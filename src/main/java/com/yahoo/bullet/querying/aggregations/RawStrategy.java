@@ -11,7 +11,6 @@ import com.yahoo.bullet.query.aggregations.Aggregation;
 import com.yahoo.bullet.record.BulletRecord;
 import com.yahoo.bullet.result.Clip;
 import lombok.extern.slf4j.Slf4j;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,10 +27,13 @@ import java.util.List;
  */
 @Slf4j
 public class RawStrategy implements Strategy {
+
     private ArrayList<BulletRecord> aggregate = new ArrayList<>();
 
     private Integer size;
+
     private int consumed = 0;
+
     private int combined = 0;
 
     /**
@@ -49,19 +51,12 @@ public class RawStrategy implements Strategy {
 
     @Override
     public boolean isClosed() {
-        return consumed + combined >= size;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void consume(BulletRecord data) {
-        // Since RawStrategy is the only strategy that can close and is really a special case, it should check before
-        // consumption. Otherwise, Windows will need to expose the fact that the aggregation should not be fed more data
-        // in order to prevent RawStrategy from accidentally consuming/combining till only the Window is closed.
-        if (data == null || isClosed()) {
-            return;
-        }
-        consumed++;
-        aggregate.add(data);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -73,23 +68,7 @@ public class RawStrategy implements Strategy {
      */
     @Override
     public void combine(byte[] data) {
-        // See the comment in consume on why the check for isClosed.
-        if (data == null || isClosed()) {
-            return;
-        }
-        ArrayList<BulletRecord> batch = SerializerDeserializer.fromBytes(data);
-        if (batch == null || batch.isEmpty()) {
-            return;
-        }
-        int batchSize = batch.size();
-        int maximumLeft = size - aggregate.size();
-        if (batchSize <= maximumLeft) {
-            aggregate.addAll(batch);
-            combined += batchSize;
-        } else {
-            aggregate.addAll(batch.subList(0, maximumLeft));
-            combined += maximumLeft;
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -99,10 +78,7 @@ public class RawStrategy implements Strategy {
      */
     @Override
     public byte[] getData() {
-        if (aggregate.isEmpty()) {
-            return null;
-        }
-        return SerializerDeserializer.toBytes(aggregate);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -113,7 +89,7 @@ public class RawStrategy implements Strategy {
      */
     @Override
     public Clip getResult() {
-        return Clip.of(getRecords());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -124,13 +100,11 @@ public class RawStrategy implements Strategy {
      */
     @Override
     public List<BulletRecord> getRecords() {
-        return aggregate;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void reset() {
-        aggregate = new ArrayList<>();
-        consumed = 0;
-        combined = 0;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

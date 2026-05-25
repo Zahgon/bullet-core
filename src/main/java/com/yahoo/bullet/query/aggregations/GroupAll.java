@@ -12,14 +12,14 @@ import com.yahoo.bullet.querying.aggregations.GroupAllStrategy;
 import com.yahoo.bullet.querying.aggregations.Strategy;
 import com.yahoo.bullet.querying.aggregations.grouping.GroupOperation;
 import lombok.Getter;
-
 import java.util.Set;
 
 @Getter
 public class GroupAll extends Aggregation {
+
     private static final long serialVersionUID = 5118426551573371428L;
-    private static final BulletException COUNT_FIELD_INVALID_OPERATION =
-            new BulletException("COUNT_FIELD is not a valid operation.", "Please remove this operation.");
+
+    private static final BulletException COUNT_FIELD_INVALID_OPERATION = new BulletException("COUNT_FIELD is not a valid operation.", "Please remove this operation.");
 
     private final Set<GroupOperation> operations;
 
@@ -39,11 +39,11 @@ public class GroupAll extends Aggregation {
 
     @Override
     public Strategy getStrategy(BulletConfig config) {
-        return new GroupAllStrategy(this, config);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String toString() {
-        return "{size: " + size + ", type: " + type + ", operations: " + operations + "}";
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

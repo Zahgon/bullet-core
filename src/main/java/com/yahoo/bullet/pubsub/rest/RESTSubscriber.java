@@ -21,22 +21,27 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 public class RESTSubscriber extends BufferingSubscriber {
+
     private static final JsonDeserializer<Metadata> METADATA_DESERIALIZER = (item, type, context) -> context.deserialize(item, RESTMetadata.class);
+
     private static final Gson GSON = new GsonBuilder().registerTypeAdapter(Metadata.class, METADATA_DESERIALIZER).create();
 
     @Getter(AccessLevel.PACKAGE)
     private List<String> urls;
+
     private CloseableHttpClient client;
+
     private long minWait;
+
     @Setter(AccessLevel.PACKAGE)
     private long lastRequest;
+
     private int connectTimeout;
 
     /**
@@ -59,45 +64,17 @@ public class RESTSubscriber extends BufferingSubscriber {
 
     @Override
     public List<PubSubMessage> getMessages() {
-        List<PubSubMessage> messages = new ArrayList<>();
-        long currentTime = System.currentTimeMillis();
-        if (currentTime - lastRequest <= minWait) {
-            return messages;
-        }
-        lastRequest = currentTime;
-        for (String url : urls) {
-            try (CloseableHttpResponse response = client.execute(makeHttpGet(url))) {
-                int statusCode = response.getStatusLine().getStatusCode();
-                if (statusCode == RESTPubSub.OK_200) {
-                    HttpEntity httpEntity = response.getEntity();
-                    String message = EntityUtils.toString(httpEntity, RESTPubSub.UTF_8);
-                    log.debug("Received message from url: {}. Message was {}", url, message);
-                    messages.add(PubSubMessage.fromJSON(message, GSON));
-                    EntityUtils.consume(httpEntity);
-                } else if (statusCode != RESTPubSub.NO_CONTENT_204) {
-                    // NO_CONTENT_204 indicates there are no new messages - anything else indicates a problem
-                    log.error("HTTP call to {} failed with status code {} and response {}.", url, statusCode, response);
-                }
-            } catch (Exception e) {
-                log.error("HTTP call to {} failed with error:", url, e);
-            }
-        }
-        return messages;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void close() {
-        try {
-            client.close();
-        } catch (IOException e) {
-            log.warn("Caught exception when closing HTTP client: ", e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private HttpGet makeHttpGet(String url) {
         HttpGet httpGet = new HttpGet(url);
-        RequestConfig requestConfig =
-                RequestConfig.custom().setConnectTimeout(connectTimeout).setSocketTimeout(connectTimeout).build();
+        RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(connectTimeout).setSocketTimeout(connectTimeout).build();
         httpGet.setConfig(requestConfig);
         return httpGet;
     }

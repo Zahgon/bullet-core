@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Random;
 
 public class RandomPool<T> {
+
     private List<T> items;
 
     private static final Random RANDOM = new Random();
@@ -27,42 +28,28 @@ public class RandomPool<T> {
      * @return a randomly chosen item from the pool.
      */
     public T get() {
-        if (items == null || items.isEmpty()) {
-            return null;
-        }
-        return items.get(RANDOM.nextInt(items.size()));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
      * Clear the RandomPool. Gets now return null.
      */
     public void clear() {
-        items = null;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String toString() {
-        return items == null ? null : items.toString();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean equals(Object object) {
-        if (this == object) {
-            return true;
-        }
-        if (object == null) {
-            return false;
-        }
-        if (!(object instanceof RandomPool)) {
-            return false;
-        }
-        RandomPool asPool = (RandomPool) object;
-        return items == null ? asPool.items == null : items.equals(asPool.items);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public int hashCode() {
-        // Any number would do since we want RandomPools of null to be equal to each other.
-        return items == null ? 42 : items.hashCode();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

@@ -9,37 +9,34 @@ import com.yahoo.bullet.common.BulletConfig;
 import com.yahoo.bullet.common.Config;
 import com.yahoo.bullet.common.Validator;
 import lombok.extern.slf4j.Slf4j;
-
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
 @Slf4j
 public class StorageConfig extends BulletConfig {
+
     private static final long serialVersionUID = 2635594185278740577L;
 
     // Field names
     public static final String PREFIX = "bullet.storage.";
+
     public static final String NAMESPACES = PREFIX + "namespaces";
+
     public static final String PARTITION_COUNT = PREFIX + "partition.count";
 
     // Defaults
     public static final int DEFAULT_PARTITION_COUNT = 1;
+
     public static final String DEFAULT_NAMESPACE = "";
+
     public static final List<String> DEFAULT_NAMESPACES = Collections.singletonList(DEFAULT_NAMESPACE);
 
     private static final Validator VALIDATOR = new Validator();
+
     static {
-        VALIDATOR.define(NAMESPACES)
-                 .defaultTo(DEFAULT_NAMESPACES)
-                 .checkIf(Validator.isListOfType(String.class))
-                 .checkIf(Validator::isNonEmptyList)
-                 .castTo(StorageConfig::asSet);
-        VALIDATOR.define(PARTITION_COUNT)
-                 .defaultTo(DEFAULT_PARTITION_COUNT)
-                 .checkIf(Validator::isPositiveInt)
-                 .unless(Validator::isNull)
-                 .castTo(Validator::asInt);
+        VALIDATOR.define(NAMESPACES).defaultTo(DEFAULT_NAMESPACES).checkIf(Validator.isListOfType(String.class)).checkIf(Validator::isNonEmptyList).castTo(StorageConfig::asSet);
+        VALIDATOR.define(PARTITION_COUNT).defaultTo(DEFAULT_PARTITION_COUNT).checkIf(Validator::isPositiveInt).unless(Validator::isNull).castTo(Validator::asInt);
     }
 
     /**
@@ -64,9 +61,7 @@ public class StorageConfig extends BulletConfig {
 
     @Override
     public StorageConfig validate() {
-        super.validate();
-        VALIDATOR.validate(this);
-        return this;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @SuppressWarnings("unchecked")

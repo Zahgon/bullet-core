@@ -10,7 +10,6 @@ import com.yahoo.bullet.query.expressions.Operation;
 import com.yahoo.bullet.record.BulletRecord;
 import com.yahoo.bullet.typesystem.Type;
 import com.yahoo.bullet.typesystem.TypedObject;
-
 import java.io.Serializable;
 import java.util.EnumMap;
 import java.util.Map;
@@ -21,8 +20,10 @@ import java.util.function.Function;
  * Unary operations used by UnaryEvaluator.
  */
 public class UnaryOperations {
+
     @FunctionalInterface
     public interface UnaryOperator extends Serializable {
+
         TypedObject apply(Evaluator evaluator, BulletRecord record);
     }
 
@@ -41,60 +42,39 @@ public class UnaryOperations {
     }
 
     static TypedObject not(Evaluator evaluator, BulletRecord record) {
-        return checkNull(evaluator, record, value -> TypedObject.valueOf(!((Boolean) value.forceCast(Type.BOOLEAN).getValue())));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject sizeOf(Evaluator evaluator, BulletRecord record) {
-        return checkNull(evaluator, record, value -> TypedObject.valueOf(value.size()));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject isNull(Evaluator evaluator, BulletRecord record) {
-        return TypedObject.valueOf(Utilities.isNull(evaluator.evaluate(record)));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject isNotNull(Evaluator evaluator, BulletRecord record) {
-        return TypedObject.valueOf(!Utilities.isNull(evaluator.evaluate(record)));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject trim(Evaluator evaluator, BulletRecord record) {
-        return checkNull(evaluator, record, value -> {
-            String str = (String) value.getValue();
-            return TypedObject.valueOf(str.trim());
-        });
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject abs(Evaluator evaluator, BulletRecord record) {
-        return checkNull(evaluator, record, value -> {
-            Number number = (Number) value.getValue();
-            switch (value.getType()) {
-                case DOUBLE:
-                    return TypedObject.valueOf(Math.abs(number.doubleValue()));
-                case FLOAT:
-                    return TypedObject.valueOf(Math.abs(number.floatValue()));
-                case LONG:
-                    return TypedObject.valueOf(Math.abs(number.longValue()));
-                default:
-                    return TypedObject.valueOf(Math.abs(number.intValue()));
-            }
-        });
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject lower(Evaluator evaluator, BulletRecord record) {
-        return checkNull(evaluator, record, value -> {
-            String str = (String) value.getValue();
-            return TypedObject.valueOf(str.toLowerCase());
-        });
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject upper(Evaluator evaluator, BulletRecord record) {
-        return checkNull(evaluator, record, value -> {
-            String str = (String) value.getValue();
-            return TypedObject.valueOf(str.toUpperCase());
-        });
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject hash(Evaluator evaluator, BulletRecord record) {
-        return TypedObject.valueOf(Objects.hashCode(evaluator.evaluate(record).getValue()));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static TypedObject checkNull(Evaluator evaluator, BulletRecord record, Function<TypedObject, TypedObject> operator) {

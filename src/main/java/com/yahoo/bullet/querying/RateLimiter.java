@@ -19,16 +19,22 @@ import lombok.Getter;
  * is spread out over bringing the overall rate lower than your configured maximum and yielding a false negative.
  */
 public class RateLimiter {
+
     @Getter
     private final int maximum;
+
     @Getter
     private final int timeInterval;
+
     @Getter
     private final double absoluteRateLimit;
 
     private long count = 0;
+
     private long lastCount = 0;
+
     private long lastCheckTime;
+
     @Getter
     private boolean exceededRate = false;
 
@@ -58,7 +64,6 @@ public class RateLimiter {
         this.maximum = maximum;
         this.timeInterval = timeInterval;
         this.absoluteRateLimit = maximum / (double) timeInterval;
-
         lastCheckTime = System.currentTimeMillis();
     }
 
@@ -66,7 +71,7 @@ public class RateLimiter {
      * Increment the measure that this is counting by one.
      */
     public void increment() {
-        count++;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -76,10 +81,7 @@ public class RateLimiter {
      * @throws IllegalArgumentException if the given number was not positive.
      */
     public void add(int n) {
-        if (n <= 0) {
-            throw new IllegalArgumentException("Add only positive numbers!");
-        }
-        count += n;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -89,22 +91,7 @@ public class RateLimiter {
      * @return A boolean denoting whether the rate limit has been exceeded.
      */
     public boolean isRateLimited() {
-        // Once exceeded, always exceeded.
-        if (exceededRate) {
-            return true;
-        }
-        long timeNow = System.currentTimeMillis();
-        // Do nothing if too early
-        if (isTooEarly(timeNow)) {
-            return false;
-        }
-        // It's time to check. Check if the count has exceeded the previous count, if so, update the last fields.
-        exceededRate = getCurrentRate(timeNow) > absoluteRateLimit;
-        if (!exceededRate) {
-            lastCount = count;
-            lastCheckTime = timeNow;
-        }
-        return exceededRate;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -113,15 +100,14 @@ public class RateLimiter {
      * @return A double representing the current absolute rate (per ms).
      */
     public double getCurrentRate() {
-        return getCurrentRate(System.currentTimeMillis());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
      * Test helper to reset the count.
      */
     void resetCounts() {
-        lastCount = 0;
-        count = 0;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private boolean isTooEarly(long timeNow) {
@@ -132,5 +118,4 @@ public class RateLimiter {
         // If denominator is zero, it will be NaN or Infinity
         return (count - lastCount) / (double) (timeNow - lastCheckTime);
     }
-
 }

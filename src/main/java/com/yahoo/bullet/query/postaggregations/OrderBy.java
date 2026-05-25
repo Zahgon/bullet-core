@@ -11,25 +11,27 @@ import com.yahoo.bullet.query.expressions.Expression;
 import com.yahoo.bullet.querying.postaggregations.OrderByStrategy;
 import com.yahoo.bullet.querying.postaggregations.PostStrategy;
 import lombok.Getter;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
 @Getter
 public class OrderBy extends PostAggregation {
+
     private static final long serialVersionUID = -58085305662163506L;
 
     public enum Direction {
-        ASC,
-        DESC
+
+        ASC, DESC
     }
 
     @Getter
     public static class SortItem implements Serializable {
+
         private static final long serialVersionUID = 4024279669854156179L;
 
         private Expression expression;
+
         private Direction direction;
 
         /**
@@ -45,12 +47,11 @@ public class OrderBy extends PostAggregation {
 
         @Override
         public String toString() {
-            return "{expression: " + expression + ", direction: " + direction + "}";
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
     }
 
-    public static final BulletException ORDER_BY_REQUIRES_FIELDS =
-            new BulletException("The ORDER BY post-aggregation requires at least one field.", "Please add at least one field.");
+    public static final BulletException ORDER_BY_REQUIRES_FIELDS = new BulletException("The ORDER BY post-aggregation requires at least one field.", "Please add at least one field.");
 
     private List<SortItem> fields;
 
@@ -70,11 +71,11 @@ public class OrderBy extends PostAggregation {
 
     @Override
     public PostStrategy getPostStrategy() {
-        return new OrderByStrategy(this);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String toString() {
-        return "{type: " + type + ", fields: " + fields + "}";
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

@@ -9,16 +9,17 @@ import com.yahoo.bullet.querying.aggregations.QuantileSketchingStrategy;
 import com.yahoo.bullet.querying.aggregations.Strategy;
 import com.yahoo.bullet.common.BulletConfig;
 import lombok.Getter;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 @Getter
 public abstract class Distribution extends Aggregation {
+
     private static final long serialVersionUID = -7862051610403543796L;
 
     protected final String field;
+
     protected final DistributionType distributionType;
 
     /**
@@ -36,11 +37,11 @@ public abstract class Distribution extends Aggregation {
 
     @Override
     public Strategy getStrategy(BulletConfig config) {
-        return new QuantileSketchingStrategy(this, config);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public List<String> getFields() {
-        return Collections.singletonList(field);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

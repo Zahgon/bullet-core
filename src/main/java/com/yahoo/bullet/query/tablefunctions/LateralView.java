@@ -8,7 +8,6 @@ package com.yahoo.bullet.query.tablefunctions;
 import com.yahoo.bullet.querying.tablefunctors.LateralViewFunctor;
 import com.yahoo.bullet.querying.tablefunctors.TableFunctor;
 import lombok.Getter;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -18,6 +17,7 @@ import java.util.Objects;
  */
 @Getter
 public class LateralView extends TableFunction {
+
     private static final long serialVersionUID = -8238108616312386350L;
 
     private final List<TableFunction> tableFunctions;
@@ -43,11 +43,11 @@ public class LateralView extends TableFunction {
 
     @Override
     public TableFunctor getTableFunctor() {
-        return new LateralViewFunctor(this);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String toString() {
-        return "{type: " + type + ", tableFunctions: " + tableFunctions + "}";
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

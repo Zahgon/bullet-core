@@ -13,22 +13,26 @@ import com.yahoo.bullet.record.BulletRecord;
 import com.yahoo.bullet.result.Meta;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
 import java.io.Serializable;
 import java.util.Map;
-
 import static com.yahoo.bullet.result.Meta.addIfNonNull;
 
 public class SlidingRecord extends Basic {
+
     public static String NAME = "Sliding";
 
     private int maxCount;
+
     private int recordCount;
 
-    @AllArgsConstructor @Getter
+    @AllArgsConstructor
+    @Getter
     public static class Data implements Serializable {
+
         private static final long serialVersionUID = -3035790881273001274L;
+
         private final long count;
+
         private final byte[] data;
     }
 
@@ -46,49 +50,41 @@ public class SlidingRecord extends Basic {
 
     @Override
     protected Map<String, Object> getMetadata(Map<String, String> metadataKeys) {
-        Map<String, Object> meta = super.getMetadata(metadataKeys);
-        addIfNonNull(meta, metadataKeys, Meta.Concept.WINDOW_SIZE, () -> this.recordCount);
-        return meta;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void consume(BulletRecord data) {
-        super.consume(data);
-        recordCount++;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void combine(byte[] data) {
-        Data wrapped = SerializerDeserializer.fromBytes(data);
-        super.combine(wrapped.getData());
-        recordCount += wrapped.getCount();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public byte[] getData() {
-        byte[] data = super.getData();
-        Data wrapped = new Data(recordCount, data);
-        return SerializerDeserializer.toBytes(wrapped);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void reset() {
-        super.reset();
-        recordCount = 0;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean isClosed() {
-        return recordCount >= maxCount;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean isClosedForPartition() {
-        return recordCount >= 1;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected String name() {
-        return NAME;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

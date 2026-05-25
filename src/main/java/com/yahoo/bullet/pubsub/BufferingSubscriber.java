@@ -7,7 +7,6 @@ package com.yahoo.bullet.pubsub;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,8 +22,10 @@ import java.util.Map;
  * This class is intended to be used if your PubSub implementation does not care about (or cannot be) using commit and
  * fail to reprocess messages from the PubSub and prefers to manage it in code.
  */
-@Slf4j @RequiredArgsConstructor
+@Slf4j
+@RequiredArgsConstructor
 public abstract class BufferingSubscriber implements Subscriber {
+
     /**
      * The maximum number of PubSubMessages we can have unacked at any time. Further calls to receive will return nothing.
      */
@@ -88,21 +89,7 @@ public abstract class BufferingSubscriber implements Subscriber {
 
     @Override
     public PubSubMessage receive() throws PubSubException {
-        if (uncommittedMessages.size() >= maxUncommittedMessages) {
-            log.warn("Reached limit of max uncommitted messages: {}. Waiting for commits to proceed.", maxUncommittedMessages);
-            return null;
-        }
-        if (isRateLimited()) {
-            log.warn("Reached rate limit of max {} messages every {} ms.", rateLimitMaxMessages, rateLimitIntervalMS);
-            return null;
-        }
-        if (!haveMessages()) {
-            return null;
-        }
-        PubSubMessage message = receivedMessages.remove(0);
-        uncommittedMessages.put(message.getId(), message);
-        updateRateLimit();
-        return message;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private boolean isRateLimited() {
@@ -131,7 +118,7 @@ public abstract class BufferingSubscriber implements Subscriber {
      */
     @Override
     public void commit(String id) {
-        uncommittedMessages.remove(id);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -142,11 +129,7 @@ public abstract class BufferingSubscriber implements Subscriber {
      */
     @Override
     public void fail(String id) {
-        PubSubMessage message = uncommittedMessages.get(id);
-        if (message != null) {
-            receivedMessages.add(0, message);
-            uncommittedMessages.remove(id);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -157,15 +140,7 @@ public abstract class BufferingSubscriber implements Subscriber {
      * @throws PubSubException if there was an issue reading the messages.
      */
     protected boolean haveMessages() throws PubSubException {
-        if (!receivedMessages.isEmpty()) {
-            return true;
-        }
-        List<PubSubMessage> messages = getMessages();
-        if (messages == null || messages.isEmpty()) {
-            return false;
-        }
-        receivedMessages.addAll(messages);
-        return true;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**

@@ -15,9 +15,7 @@ import com.yahoo.bullet.query.aggregations.Aggregation;
 import com.yahoo.bullet.query.aggregations.Distribution;
 import com.yahoo.bullet.record.BulletRecord;
 import com.yahoo.bullet.record.BulletRecordProvider;
-
 import java.util.List;
-
 import static com.yahoo.bullet.common.Utilities.extractFieldAsNumber;
 
 /**
@@ -25,6 +23,7 @@ import static com.yahoo.bullet.common.Utilities.extractFieldAsNumber;
  * configured for the sketch, the normalized rank error can be determined and tightly bound.
  */
 public class QuantileSketchingStrategy extends SketchingStrategy<QuantileSketch> {
+
     private String field;
 
     /**
@@ -42,10 +41,7 @@ public class QuantileSketchingStrategy extends SketchingStrategy<QuantileSketch>
 
     @Override
     public void consume(BulletRecord data) {
-        Number value = extractFieldAsNumber(field, data);
-        if (value != null) {
-            sketch.update(value.doubleValue());
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static QuantileSketch getSketch(Distribution aggregation, BulletConfig config) {

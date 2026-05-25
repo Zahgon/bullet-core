@@ -12,20 +12,21 @@ import com.yahoo.bullet.common.BulletConfig;
 import com.yahoo.bullet.common.BulletException;
 import com.yahoo.bullet.common.Utilities;
 import lombok.Getter;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class GroupBy extends Aggregation {
+
     private static final long serialVersionUID = -6974294259446732772L;
-    private static final BulletException GROUP_BY_REQUIRES_FIELDS =
-            new BulletException("GROUP BY requires at least one field.", "Please group by at least one field.");
-    private static final BulletException COUNT_FIELD_INVALID_OPERATION =
-            new BulletException("COUNT_FIELD is not a valid operation.", "Please remove this operation.");
+
+    private static final BulletException GROUP_BY_REQUIRES_FIELDS = new BulletException("GROUP BY requires at least one field.", "Please group by at least one field.");
+
+    private static final BulletException COUNT_FIELD_INVALID_OPERATION = new BulletException("COUNT_FIELD is not a valid operation.", "Please remove this operation.");
 
     private final Map<String, String> fields;
+
     @Getter
     private final Set<GroupOperation> operations;
 
@@ -52,12 +53,12 @@ public class GroupBy extends Aggregation {
 
     @Override
     public Strategy getStrategy(BulletConfig config) {
-        return new TupleSketchingStrategy(this, config);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public List<String> getFields() {
-        return new ArrayList<>(fields.keySet());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -66,11 +67,11 @@ public class GroupBy extends Aggregation {
      * @return A {@link Map} from field names to aliases.
      */
     public Map<String, String> getFieldsToNames() {
-        return fields;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String toString() {
-        return "{size: " + size + ", type: " + type + ", fields: " + fields + ", operations: " + operations + "}";
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

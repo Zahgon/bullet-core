@@ -9,9 +9,7 @@ import com.yahoo.bullet.common.BulletException;
 import com.yahoo.bullet.querying.evaluators.BinaryEvaluator;
 import com.yahoo.bullet.querying.evaluators.Evaluator;
 import lombok.Getter;
-
 import java.util.Objects;
-
 import static com.yahoo.bullet.query.expressions.Operation.BINARY_OPERATIONS;
 
 /**
@@ -19,12 +17,15 @@ import static com.yahoo.bullet.query.expressions.Operation.BINARY_OPERATIONS;
  */
 @Getter
 public class BinaryExpression extends Expression {
+
     private static final long serialVersionUID = -7911485746578844403L;
-    private static final BulletException BINARY_EXPRESSION_REQUIRES_BINARY_OPERATION =
-            new BulletException("Binary expression requires a binary operation.", "Please specify a binary operation.");
+
+    private static final BulletException BINARY_EXPRESSION_REQUIRES_BINARY_OPERATION = new BulletException("Binary expression requires a binary operation.", "Please specify a binary operation.");
 
     private final Expression left;
+
     private final Expression right;
+
     private final Operation op;
 
     /**
@@ -45,31 +46,21 @@ public class BinaryExpression extends Expression {
 
     @Override
     public Evaluator getEvaluator() {
-        return new BinaryEvaluator(this);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (!(obj instanceof BinaryExpression)) {
-            return false;
-        }
-        BinaryExpression other = (BinaryExpression) obj;
-        return Objects.equals(left, other.left) &&
-               Objects.equals(right, other.right) &&
-               op == other.op &&
-               type == other.type;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(left, right, op, type);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String toString() {
-        return "{left: " + left + ", right: " + right + ", op: " + op + ", " + super.toString() + "}";
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

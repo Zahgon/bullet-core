@@ -12,7 +12,6 @@ import com.yahoo.bullet.record.BulletRecord;
 import com.yahoo.bullet.result.Clip;
 import com.yahoo.bullet.typesystem.TypedObject;
 import lombok.extern.slf4j.Slf4j;
-
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -21,16 +20,23 @@ import java.util.stream.Collectors;
 
 @Slf4j
 public class OrderByStrategy implements PostStrategy {
+
     private static final Comparator<TypedObject> NULLS_FIRST = TypedObject.nullsFirst();
 
     private final Comparator<BulletRecord> comparator;
+
     private final List<Evaluator> evaluators;
+
     private final List<OrderBy.Direction> directions;
+
     private final Map<BulletRecord, LazyArray> mapping;
+
     private final int numberOfFields;
 
     private class LazyArray {
+
         private final BulletRecord record;
+
         private final TypedObject[] values;
 
         private LazyArray(BulletRecord record, int capacity) {
@@ -67,11 +73,7 @@ public class OrderByStrategy implements PostStrategy {
 
     @Override
     public Clip execute(Clip clip) {
-        List<BulletRecord> records = clip.getRecords();
-        records.forEach(record -> mapping.put(record, new LazyArray(record, numberOfFields)));
-        records.sort(comparator);
-        mapping.clear();
-        return clip;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private Comparator<BulletRecord> getComparator() {
@@ -80,8 +82,7 @@ public class OrderByStrategy implements PostStrategy {
             LazyArray lazyArrayB = mapping.get(b);
             int c;
             for (int i = 0; i < numberOfFields; i++) {
-                c = directions.get(i) == OrderBy.Direction.ASC ? NULLS_FIRST.compare(lazyArrayA.get(i), lazyArrayB.get(i))
-                                                               : NULLS_FIRST.compare(lazyArrayB.get(i), lazyArrayA.get(i));
+                c = directions.get(i) == OrderBy.Direction.ASC ? NULLS_FIRST.compare(lazyArrayA.get(i), lazyArrayB.get(i)) : NULLS_FIRST.compare(lazyArrayB.get(i), lazyArrayA.get(i));
                 if (c != 0) {
                     return c;
                 }

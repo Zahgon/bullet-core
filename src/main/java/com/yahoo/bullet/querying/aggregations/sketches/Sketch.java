@@ -10,11 +10,9 @@ import com.yahoo.bullet.record.BulletRecordProvider;
 import com.yahoo.bullet.result.Clip;
 import com.yahoo.bullet.result.Meta;
 import com.yahoo.bullet.result.Meta.Concept;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import static com.yahoo.bullet.result.Meta.addIfNonNull;
 
 /**
@@ -22,6 +20,7 @@ import static com.yahoo.bullet.result.Meta.addIfNonNull;
  * this will encapsulate both of them and provide methods to serialize, union and createResult results.
  */
 public abstract class Sketch {
+
     // While this class could implement Monoidal, it does not need the full breadth of those methods and it would need to be
     // receiving data as BulletRecord for one off operations, which is cumbersome.
     protected BulletRecordProvider provider;
@@ -64,8 +63,7 @@ public abstract class Sketch {
      * @return A {@link Clip} of the results.
      */
     public Clip getResult(String metaKey, Map<String, String> conceptKeys) {
-        // Subclasses are charge of adding data. We'll just create an empty Clip with the metadata.
-        return Clip.of(getMetadata(metaKey, conceptKeys));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -76,10 +74,7 @@ public abstract class Sketch {
      * @return The metadata object or an empty one if no metadata was collected.
      */
     public Meta getMetadata(String metaKey, Map<String, String> conceptKeys) {
-        if (metaKey == null) {
-            return new Meta();
-        }
-        return new Meta().add(metaKey, addMetadata(conceptKeys));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -89,11 +84,7 @@ public abstract class Sketch {
      * @return The created {@link Map} of sketch metadata.
      */
     protected Map<String, Object> addMetadata(Map<String, String> conceptKeys) {
-        Map<String, Object> metadata = new HashMap<>();
-        addIfNonNull(metadata, conceptKeys, Concept.SKETCH_FAMILY, this::getFamily);
-        addIfNonNull(metadata, conceptKeys, Concept.SKETCH_SIZE, this::getSize);
-        addIfNonNull(metadata, conceptKeys, Concept.SKETCH_ESTIMATED_RESULT, this::isEstimationMode);
-        return metadata;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**

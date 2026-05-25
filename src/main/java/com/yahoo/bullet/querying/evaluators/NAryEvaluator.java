@@ -9,7 +9,6 @@ import com.yahoo.bullet.query.expressions.Expression;
 import com.yahoo.bullet.query.expressions.NAryExpression;
 import com.yahoo.bullet.record.BulletRecord;
 import com.yahoo.bullet.typesystem.TypedObject;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,9 +16,11 @@ import java.util.stream.Collectors;
  * An evaluator that applies an n-ary operator to the results of a list of evaluators.
  */
 public class NAryEvaluator extends Evaluator {
+
     private static final long serialVersionUID = 54879052369401372L;
 
     final List<Evaluator> operands;
+
     final NAryOperations.NAryOperator op;
 
     /**
@@ -34,6 +35,6 @@ public class NAryEvaluator extends Evaluator {
 
     @Override
     public TypedObject evaluate(BulletRecord record) {
-        return op.apply(operands, record);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

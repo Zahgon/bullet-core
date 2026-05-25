@@ -7,10 +7,10 @@ package com.yahoo.bullet.querying.postaggregations;
 
 import com.yahoo.bullet.query.postaggregations.Culling;
 import com.yahoo.bullet.result.Clip;
-
 import java.util.Set;
 
 public class CullingStrategy implements PostStrategy {
+
     private Set<String> transientFields;
 
     /**
@@ -24,9 +24,6 @@ public class CullingStrategy implements PostStrategy {
 
     @Override
     public Clip execute(Clip clip) {
-        for (String field : transientFields) {
-            clip.getRecords().forEach(record -> record.remove(field));
-        }
-        return clip;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

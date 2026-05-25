@@ -7,11 +7,12 @@ package com.yahoo.bullet.pubsub;
 
 import lombok.Getter;
 import lombok.Setter;
-
 import java.io.Serializable;
 
 public class Metadata implements Serializable {
+
     public enum Signal {
+
         ACKNOWLEDGE,
         COMPLETE,
         FAIL,
@@ -21,11 +22,16 @@ public class Metadata implements Serializable {
     }
 
     private static final long serialVersionUID = 7478596915692253699L;
-    @Getter @Setter
+
+    @Getter
+    @Setter
     protected Signal signal;
+
     // Serializable enforced through the constructor, getter, and setter. Is Object so GSON can reify an instance.
     protected Object content;
-    @Getter @Setter
+
+    @Getter
+    @Setter
     protected long created;
 
     /**
@@ -54,7 +60,7 @@ public class Metadata implements Serializable {
      * @return A copy of this {@link Metadata}.
      */
     public Metadata copy() {
-        return new Metadata(signal, (Serializable) content);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -63,7 +69,7 @@ public class Metadata implements Serializable {
      * @param content The content for this metadata.
      */
     public void setContent(Serializable content) {
-        this.content = content;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -72,8 +78,7 @@ public class Metadata implements Serializable {
      * @return The serializable content or null.
      */
     public Serializable getContent() {
-        return (Serializable) content;
-
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -82,7 +87,7 @@ public class Metadata implements Serializable {
      * @return true if Metadata has content.
      */
     public boolean hasContent() {
-        return content != null;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -91,7 +96,7 @@ public class Metadata implements Serializable {
      * @return true if message has {@link Metadata#signal}
      */
     public boolean hasSignal() {
-        return signal != null;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -101,6 +106,6 @@ public class Metadata implements Serializable {
      * @return true if message has {@link Metadata#signal}
      */
     public boolean hasSignal(Signal signal) {
-        return hasSignal() && this.signal == signal;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

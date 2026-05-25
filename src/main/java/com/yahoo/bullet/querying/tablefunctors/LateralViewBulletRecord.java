@@ -11,7 +11,6 @@ import com.yahoo.bullet.typesystem.TypedObject;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -38,79 +37,72 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Getter(AccessLevel.PACKAGE)
 class LateralViewBulletRecord extends BulletRecord {
+
     private static final long serialVersionUID = 1756000447237973392L;
 
     private final BulletRecord baseRecord;
+
     private final BulletRecord topRecord;
+
     private Set<String> culledFields = new HashSet<>();
 
     @Override
     protected Serializable convert(Object object) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected BulletRecord rawSet(String field, Serializable object) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected Map<String, Serializable> getRawDataMap() {
-        Map<String, Serializable> map = new HashMap<>(baseRecord.toUnmodifiableDataMap());
-        map.putAll(topRecord.toUnmodifiableDataMap());
-        map.keySet().removeAll(culledFields);
-        return map;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public Serializable get(String field) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean hasField(String field) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public int fieldCount() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public Serializable getAndRemove(String field) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public BulletRecord remove(String field) {
-        culledFields.add(field);
-        topRecord.remove(field);
-        return this;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public TypedObject typedGet(String field, Type hint) {
-        if (culledFields.contains(field)) {
-            return TypedObject.NULL;
-        }
-        return topRecord.hasField(field) ? topRecord.typedGet(field, hint) : baseRecord.typedGet(field, hint);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public BulletRecord typedSet(String field, TypedObject object) {
-        culledFields.remove(field);
-        topRecord.typedSet(field, object);
-        return this;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public BulletRecord copy() {
-        return this;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public Iterator iterator() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

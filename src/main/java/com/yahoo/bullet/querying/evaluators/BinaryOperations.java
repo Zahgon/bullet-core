@@ -9,7 +9,6 @@ import com.yahoo.bullet.query.expressions.Operation;
 import com.yahoo.bullet.record.BulletRecord;
 import com.yahoo.bullet.typesystem.Type;
 import com.yahoo.bullet.typesystem.TypedObject;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -20,15 +19,16 @@ import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
 import static com.yahoo.bullet.common.Utilities.isNull;
 
 /**
  * Binary operations used by BinaryEvaluator.
  */
 public class BinaryOperations {
+
     @FunctionalInterface
     public interface BinaryOperator extends Serializable {
+
         TypedObject apply(Evaluator left, Evaluator right, BulletRecord record);
     }
 
@@ -74,278 +74,150 @@ public class BinaryOperations {
     }
 
     static TypedObject add(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) -> {
-            Type type = getArithmeticResultType(leftValue.getType(), rightValue.getType());
-            switch (type) {
-                case DOUBLE:
-                    return new TypedObject(Type.DOUBLE, getDouble(leftValue) + getDouble(rightValue));
-                case FLOAT:
-                    return new TypedObject(Type.FLOAT, getFloat(leftValue) + getFloat(rightValue));
-                case LONG:
-                    return new TypedObject(Type.LONG, getLong(leftValue) + getLong(rightValue));
-                default:
-                    return new TypedObject(Type.INTEGER, getInteger(leftValue) + getInteger(rightValue));
-            }
-        });
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject sub(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) -> {
-            Type type = getArithmeticResultType(leftValue.getType(), rightValue.getType());
-            switch (type) {
-                case DOUBLE:
-                    return new TypedObject(Type.DOUBLE, getDouble(leftValue) - getDouble(rightValue));
-                case FLOAT:
-                    return new TypedObject(Type.FLOAT, getFloat(leftValue) - getFloat(rightValue));
-                case LONG:
-                    return new TypedObject(Type.LONG, getLong(leftValue) - getLong(rightValue));
-                default:
-                    return new TypedObject(Type.INTEGER, getInteger(leftValue) - getInteger(rightValue));
-            }
-        });
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject mul(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) -> {
-            Type type = getArithmeticResultType(leftValue.getType(), rightValue.getType());
-            switch (type) {
-                case DOUBLE:
-                    return new TypedObject(Type.DOUBLE, getDouble(leftValue) * getDouble(rightValue));
-                case FLOAT:
-                    return new TypedObject(Type.FLOAT, getFloat(leftValue) * getFloat(rightValue));
-                case LONG:
-                    return new TypedObject(Type.LONG, getLong(leftValue) * getLong(rightValue));
-                default:
-                    return new TypedObject(Type.INTEGER, getInteger(leftValue) * getInteger(rightValue));
-            }
-        });
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject div(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) -> {
-            Type type = getArithmeticResultType(leftValue.getType(), rightValue.getType());
-            switch (type) {
-                case DOUBLE:
-                    return new TypedObject(Type.DOUBLE, getDouble(leftValue) / getDouble(rightValue));
-                case FLOAT:
-                    return new TypedObject(Type.FLOAT, getFloat(leftValue) / getFloat(rightValue));
-                case LONG:
-                    return new TypedObject(Type.LONG, getLong(leftValue) / getLong(rightValue));
-                default:
-                    return new TypedObject(Type.INTEGER, getInteger(leftValue) / getInteger(rightValue));
-            }
-        });
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject mod(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) -> {
-            Type type = getArithmeticResultType(leftValue.getType(), rightValue.getType());
-            switch (type) {
-                case DOUBLE:
-                    return new TypedObject(Type.DOUBLE, getDouble(leftValue) % getDouble(rightValue));
-                case FLOAT:
-                    return new TypedObject(Type.FLOAT, getFloat(leftValue) % getFloat(rightValue));
-                case LONG:
-                    return new TypedObject(Type.LONG, getLong(leftValue) % getLong(rightValue));
-                default:
-                    return new TypedObject(Type.INTEGER, getInteger(leftValue) % getInteger(rightValue));
-            }
-        });
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject equals(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) -> TypedObject.valueOf(leftValue.equalTo(rightValue)));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject equalsAny(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) -> ternaryAnyMatch(leftValue, rightValue, i -> i == 0));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject equalsAll(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) -> ternaryAllMatch(leftValue, rightValue, i -> i == 0));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject notEquals(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) -> TypedObject.valueOf(!leftValue.equalTo(rightValue)));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject notEqualsAny(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) -> ternaryAnyMatch(leftValue, rightValue, i -> i != 0));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject notEqualsAll(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) -> ternaryAllMatch(leftValue, rightValue, i -> i != 0));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject greaterThan(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) -> TypedObject.valueOf(leftValue.compareTo(rightValue) > 0));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject greaterThanAny(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) -> ternaryAnyMatch(leftValue, rightValue, i -> i > 0));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject greaterThanAll(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) -> ternaryAllMatch(leftValue, rightValue, i -> i > 0));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject lessThan(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) -> TypedObject.valueOf(leftValue.compareTo(rightValue) < 0));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject lessThanAny(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) -> ternaryAnyMatch(leftValue, rightValue, i -> i < 0));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject lessThanAll(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) -> ternaryAllMatch(leftValue, rightValue, i -> i < 0));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject greaterThanOrEquals(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) -> TypedObject.valueOf(leftValue.compareTo(rightValue) >= 0));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject greaterThanOrEqualsAny(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) -> ternaryAnyMatch(leftValue, rightValue, i -> i >= 0));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject greaterThanOrEqualsAll(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) -> ternaryAllMatch(leftValue, rightValue, i -> i >= 0));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject lessThanOrEquals(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) -> TypedObject.valueOf(leftValue.compareTo(rightValue) <= 0));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject lessThanOrEqualsAny(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) -> ternaryAnyMatch(leftValue, rightValue, i -> i <= 0));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject lessThanOrEqualsAll(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) -> ternaryAllMatch(leftValue, rightValue, i -> i <= 0));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject regexLike(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) ->
-                TypedObject.valueOf(Pattern.compile((String) rightValue.getValue())
-                                           .matcher((String) leftValue.getValue())
-                                           .matches()));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @SuppressWarnings("unchecked")
     static TypedObject regexLikeAny(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) -> {
-            String value = (String) leftValue.getValue();
-            boolean containsNull = false;
-            for (Serializable object : (List<? extends Serializable>) rightValue.getValue()) {
-                if (object == null) {
-                    containsNull = true;
-                } else if (Pattern.compile((String) object).matcher(value).matches()) {
-                    return TypedObject.TRUE;
-                }
-            }
-            return !containsNull ? TypedObject.FALSE : TypedObject.NULL;
-        });
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject notRegexLike(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) ->
-                TypedObject.valueOf(!Pattern.compile((String) rightValue.getValue())
-                                            .matcher((String) leftValue.getValue())
-                                            .matches()));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @SuppressWarnings("unchecked")
     static TypedObject notRegexLikeAny(Evaluator left, Evaluator right, BulletRecord record) {
-        TypedObject result = regexLikeAny(left, right, record);
-        if (result.isNull()) {
-            return TypedObject.NULL;
-        }
-        return (Boolean) result.getValue() ? TypedObject.FALSE : TypedObject.TRUE;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject sizeIs(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) -> TypedObject.valueOf(leftValue.size() == (int) rightValue.getValue()));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject containsKey(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) -> {
-            Boolean result = leftValue.containsKey((String) rightValue.getValue());
-            return result == null ? TypedObject.NULL : TypedObject.valueOf(result);
-        });
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject containsValue(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) -> {
-            Boolean result = leftValue.containsValue(rightValue);
-            return result == null ? TypedObject.NULL : TypedObject.valueOf(result);
-        });
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject in(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) -> {
-            Boolean result = rightValue.containsValue(leftValue);
-            return result == null ? TypedObject.NULL : TypedObject.valueOf(result);
-        });
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject notIn(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) -> {
-            Boolean result = rightValue.containsValue(leftValue);
-            return result == null ? TypedObject.NULL : TypedObject.valueOf(!result);
-        });
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject and(Evaluator left, Evaluator right, BulletRecord record) {
-        TypedObject leftValue = left.evaluate(record);
-        if (!isNull(leftValue) && !((Boolean) leftValue.forceCast(Type.BOOLEAN).getValue())) {
-            return TypedObject.FALSE;
-        }
-        TypedObject rightValue = right.evaluate(record);
-        if (isNull(rightValue)) {
-            return TypedObject.NULL;
-        } else if (!((Boolean) rightValue.forceCast(Type.BOOLEAN).getValue())) {
-            return TypedObject.FALSE;
-        } else if (isNull(leftValue)) {
-            return TypedObject.NULL;
-        } else {
-            return TypedObject.TRUE;
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject or(Evaluator left, Evaluator right, BulletRecord record) {
-        TypedObject leftValue = left.evaluate(record);
-        if (!isNull(leftValue) && (Boolean) leftValue.forceCast(Type.BOOLEAN).getValue()) {
-            return TypedObject.TRUE;
-        }
-        TypedObject rightValue = right.evaluate(record);
-        if (isNull(rightValue)) {
-            return TypedObject.NULL;
-        } else if ((Boolean) rightValue.forceCast(Type.BOOLEAN).getValue()) {
-            return TypedObject.TRUE;
-        } else if (isNull(leftValue)) {
-            return TypedObject.NULL;
-        } else {
-            return TypedObject.FALSE;
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static TypedObject xor(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) ->
-                TypedObject.valueOf((Boolean) leftValue.forceCast(Type.BOOLEAN).getValue() ^
-                                    (Boolean) rightValue.forceCast(Type.BOOLEAN).getValue()));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @SuppressWarnings("unchecked")
     static TypedObject filter(Evaluator left, Evaluator right, BulletRecord record) {
-        return checkNull(left, right, record, (leftValue, rightValue) -> {
-            List<? extends Serializable> list = (List<? extends Serializable>) leftValue.getValue();
-            List<Boolean> booleans = (List<Boolean>) rightValue.getValue();
-            return new TypedObject(leftValue.getType(), IntStream.range(0, list.size())
-                                                                 .filter(i -> Boolean.TRUE.equals(booleans.get(i)))
-                                                                 .mapToObj(list::get)
-                                                                 .collect(Collectors.toCollection(ArrayList::new)));
-        });
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static TypedObject checkNull(Evaluator left, Evaluator right, BulletRecord record, BiFunction<TypedObject, TypedObject, TypedObject> operator) {

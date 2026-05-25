@@ -8,7 +8,6 @@ package com.yahoo.bullet.pubsub;
 import com.yahoo.bullet.common.BulletConfig;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-
 import java.util.List;
 
 /**
@@ -19,6 +18,7 @@ import java.util.List;
  */
 @Slf4j
 public abstract class PubSub {
+
     /**
      * The context determines how the {@link Publisher} and {@link Subscriber} returned by PubSub behave. For example,
      * If the Context is {@link Context#QUERY_SUBMISSION}:
@@ -33,12 +33,13 @@ public abstract class PubSub {
      * </ol>
      */
     public enum Context {
-        QUERY_SUBMISSION,
-        QUERY_PROCESSING
+
+        QUERY_SUBMISSION, QUERY_PROCESSING
     }
 
     @Getter
     protected Context context;
+
     protected BulletConfig config;
 
     /**
@@ -61,11 +62,7 @@ public abstract class PubSub {
      * @throws PubSubException if the context switch could not be done.
      */
     public void switchContext(Context context, BulletConfig config) throws PubSubException {
-        if (this.context != context) {
-            this.config.merge(config);
-            this.context = context;
-            log.info("Switched to context: {}", context);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -114,11 +111,7 @@ public abstract class PubSub {
      * @throws PubSubException if PubSub creation fails.
      */
     public static PubSub from(BulletConfig config) throws PubSubException {
-        try {
-            return config.loadConfiguredClass(BulletConfig.PUBSUB_CLASS_NAME);
-        } catch (RuntimeException e) {
-            throw new PubSubException("Cannot create PubSub instance.", e.getCause());
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -131,10 +124,6 @@ public abstract class PubSub {
      * @throws PubSubException if the configuration is missing or cannot be cast to type T.
      */
     public <T> T getRequiredConfig(Class<T> clazz, String name) throws PubSubException {
-        try {
-            return config.getRequiredConfigAs(name, clazz);
-        } catch (Exception e) {
-            throw PubSubException.forArgument(name, e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

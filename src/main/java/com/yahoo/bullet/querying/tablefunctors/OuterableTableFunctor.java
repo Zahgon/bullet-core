@@ -8,7 +8,6 @@ package com.yahoo.bullet.querying.tablefunctors;
 import com.yahoo.bullet.record.BulletRecord;
 import com.yahoo.bullet.record.BulletRecordProvider;
 import lombok.AllArgsConstructor;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -21,17 +20,14 @@ import java.util.List;
  */
 @AllArgsConstructor
 public abstract class OuterableTableFunctor extends TableFunctor {
+
     private static final long serialVersionUID = 5523194920317863876L;
 
     protected final boolean outer;
 
     @Override
     public List<BulletRecord> apply(BulletRecord record, BulletRecordProvider provider) {
-        List<BulletRecord> records = outerableApply(record, provider);
-        if (records.isEmpty() && outer) {
-            return Collections.singletonList(provider.getInstance());
-        }
-        return records;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**

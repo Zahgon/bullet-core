@@ -19,12 +19,10 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-
 import static org.apache.http.entity.ContentType.APPLICATION_JSON;
 
 /**
@@ -32,12 +30,19 @@ import static org.apache.http.entity.ContentType.APPLICATION_JSON;
  */
 @Slf4j
 public class HTTPMetricEventPublisher extends MetricEventPublisher {
+
     private final String url;
+
     private final String group;
+
     private final int retries;
+
     private final int retryIntervalMS;
+
     private final Map<String, String> dimensions;
-    @Getter @Setter
+
+    @Getter
+    @Setter
     private CloseableHttpClient client;
 
     /**
@@ -63,43 +68,27 @@ public class HTTPMetricEventPublisher extends MetricEventPublisher {
      * @return A created client that has the max concurrent connections set to the max per route.
      */
     protected CloseableHttpClient createClient() {
-        final int concurrency = config.getRequiredConfigAs(HTTPMetricPublisherConfig.MAX_CONCURRENCY, Integer.class);
-        PoolingHttpClientConnectionManager manager = new PoolingHttpClientConnectionManager();
-        // The max per route should be the max
-        manager.setMaxTotal(concurrency);
-        manager.setDefaultMaxPerRoute(concurrency);
-        return HttpClients.custom().setConnectionManager(manager).build();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void close() {
-        try {
-            client.close();
-        } catch (IOException e) {
-            log.error("Could not close the HTTP client", e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String getGroup() {
-        return group;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public Map<String, String> getDimensions(Map<String, String> extraDimensions) {
-        Map<String, String> dimensions = new HashMap<>(this.dimensions);
-        dimensions.putAll(extraDimensions);
-        return dimensions;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public CompletableFuture<Boolean> publish(MetricEvent payload) {
-        String json = payload.asJSON();
-        log.debug("Publishing metric {}", json);
-        HttpUriRequest post = getPost(json);
-        return CompletableFuture.supplyAsync(() -> submitWithRetry(post, retries))
-                                .thenApply(HTTPMetricEventPublisher::onHTTPResult)
-                                .exceptionally(HTTPMetricEventPublisher::onHTTPFail);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -109,10 +98,7 @@ public class HTTPMetricEventPublisher extends MetricEventPublisher {
      * @return A {@link HttpUriRequest} that is a POST.
      */
     HttpUriRequest getPost(String body) {
-        return RequestBuilder.post()
-                .setUri(url)
-                .setHeader(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON.toString())
-                .setEntity(new StringEntity(body, ContentType.DEFAULT_TEXT)).build();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private boolean submitWithRetry(HttpUriRequest post, int retries) {

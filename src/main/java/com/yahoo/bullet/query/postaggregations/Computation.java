@@ -11,15 +11,14 @@ import com.yahoo.bullet.querying.postaggregations.ComputationStrategy;
 import com.yahoo.bullet.querying.postaggregations.PostStrategy;
 import com.yahoo.bullet.query.Field;
 import lombok.Getter;
-
 import java.util.List;
 
 @Getter
 public class Computation extends PostAggregation {
+
     private static final long serialVersionUID = -1401910210528780976L;
 
-    public static final BulletException COMPUTATION_REQUIRES_FIELDS =
-            new BulletException("The COMPUTATION post-aggregation requires at least one field.", "Please add at least one field.");
+    public static final BulletException COMPUTATION_REQUIRES_FIELDS = new BulletException("The COMPUTATION post-aggregation requires at least one field.", "Please add at least one field.");
 
     private List<Field> fields;
 
@@ -39,11 +38,11 @@ public class Computation extends PostAggregation {
 
     @Override
     public PostStrategy getPostStrategy() {
-        return new ComputationStrategy(this);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String toString() {
-        return "{type: " + type + ", fields: " + fields + "}";
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

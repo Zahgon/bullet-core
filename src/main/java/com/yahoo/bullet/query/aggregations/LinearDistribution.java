@@ -10,9 +10,10 @@ import lombok.Getter;
 
 @Getter
 public class LinearDistribution extends Distribution {
+
     private static final long serialVersionUID = -5320252906943658246L;
-    private static final BulletException NUMBER_OF_POINTS_MUST_BE_POSITIVE =
-            new BulletException("If specifying the distribution by the number of points, the number must be positive.", "Please specify a positive number.");
+
+    private static final BulletException NUMBER_OF_POINTS_MUST_BE_POSITIVE = new BulletException("If specifying the distribution by the number of points, the number must be positive.", "Please specify a positive number.");
 
     private final int numberOfPoints;
 
@@ -35,6 +36,6 @@ public class LinearDistribution extends Distribution {
 
     @Override
     public String toString() {
-        return "{size: " + size + ", type: " + type + ", field: " + field + ", distributionType: " + distributionType + ", numberOfPoints: " + numberOfPoints + "}";
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

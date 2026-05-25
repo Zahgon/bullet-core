@@ -7,7 +7,6 @@ package com.yahoo.bullet.common.metrics;
 
 import com.yahoo.bullet.result.JSONFormatter;
 import lombok.Getter;
-
 import java.util.Map;
 
 /**
@@ -15,9 +14,13 @@ import java.util.Map;
  */
 @Getter
 public class MetricEvent implements JSONFormatter {
+
     private final String group;
+
     private final long timestamp;
+
     private final Map<String, String> dimensions;
+
     private final Map<String, Number> metrics;
 
     /**
@@ -36,7 +39,6 @@ public class MetricEvent implements JSONFormatter {
 
     @Override
     public String asJSON() {
-        return JSONFormatter.asJSON(this);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }
-

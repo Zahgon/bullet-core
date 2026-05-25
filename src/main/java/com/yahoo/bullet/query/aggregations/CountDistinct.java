@@ -11,17 +11,18 @@ import com.yahoo.bullet.common.BulletConfig;
 import com.yahoo.bullet.common.BulletException;
 import com.yahoo.bullet.common.Utilities;
 import lombok.Getter;
-
 import java.util.List;
 import java.util.Objects;
 
 @Getter
 public class CountDistinct extends Aggregation {
+
     private static final long serialVersionUID = 3079494553075374672L;
-    private static final BulletException COUNT_DISTINCT_REQUIRES_FIELDS =
-            new BulletException("COUNT DISTINCT requires at least one field.", "Please add at least one field.");
+
+    private static final BulletException COUNT_DISTINCT_REQUIRES_FIELDS = new BulletException("COUNT DISTINCT requires at least one field.", "Please add at least one field.");
 
     private final List<String> fields;
+
     private final String name;
 
     /**
@@ -42,11 +43,11 @@ public class CountDistinct extends Aggregation {
 
     @Override
     public Strategy getStrategy(BulletConfig config) {
-        return new ThetaSketchingStrategy(this, config);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String toString() {
-        return "{size: " + size + ", type: " + type + ", fields: " + fields + ", name: " + name + "}";
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

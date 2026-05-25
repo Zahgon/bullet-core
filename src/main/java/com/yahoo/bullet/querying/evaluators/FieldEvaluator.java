@@ -10,7 +10,6 @@ import com.yahoo.bullet.query.expressions.FieldExpression;
 import com.yahoo.bullet.record.BulletRecord;
 import com.yahoo.bullet.typesystem.Type;
 import com.yahoo.bullet.typesystem.TypedObject;
-
 import java.io.Serializable;
 import java.util.Set;
 
@@ -19,10 +18,12 @@ import java.util.Set;
  * {@link BulletRecord}.
  */
 public class FieldEvaluator extends Evaluator {
+
     private static final long serialVersionUID = -1186787768122072138L;
 
     @FunctionalInterface
     public interface FieldExtractor extends Serializable {
+
         TypedObject extract(BulletRecord record);
     }
 
@@ -39,7 +40,7 @@ public class FieldEvaluator extends Evaluator {
 
     @Override
     public TypedObject evaluate(BulletRecord record) {
-        return fieldExtractor.extract(record);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static FieldExtractor getFieldExtractor(FieldExpression fieldExpression) {
@@ -47,7 +48,6 @@ public class FieldEvaluator extends Evaluator {
         final Serializable key = fieldExpression.getKey();
         final Serializable subKey = fieldExpression.getSubKey();
         final Type fieldType = fieldExpression.getType() != null ? fieldExpression.getType() : Type.UNKNOWN;
-
         if (key instanceof String) {
             if (subKey instanceof String) {
                 return record -> record.typedGet(field, (String) key, (String) subKey, getSuperSuperType(Type.COMPLEX_MAPS, fieldType));

@@ -14,7 +14,6 @@ import com.yahoo.bullet.query.expressions.Operation;
 import com.yahoo.bullet.query.expressions.ValueExpression;
 import com.yahoo.bullet.record.BulletRecord;
 import com.yahoo.bullet.typesystem.TypedObject;
-
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
@@ -25,7 +24,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
 import static com.yahoo.bullet.common.Utilities.isNull;
 
 /**
@@ -67,20 +65,28 @@ import static com.yahoo.bullet.common.Utilities.isNull;
  * seen by exactly only the queries that need to see it.
  */
 public class SimpleEqualityPartitioner implements Partitioner {
+
     /*
     NULL represents the null value (as opposed to the string "null"). ANY represents all values and is a wildcard used
     when a field doesn't have a filter, i.e. the field's value does not matter.
     */
     private static final String ANY = "*";
+
     private static final String NULL = "null";
+
     private static final int LOWEST_BIT_MASK = 1;
+
     private static final int ZERO = 0;
+
     // This appends this char to all non-null values to disambiguate them if they actually had NO_FIELD as their values
     public static final char DISAMBIGUATOR = '.';
 
     private List<String> fields;
+
     private Set<String> fieldSet;
+
     private String delimiter;
+
     private final Set<String> defaultKeys;
 
     /**
@@ -109,40 +115,12 @@ public class SimpleEqualityPartitioner implements Partitioner {
      */
     @Override
     public Set<String> getKeys(Query query) {
-        Objects.requireNonNull(query);
-
-        Expression filter = query.getFilter();
-
-        // If no filter, default partition
-        if (filter == null) {
-            return defaultKeys;
-        }
-
-        // Map each field to the values that it is checked for equality against
-        Map<String, Set<Serializable>> equalityClauses = new HashMap<>();
-        mapFieldsToValues(filter, equalityClauses);
-
-        // If not exactly one equality per field, default partition
-        if (equalityClauses.values().stream().anyMatch(set -> set.size() != 1)) {
-            return defaultKeys;
-        }
-
-        // Generate key in fields order and pad with NO_FIELD if no mapping present
-        String key = fields.stream().map(equalityClauses::get).map(this::getFilterValue).collect(Collectors.joining(delimiter));
-
-        // For the SimpleEqualityPartitioner, the query is mapped to exactly one key only.
-        return Collections.singleton(key);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public Set<String> getKeys(BulletRecord record) {
-        Map<String, String> values = getFieldValues(record);
-        /*
-         * Generate a truth table for all possible combinations of the fields when using the field value or not using
-         * an integer to represent a binary of fields.size() chars where each one represents to include or not include
-         * the field. Note, fields that are not present are NULL-mapped. When not included, they are ANY-mapped.
-         */
-        return IntStream.range(0, 1 << fields.size()).mapToObj(i -> binaryToKey(i, values)).collect(Collectors.toSet());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private void mapFieldsToValues(Expression expression, Map<String, Set<Serializable>> mapping) {
@@ -195,8 +173,7 @@ public class SimpleEqualityPartitioner implements Partitioner {
 
     private String binaryToKey(int number, Map<String, String> values) {
         // If binary is 011 and fields is [A, B.c, D], the key is [values[A], values[B.c], ANY].join(delimiter)
-        return IntStream.range(0, fields.size()).mapToObj(i -> getValueForIndex(number, i, values))
-                                                .collect(Collectors.joining(delimiter));
+        return IntStream.range(0, fields.size()).mapToObj(i -> getValueForIndex(number, i, values)).collect(Collectors.joining(delimiter));
     }
 
     private String getValueForIndex(int number, int index, Map<String, String> values) {

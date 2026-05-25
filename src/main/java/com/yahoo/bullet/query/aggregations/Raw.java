@@ -10,6 +10,7 @@ import com.yahoo.bullet.querying.aggregations.RawStrategy;
 import com.yahoo.bullet.querying.aggregations.Strategy;
 
 public class Raw extends Aggregation {
+
     private static final long serialVersionUID = -589592577885076012L;
 
     /**
@@ -23,6 +24,6 @@ public class Raw extends Aggregation {
 
     @Override
     public Strategy getStrategy(BulletConfig config) {
-        return new RawStrategy(this, config);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

@@ -9,7 +9,6 @@ import com.yahoo.bullet.query.expressions.Expression;
 import com.yahoo.bullet.querying.tablefunctors.ExplodeFunctor;
 import com.yahoo.bullet.querying.tablefunctors.TableFunctor;
 import lombok.Getter;
-
 import java.util.Objects;
 
 /**
@@ -17,10 +16,13 @@ import java.util.Objects;
  */
 @Getter
 public class Explode extends OuterableTableFunction {
+
     private static final long serialVersionUID = 6058738006416405818L;
 
     private final Expression field;
+
     private final String keyAlias;
+
     private final String valueAlias;
 
     /**
@@ -40,11 +42,11 @@ public class Explode extends OuterableTableFunction {
 
     @Override
     public TableFunctor getTableFunctor() {
-        return new ExplodeFunctor(this);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String toString() {
-        return "{outer: " + outer + ", type: " + type + ", field: " + field + ", keyAlias: " + keyAlias + ", valueAlias: " + valueAlias + "}";
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

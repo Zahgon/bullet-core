@@ -8,7 +8,6 @@ package com.yahoo.bullet.common;
 import com.yahoo.bullet.record.BulletRecord;
 import com.yahoo.bullet.typesystem.Type;
 import com.yahoo.bullet.typesystem.TypedObject;
-
 import java.lang.reflect.Constructor;
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -19,22 +18,19 @@ import java.util.Set;
 import java.util.function.Function;
 
 public class Utilities {
-   /**
-    * Tries to get the object casted as the target type. If it is generic, the captured types cannot not be
-    * validated. Only the base object type is validated.
-    *
-    * @param entry The object to cast.
-    * @param clazz The class of the U.
-    * @param <U> The type to get the object as.
-    * @return The casted object of type U or null if the cast could not be done.
-    */
+
+    /**
+     * Tries to get the object casted as the target type. If it is generic, the captured types cannot not be
+     * validated. Only the base object type is validated.
+     *
+     * @param entry The object to cast.
+     * @param clazz The class of the U.
+     * @param <U> The type to get the object as.
+     * @return The casted object of type U or null if the cast could not be done.
+     */
     @SuppressWarnings("unchecked")
     public static <U> U getCasted(Object entry, Class<U> clazz) {
-        try {
-            return clazz.cast(entry);
-        } catch (ClassCastException ignored) {
-        }
-        return null;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -50,7 +46,7 @@ public class Utilities {
      */
     @SuppressWarnings("unchecked")
     public static <U> U getCasted(Map<String, Object> map, String key, Class<U> clazz) {
-        return getCasted(map.get(key), clazz);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -60,7 +56,7 @@ public class Utilities {
      * @return A boolean denoting whether the map had mappings.
      */
     public static boolean isEmpty(Map map) {
-        return map == null || map.isEmpty();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -70,7 +66,7 @@ public class Utilities {
      * @return A boolean denoting whether the collection had items.
      */
     public static boolean isEmpty(Collection collection) {
-        return collection == null || collection.isEmpty();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -80,7 +76,7 @@ public class Utilities {
      * @return A boolean denoting whether the string was present.
      */
     public static boolean isEmpty(String string) {
-        return string == null || string.isEmpty();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -91,11 +87,7 @@ public class Utilities {
      * @return The list.
      */
     public static <T> List<T> requireNonNull(List<T> list) {
-        Objects.requireNonNull(list);
-        for (T t : list) {
-            Objects.requireNonNull(t);
-        }
-        return list;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -106,11 +98,7 @@ public class Utilities {
      * @return The set.
      */
     public static <T> Set<T> requireNonNull(Set<T> set) {
-        Objects.requireNonNull(set);
-        for (T t : set) {
-            Objects.requireNonNull(t);
-        }
-        return set;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -122,12 +110,7 @@ public class Utilities {
      * @return The map.
      */
     public static <K, V> Map<K, V> requireNonNull(Map<K, V> map) {
-        Objects.requireNonNull(map);
-        for (Map.Entry<K, V> entry : map.entrySet()) {
-            Objects.requireNonNull(entry.getKey());
-            Objects.requireNonNull(entry.getValue());
-        }
-        return map;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -141,10 +124,7 @@ public class Utilities {
      * @return The map.
      */
     public static <K, V> Map<K, V> putNotNull(Map<K, V> map, K key, V value) {
-        if (value != null) {
-            map.put(key, value);
-        }
-        return map;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -155,8 +135,7 @@ public class Utilities {
      * @return The resulting rounded double.
      */
     public static double round(double value, int places) {
-        return Double.isInfinite(value) || Double.isNaN(value) ?
-               value : BigDecimal.valueOf(value).setScale(places, BigDecimal.ROUND_HALF_UP).doubleValue();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -169,13 +148,7 @@ public class Utilities {
      * @return An array of points generated from the given arguments.
      */
     public static double[] generatePoints(double start, Function<Double, Double> generator, int numberOfPoints, int rounding) {
-        double[] points = new double[numberOfPoints];
-        double value = start;
-        for (int i = 0; i < numberOfPoints; ++i) {
-            points[i] = round(value, rounding);
-            value = generator.apply(value);
-        }
-        return points;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -186,21 +159,7 @@ public class Utilities {
      * @return The value of the field as a {@link Number} or null if it cannot be forced to one.
      */
     public static Number extractFieldAsNumber(String field, BulletRecord record) {
-        TypedObject value = record.typedGet(field);
-        if (isNull(value)) {
-            return null;
-        }
-        if (Type.isNumeric(value.getType())) {
-            return (Number) value.getValue();
-        }
-        if (value.getType() == Type.BOOLEAN) {
-            return (Boolean) value.getValue() ? 1L : 0L;
-        }
-        try {
-            return (Number) value.forceCast(Type.DOUBLE).getValue();
-        } catch (Exception e) {
-            return null;
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -210,7 +169,7 @@ public class Utilities {
      * @return true if the {@link TypedObject} has type {@link TypedObject#NULL} or value null and false otherwise.
      */
     public static boolean isNull(TypedObject typedObject) {
-        return typedObject.isNull() || typedObject.getValue() == null;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -226,12 +185,6 @@ public class Utilities {
      */
     @SuppressWarnings("unchecked")
     public static <S> S loadConfiguredClass(String name, BulletConfig config) {
-        try {
-            Class<? extends S> className = (Class<? extends S>) Class.forName(name);
-            Constructor<? extends S> constructor = className.getConstructor(BulletConfig.class);
-            return constructor.newInstance(config);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

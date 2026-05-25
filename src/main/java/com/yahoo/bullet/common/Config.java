@@ -9,7 +9,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.yaml.snakeyaml.Yaml;
-
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,10 +24,13 @@ import java.util.Set;
 
 @Slf4j
 public class Config implements Serializable {
+
     private static final long serialVersionUID = 304261170659494090L;
+
     private Map<String, Object> data;
 
     public static final String DELIMITER = ".";
+
     private static Gson GSON = new GsonBuilder().serializeNulls().setPrettyPrinting().disableHtmlEscaping().create();
 
     /**
@@ -60,7 +62,7 @@ public class Config implements Serializable {
      * @return value that the key maps to or null.
      */
     public Object get(String key) {
-        return data.get(key);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -71,8 +73,7 @@ public class Config implements Serializable {
      * @return The value of the key or the defaultValue.
      */
     public Object getOrDefault(String key, Object defaultValue) {
-        Object value = get(key);
-        return value != null ? value : defaultValue;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -85,7 +86,7 @@ public class Config implements Serializable {
      * @throws ClassCastException if the value of the config could not be casted to the type.
      */
     public <T> T getAs(String key, Class<T> clazz) {
-        return clazz.cast(get(key));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -99,7 +100,7 @@ public class Config implements Serializable {
      * @throws ClassCastException if the value of the config or default could not be casted to the type.
      */
     public <T> T getOrDefaultAs(String key, T defaultValue, Class<T> clazz) {
-        return clazz.cast(getOrDefault(key, defaultValue));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -113,7 +114,7 @@ public class Config implements Serializable {
      * @throws NullPointerException if the config was not found.
      */
     public <T> T getRequiredConfigAs(String key, Class<T> clazz) {
-        return Objects.requireNonNull(getAs(key, clazz), "Required value for " + key + " was missing");
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -124,10 +125,7 @@ public class Config implements Serializable {
      * @return a mapping (non-backing) of keys if present, or all the mappings.
      */
     public Map<String, Object> getAll(Optional<Set<String>> keys) {
-        Set<String> inclusions = keys.orElse(data.keySet());
-        return this.data.entrySet().stream()
-                        .filter(e -> inclusions.contains(e.getKey()))
-                        .collect(HashMap::new, (m, e) -> m.put(e.getKey(), e.getValue()), HashMap::putAll);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -140,12 +138,7 @@ public class Config implements Serializable {
      * @return mapping for keys (or all keys in data, if keys is empty) with the prefix.
      */
     public Map<String, Object> getAllWithPrefix(Optional<Set<String>> keys, String prefix, boolean stripPrefix) {
-        Set<String> inclusions = keys.orElse(data.keySet());
-        int prefixLength = stripPrefix ? prefix.length() : 0;
-        return this.data.entrySet().stream()
-                        .filter(e -> inclusions.contains(e.getKey()))
-                        .filter(e -> e.getKey().startsWith(prefix))
-                        .collect(HashMap::new, (m, e) -> m.put(e.getKey().substring(prefixLength), e.getValue()), HashMap::putAll);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -156,10 +149,7 @@ public class Config implements Serializable {
      * @return a mapping (non-backing) of keys if present, or all the mappings.
      */
     public Map<String, Object> getAllBut(Optional<Set<String>> keys) {
-        Set<String> exclusions = keys.orElse(new HashSet<>());
-        return this.data.entrySet().stream()
-                        .filter(e -> !exclusions.contains(e.getKey()))
-                        .collect(HashMap::new, (m, e) -> m.put(e.getKey(), e.getValue()), HashMap::putAll);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -169,7 +159,7 @@ public class Config implements Serializable {
      * @param value to use
      */
     public void set(String key, Object value) {
-        data.put(key, value);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -178,16 +168,14 @@ public class Config implements Serializable {
      * @param other The other {@link Config} to merge into this one.
      */
     public void merge(Config other) {
-        if (other != null) {
-            data.putAll(other.data);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
      * Clears out the configuration.
      */
     public void clear() {
-        data.clear();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -197,23 +185,11 @@ public class Config implements Serializable {
      * @return A {@link Map} of String names to Objects of the mappings in the YAML file.
      */
     protected Map<String, Object> readYAML(String yamlFile) {
-        if (yamlFile == null || yamlFile.isEmpty()) {
-            return new HashMap<>();
-        }
-        log.info("Loading configuration file: {}", yamlFile);
-        try {
-            Yaml yaml = new Yaml();
-            InputStream is = this.getClass().getResourceAsStream("/" + yamlFile);
-            Reader reader = (is != null ? new InputStreamReader(is) : new FileReader(yamlFile));
-            return (Map<String, Object>) yaml.load(reader);
-        } catch (IOException ioe) {
-            log.error("Error loading configuration", ioe);
-            return new HashMap<>();
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String toString() {
-        return GSON.toJson(data);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

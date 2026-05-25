@@ -7,7 +7,6 @@ package com.yahoo.bullet.common.metrics;
 
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -24,12 +23,16 @@ import java.util.concurrent.atomic.LongAdder;
  * {@link #extractMetrics()}. This method will also reset all the metrics stored. Use this class if you want to count
  * or average metrics periodically and with high concurrency, extract them and report them somewhere.
  */
-@NoArgsConstructor @Slf4j
+@NoArgsConstructor
+@Slf4j
 public class MetricCollector {
+
     private final ConcurrentMap<String, Number> metrics = new ConcurrentHashMap<>();
+
     private final Set<String> averageMetrics = new HashSet<>();
 
     private static final String SUM = ".s";
+
     private static final String FREQUENCY = ".f";
 
     /**
@@ -58,7 +61,7 @@ public class MetricCollector {
      * @param key The key to increment.
      */
     public void increment(String key) {
-        add(key, 1L);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -68,9 +71,7 @@ public class MetricCollector {
      * @param total The total to add as.
      */
     public void add(String key, long total) {
-        LongAdder count = (LongAdder) metrics.computeIfAbsent(key, k -> new LongAdder());
-        count.add(total);
-        log.debug("Incrementing metric for {} to {}", key, count);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -80,7 +81,7 @@ public class MetricCollector {
      * @param absoluteTotal The total to add.
      */
     public void average(String key, long absoluteTotal) {
-        average(key, absoluteTotal, 1L);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -91,8 +92,7 @@ public class MetricCollector {
      * @param frequencyTotal The total number of instances of the absolute metric provided in this call.
      */
     public void average(String key, long absoluteTotal, long frequencyTotal) {
-        add(sum(key), absoluteTotal);
-        add(frequency(key), frequencyTotal);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -101,10 +101,7 @@ public class MetricCollector {
      * @return {@link Map} of names to counts of frequencies.
      */
     public Map<String, Number> extractMetrics() {
-        final Map<String, Number> current = new HashMap<>();
-        metrics.forEach((k, v) -> current.put(k, ((LongAdder) v).sumThenReset()));
-        averageMetrics.forEach(m -> computeAverage(m, current));
-        return current;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private void computeAverage(String name, Map<String, Number> metrics) {

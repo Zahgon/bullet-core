@@ -7,7 +7,6 @@ package com.yahoo.bullet.result;
 
 import com.yahoo.bullet.common.BulletError;
 import lombok.Getter;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,15 +14,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-
 import static java.util.Arrays.asList;
 
 public class Meta {
+
     private Map<String, Object> meta = new HashMap<>();
+
     public static final List<Concept> KNOWN_CONCEPTS = asList(Concept.values());
 
     @Getter
     public enum Concept {
+
         // Query metadata
         QUERY_METADATA("Query Metadata"),
         QUERY_RECEIVE_TIME("Query Receive Time"),
@@ -32,7 +33,6 @@ public class Meta {
         QUERY_OBJECT("Query Object"),
         QUERY_STRING("Query String"),
         INNER_QUERY_METADATA("Inner Query Metadata"),
-
         // Sketching metadata
         SKETCH_METADATA("Sketch Metadata"),
         SKETCH_ESTIMATED_RESULT("Sketch Estimated Result"),
@@ -47,7 +47,6 @@ public class Meta {
         SKETCH_NORMALIZED_RANK_ERROR("Sketch Normalized Rank Error"),
         SKETCH_MAXIMUM_COUNT_ERROR("Sketch Maximum Count Error"),
         SKETCH_ACTIVE_ITEMS("Sketch Active Items"),
-
         // Windowing metadata
         WINDOW_METADATA("Window Metadata"),
         WINDOW_NAME("Window Name"),
@@ -69,7 +68,7 @@ public class Meta {
          * @return A boolean denoting whether this concept is this String.
          */
         public boolean isMe(String concept) {
-            return name.equals(concept);
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         /**
@@ -79,7 +78,7 @@ public class Meta {
          * @return A Concept or null if the string does not match any known Concept.
          */
         public static Concept from(String concept) {
-            return KNOWN_CONCEPTS.stream().filter(c -> c.isMe(concept)).findFirst().orElse(null);
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
     }
 
@@ -92,7 +91,7 @@ public class Meta {
      * @return A Map of keys to objects that denote the meta information.
      */
     public Map<String, Object> asMap() {
-        return meta;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -103,8 +102,7 @@ public class Meta {
      * @return This object for chaining.
      */
     public Meta add(String key, Object information) {
-        meta.put(key, information);
-        return this;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -115,14 +113,7 @@ public class Meta {
      */
     @SuppressWarnings("unchecked")
     public Meta addErrors(List<BulletError> errors) {
-        Objects.requireNonNull(errors);
-        List<BulletError> existing = (List<BulletError>) meta.get(ERROR_KEY);
-        if (existing != null) {
-            existing.addAll(errors);
-        } else {
-            meta.put(ERROR_KEY, new ArrayList<>(errors));
-        }
-        return this;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -132,9 +123,7 @@ public class Meta {
      * @return The Meta object with the errors.
      */
     public static Meta of(BulletError... errors) {
-        Meta meta = new Meta();
-        meta.addErrors(asList(errors));
-        return meta;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -144,9 +133,7 @@ public class Meta {
      * @return The Meta object with the errors.
      */
     public static Meta of(List<BulletError> errors) {
-        Meta meta = new Meta();
-        meta.addErrors(errors);
-        return meta;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -156,10 +143,7 @@ public class Meta {
      * @return This Object after the merge.
      */
     public Meta merge(Meta meta) {
-        if (meta != null) {
-            this.meta.putAll(meta.asMap());
-        }
-        return this;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -172,16 +156,8 @@ public class Meta {
      * @param supplier A {@link Supplier} that can produce a value to add to the metadata for the concept. If the
      *                 supplier produces null, it is not added.
      */
-    public static void addIfNonNull(Map<String, Object> meta, Map<String, String> names, Concept concept,
-                                    Supplier<Object> supplier) {
-        Object data = null;
-        String key = names.get(concept.getName());
-        if (key != null) {
-            data = supplier.get();
-        }
-        if (data != null) {
-            meta.put(key, data);
-        }
+    public static void addIfNonNull(Map<String, Object> meta, Map<String, String> names, Concept concept, Supplier<Object> supplier) {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -192,10 +168,6 @@ public class Meta {
      * @param action The action to apply if the concept was provided in the map.
      */
     public static void consumeRegisteredConcept(Concept concept, Map<String, String> names, Consumer<String> action) {
-        // Only consume the concept if we have a key for it: i.e. it was registered
-        String key = names.get(concept.getName());
-        if (key != null) {
-            action.accept(key);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

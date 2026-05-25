@@ -9,6 +9,7 @@ import com.yahoo.bullet.common.Monoidal;
 import com.yahoo.bullet.result.Meta;
 
 public interface Strategy extends Monoidal {
+
     /**
      * Returns false if more data should not be consumed or combined. This method can be used to avoid passing more
      * data into this Strategy. By default, returns false unless overridden.
@@ -17,7 +18,7 @@ public interface Strategy extends Monoidal {
      */
     @Override
     default boolean isClosed() {
-        return false;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -27,7 +28,6 @@ public interface Strategy extends Monoidal {
      */
     @Override
     default Meta getMetadata() {
-        return new Meta();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }
-

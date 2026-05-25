@@ -15,24 +15,23 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class GroupDataSummary implements UpdatableSummary<CachingGroupData> {
+
     public static final int INITIALIZED_POSITION = 0;
+
     public static final int SIZE_POSITION = Byte.BYTES;
+
     public static final int DATA_POSITION = SIZE_POSITION + Integer.BYTES;
 
     @Getter(AccessLevel.PACKAGE)
     private boolean initialized = false;
 
-    @Getter @Setter(AccessLevel.PACKAGE)
+    @Getter
+    @Setter(AccessLevel.PACKAGE)
     private GroupData data;
 
     @Override
     public void update(CachingGroupData value) {
-        if (!initialized) {
-            // This only needs to happen once per summary (i.e. once per group).
-            data = value.partialCopy();
-            initialized = true;
-        }
-        data.consume(value.getCachedRecord());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -44,27 +43,19 @@ public class GroupDataSummary implements UpdatableSummary<CachingGroupData> {
      * @return The resulting merged summary or null if both arguments were null.
      */
     public static GroupDataSummary mergeInPlace(GroupDataSummary a, GroupDataSummary b) {
-        if (a != null) {
-            a.mergeInPlace(b);
-            return a;
-        } else if (b != null) {
-            return b;
-        }
-        return null;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private void mergeInPlace(GroupDataSummary other) {
         if (other == null) {
             return;
         }
-
         // This check is unnecessary since all merges will have valid (or at least non empty data) from the very fact
         // that they were created (see update above).
         GroupData targetData = other.getData();
         if (targetData == null) {
             return;
         }
-
         // In-place, so not copying targetData
         if (data == null) {
             data = targetData;
@@ -76,24 +67,12 @@ public class GroupDataSummary implements UpdatableSummary<CachingGroupData> {
     @SuppressWarnings("unchecked")
     @Override
     public GroupDataSummary copy() {
-        GroupDataSummary copy = new GroupDataSummary();
-        copy.initialized = initialized;
-        copy.data = CachingGroupData.copy(data);
-        return copy;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public byte[] toByteArray() {
-        byte[] groupData = SerializerDeserializer.toBytes(data);
-        int length = groupData.length;
-
-        // Create a new ByteBuffer to hold a byte, an integer and the data in bytes
-        byte[] serialized = new byte[DATA_POSITION + length];
-        Memory memory = new NativeMemory(serialized);
-        memory.putByte(INITIALIZED_POSITION, (byte) (initialized ? 1 : 0));
-        memory.putInt(SIZE_POSITION, length);
-        memory.putByteArray(DATA_POSITION, groupData, 0, length);
-        return serialized;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -103,18 +82,6 @@ public class GroupDataSummary implements UpdatableSummary<CachingGroupData> {
      * @return A {@link DeserializeResult} representing the deserialized summary.
      */
     public static DeserializeResult<GroupDataSummary> fromMemory(Memory serializedSummary) {
-        byte initialized = serializedSummary.getByte(INITIALIZED_POSITION);
-        int size = serializedSummary.getInt(SIZE_POSITION);
-
-        byte[] data = new byte[size];
-        serializedSummary.getByteArray(DATA_POSITION, data, 0, size);
-        GroupData deserializedData = SerializerDeserializer.fromBytes(data);
-
-        GroupDataSummary deserialized = new GroupDataSummary();
-        deserialized.initialized = initialized != 0;
-        deserialized.data = deserializedData;
-
-        // Size read is the size of size and the byte in bytes (DATA_POSITION) plus the size of the data (size)
-        return new DeserializeResult<>(deserialized, size + DATA_POSITION);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

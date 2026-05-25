@@ -12,29 +12,31 @@ import com.yahoo.sketches.tuple.SummaryFactory;
 import com.yahoo.sketches.tuple.SummarySetOperations;
 
 public class GroupDataSummaryFactory implements SummaryFactory {
+
     public static final int SERIALIZED_SIZE = 1;
+
     public static final byte[] SERIALIZED = new byte[SERIALIZED_SIZE];
+
     public static final GroupDataSummarySetOperations SUMMARY_OPERATIONS = new GroupDataSummarySetOperations();
 
     @Override
     public Summary newSummary() {
-        return new GroupDataSummary();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public SummarySetOperations getSummarySetOperations() {
-        // Stateless so return the static one
-        return SUMMARY_OPERATIONS;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public DeserializeResult summaryFromMemory(Memory serializedSummary) {
-        return GroupDataSummary.fromMemory(serializedSummary);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public byte[] toByteArray() {
-        return SERIALIZED;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -44,7 +46,6 @@ public class GroupDataSummaryFactory implements SummaryFactory {
      * @return A {@link DeserializeResult} representing the deserialized summary factory.
      */
     public static DeserializeResult<GroupDataSummaryFactory> fromMemory(Memory summaryFactory) {
-        // This has no state so it does not use the Memory
-        return new DeserializeResult<>(new GroupDataSummaryFactory(), SERIALIZED_SIZE);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

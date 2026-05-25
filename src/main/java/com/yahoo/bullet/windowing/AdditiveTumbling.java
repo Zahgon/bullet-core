@@ -10,6 +10,7 @@ import com.yahoo.bullet.common.BulletConfig;
 import com.yahoo.bullet.query.Window;
 
 public class AdditiveTumbling extends Tumbling {
+
     /**
      * Creates an instance of this windowing scheme with the provided {@link Strategy} and {@link BulletConfig}.
      *
@@ -23,14 +24,11 @@ public class AdditiveTumbling extends Tumbling {
 
     @Override
     public void reset() {
-        nextCloseTime = nextCloseTime + windowLength;
-        windowCount++;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void resetForPartition() {
-        // Do reset the strategy.
-        aggregation.reset();
-        reset();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

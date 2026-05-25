@@ -8,7 +8,6 @@ package com.yahoo.bullet.pubsub;
 import com.yahoo.bullet.common.BulletConfig;
 import com.yahoo.bullet.common.SerializerDeserializer;
 import com.yahoo.bullet.query.Query;
-
 import java.io.Serializable;
 
 /**
@@ -22,12 +21,14 @@ import java.io.Serializable;
  * This behaves like the {@link IdentityPubSubMessageSerDe} for all other operations.
  */
 public class ByteArrayPubSubMessageSerDe extends IdentityPubSubMessageSerDe {
+
     private static final long serialVersionUID = -7648403271773714704L;
 
     /**
      * A {@link PubSubMessage} that is sticky for converting the content between byte[] and {@link Query}.
      */
     private static class LazyPubSubMessage extends PubSubMessage {
+
         private static final long serialVersionUID = -6516915913438279870L;
 
         private LazyPubSubMessage(String id, byte[] content, Metadata metadata) {
@@ -36,18 +37,12 @@ public class ByteArrayPubSubMessageSerDe extends IdentityPubSubMessageSerDe {
 
         @Override
         public byte[] getContentAsByteArray() {
-            if (content instanceof Query) {
-                content = SerializerDeserializer.toBytes((Serializable) content);
-            }
-            return (byte[]) content;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         @Override
         public Query getContentAsQuery() {
-            if (content instanceof byte[]) {
-                content = SerializerDeserializer.fromBytes((byte[]) content);
-            }
-            return (Query) content;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
     }
 
@@ -62,6 +57,6 @@ public class ByteArrayPubSubMessageSerDe extends IdentityPubSubMessageSerDe {
 
     @Override
     public PubSubMessage toMessage(String id, Query query, String queryString) {
-        return toMessage(new LazyPubSubMessage(id, SerializerDeserializer.toBytes(query), new Metadata(null, queryString)));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

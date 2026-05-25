@@ -15,7 +15,9 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class BulletPubSubResponder extends PubSubResponder {
+
     protected PubSub pubSub;
+
     protected Publisher publisher;
 
     /**
@@ -35,22 +37,11 @@ public class BulletPubSubResponder extends PubSubResponder {
 
     @Override
     public void respond(String id, PubSubMessage message) {
-        log.debug("Responding with message {}", id);
-        log.trace("Responding to {} with payload {}", id, message);
-        try {
-            publisher.send(message);
-        } catch (PubSubException e) {
-            log.error("Unable to publish message. Ignoring {}: {}", id, message);
-            log.error("Error", e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void close() {
-        try {
-            publisher.close();
-        } catch (Exception e) {
-            log.error("Unable to close the publisher", e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

@@ -8,8 +8,10 @@ package com.yahoo.bullet.common;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@Getter @AllArgsConstructor
+@Getter
+@AllArgsConstructor
 public class BulletException extends RuntimeException {
+
     private static final long serialVersionUID = 2868933191828758133L;
 
     private BulletError error;
@@ -26,6 +28,6 @@ public class BulletException extends RuntimeException {
 
     @Override
     public String getMessage() {
-        return error.getError();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

@@ -13,24 +13,25 @@ package com.yahoo.bullet.querying.aggregations.sketches;
  * results or resetting.
  */
 public abstract class DualSketch extends Sketch {
+
     private boolean updated = false;
+
     private boolean unioned = false;
+
     private boolean mustMerge = true;
 
     /**
      * This method must be called after an update operation.
      */
     protected void update() {
-        updated = true;
-        mustMerge = true;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
      * This method must be called after a {@link #union(byte[])}.
      */
     protected void union() {
-        unioned = true;
-        mustMerge = true;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -44,21 +45,7 @@ public abstract class DualSketch extends Sketch {
      * {@link #reset()}) defined in this class when performing those operations.
      */
     protected void merge() {
-        if (!mustMerge) {
-            return;
-        }
-        if (unionedExistingResults()) {
-            // Force unioned to be true so that the union sketch with the result is merged
-            unioned = true;
-        }
-        if (unioned && updated) {
-            mergeBothSketches();
-        } else if (unioned) {
-            mergeUnionSketch();
-        } else {
-            mergeUpdateSketch();
-        }
-        mustMerge = false;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -91,9 +78,6 @@ public abstract class DualSketch extends Sketch {
      */
     @Override
     public void reset() {
-        updated = false;
-        unioned = false;
-        // If reset, must merge again since old merged result is thrown away and recreated.
-        mustMerge = true;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

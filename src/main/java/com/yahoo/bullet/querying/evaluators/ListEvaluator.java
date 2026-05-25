@@ -9,7 +9,6 @@ import com.yahoo.bullet.query.expressions.Expression;
 import com.yahoo.bullet.query.expressions.ListExpression;
 import com.yahoo.bullet.record.BulletRecord;
 import com.yahoo.bullet.typesystem.TypedObject;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +17,7 @@ import java.util.stream.Collectors;
  * An evaluator that returns a list of the results of a list of evaluators.
  */
 public class ListEvaluator extends Evaluator {
+
     private static final long serialVersionUID = -2945310695360542354L;
 
     final List<Evaluator> evaluators;
@@ -33,6 +33,6 @@ public class ListEvaluator extends Evaluator {
 
     @Override
     public TypedObject evaluate(BulletRecord record) {
-        return new TypedObject(evaluators.stream().map(e -> e.evaluate(record).getValue()).collect(Collectors.toCollection(ArrayList::new)));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

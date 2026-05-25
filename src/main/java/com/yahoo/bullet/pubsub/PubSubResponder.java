@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public abstract class PubSubResponder implements AutoCloseable {
+
     protected BulletConfig config;
 
     /**
@@ -34,5 +35,6 @@ public abstract class PubSubResponder implements AutoCloseable {
 
     @Override
     public void close() {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

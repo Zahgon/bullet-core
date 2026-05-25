@@ -11,8 +11,9 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializer;
 
 public interface JSONFormatter {
-    JsonSerializer<Double> INVALID_DOUBLES = (item, type, context) -> item.isNaN() || item.isInfinite() ?
-                                                                      new JsonPrimitive(item.toString()) : new JsonPrimitive(item);
+
+    JsonSerializer<Double> INVALID_DOUBLES = (item, type, context) -> item.isNaN() || item.isInfinite() ? new JsonPrimitive(item.toString()) : new JsonPrimitive(item);
+
     Gson GSON = new GsonBuilder().serializeNulls().registerTypeAdapter(Double.class, INVALID_DOUBLES).create();
 
     /**
@@ -21,7 +22,7 @@ public interface JSONFormatter {
      * @return JSON string of the object.
      */
     static String asJSON(Object object) {
-        return GSON.toJson(object);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -33,7 +34,7 @@ public interface JSONFormatter {
      * @return An instance of the object deserialized from JSON.
      */
     static <T extends JSONFormatter> T fromJSON(String json, Class<T> clazz) {
-        return GSON.fromJson(json, clazz);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**

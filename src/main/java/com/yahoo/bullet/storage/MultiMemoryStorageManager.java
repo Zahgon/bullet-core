@@ -9,7 +9,6 @@ import com.yahoo.bullet.common.BulletConfig;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
@@ -30,10 +29,13 @@ import java.util.stream.IntStream;
  */
 @Slf4j
 public class MultiMemoryStorageManager<V extends Serializable> extends StorageManager<V> implements Serializable {
+
     private static final long serialVersionUID = 9019357859078979031L;
 
     private Set<String> namespaces;
+
     private String defaultNamespace;
+
     private Map<String, Integer> partitions;
 
     @Getter(AccessLevel.PACKAGE)
@@ -60,89 +62,62 @@ public class MultiMemoryStorageManager<V extends Serializable> extends StorageMa
 
     @Override
     protected CompletableFuture<Boolean> putRaw(String namespace, String id, byte[] value) {
-        validateNamespace(namespace);
-        storage.get(namespace).get(hash(namespace, id)).put(id, value);
-        return SUCCESS;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected CompletableFuture<byte[]> getRaw(String namespace, String id) {
-        validateNamespace(namespace);
-        return CompletableFuture.completedFuture(storage.get(namespace).get(hash(namespace, id)).get(id));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected CompletableFuture<Map<String, byte[]>> getAllRaw(String namespace) {
-        validateNamespace(namespace);
-        Map<String, byte[]> result = new HashMap<>();
-        storage.get(namespace).values().forEach(result::putAll);
-        return CompletableFuture.completedFuture(result);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected CompletableFuture<byte[]> removeRaw(String namespace, String id) {
-        validateNamespace(namespace);
-        return CompletableFuture.completedFuture(storage.get(namespace).get(hash(namespace, id)).remove(id));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected CompletableFuture<Map<String, byte[]>> getPartitionRaw(String namespace, int partition) {
-        validateNamespace(namespace);
-        validatePartition(namespace, partition);
-        return CompletableFuture.completedFuture(new HashMap<>(storage.get(namespace).get(partition)));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public CompletableFuture<Boolean> wipe() {
-        initializeStorage();
-        return SUCCESS;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public CompletableFuture<Boolean> clear(String namespace) {
-        validateNamespace(namespace);
-        storage.put(namespace, emptyPartitions(namespace));
-        return SUCCESS;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public CompletableFuture<Boolean> clear(String namespace, Set<String> ids) {
-        validateNamespace(namespace);
-        if (ids == null) {
-            return SUCCESS;
-        }
-        Map<Integer, Map<String, byte[]>> data = storage.get(namespace);
-        int count = partitions.get(namespace);
-        for (String id : ids) {
-            data.get(hash(id, count)).remove(id);
-        }
-        return SUCCESS;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public int numberOfPartitions(String namespace) {
-        validateNamespace(namespace);
-        return partitions.get(namespace);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public CompletableFuture<Boolean> clear(String namespace, int partition) {
-        return super.clear(namespace, partition);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public CompletableFuture<Boolean> repartition(String namespace, int newPartitionCount) {
-        if (newPartitionCount < 0) {
-            throw new IllegalArgumentException("New partition count must be positive!");
-        }
-        partitions.put(namespace, newPartitionCount);
-        storage.put(namespace, repartition(namespace, storage.get(namespace).values()));
-        return SUCCESS;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected String getDefaultNamespace() {
-        return defaultNamespace;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private Map<Integer, Map<String, byte[]>> repartition(String namespace, Collection<Map<String, byte[]>> oldPartitions) {
@@ -169,10 +144,7 @@ public class MultiMemoryStorageManager<V extends Serializable> extends StorageMa
      * @throws IllegalArgumentException if the namespace is not a valid namespace.
      */
     void validateNamespace(String namespace) {
-        if (!namespaces.contains(namespace)) {
-            log.error("Namespace {} is not one of {}", namespace, namespaces);
-            throw new IllegalArgumentException("The provided namespace is not a valid namespace: " + namespace);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private void validatePartition(String namespace, int partition) {

@@ -10,7 +10,6 @@ import com.yahoo.bullet.common.BulletException;
 import com.yahoo.bullet.querying.evaluators.Evaluator;
 import com.yahoo.bullet.querying.evaluators.FieldEvaluator;
 import lombok.Getter;
-
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Objects;
@@ -21,15 +20,19 @@ import java.util.Objects;
  */
 @Getter
 public class FieldExpression extends Expression {
+
     private static final long serialVersionUID = -1659250076242321771L;
-    private static final BulletException FIELD_EXPRESSION_WITH_KEY_CANNOT_ACCEPT_AN_INDEX =
-            new BulletException(new BulletError("The field expression already has a key and cannot accept an index.", Collections.emptyList()));
-    private static final BulletException FIELD_EXPRESSION_CANNOT_ACCEPT_ANOTHER_KEY =
-            new BulletException(new BulletError("The field expression already has a key and subkey and cannot accept another key.", Collections.emptyList()));
+
+    private static final BulletException FIELD_EXPRESSION_WITH_KEY_CANNOT_ACCEPT_AN_INDEX = new BulletException(new BulletError("The field expression already has a key and cannot accept an index.", Collections.emptyList()));
+
+    private static final BulletException FIELD_EXPRESSION_CANNOT_ACCEPT_ANOTHER_KEY = new BulletException(new BulletError("The field expression already has a key and subkey and cannot accept another key.", Collections.emptyList()));
+
     private static final String DELIMITER = ".";
 
     private String field;
+
     private Serializable key;
+
     private Serializable subKey;
 
     /**
@@ -216,51 +219,26 @@ public class FieldExpression extends Expression {
      * @return The name of this field expression.
      */
     public String getName() {
-        if (key != null) {
-            if (subKey != null) {
-                return field + DELIMITER + key + DELIMITER + subKey;
-            }
-            return field + DELIMITER + key;
-        }
-        return field;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public Evaluator getEvaluator() {
-        return new FieldEvaluator(this);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (!(obj instanceof FieldExpression)) {
-            return false;
-        }
-        FieldExpression other = (FieldExpression) obj;
-        return Objects.equals(field, other.field) &&
-               Objects.equals(key, other.key) &&
-               Objects.equals(subKey, other.subKey) &&
-               type == other.type;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(field, key, subKey, type);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("{field: ").append(field);
-        if (key != null) {
-            builder.append(", key: ").append(key);
-            if (subKey != null) {
-                builder.append(", subKey: ").append(subKey);
-            }
-        }
-        builder.append(", ").append(super.toString()).append("}");
-        return builder.toString();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

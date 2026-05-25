@@ -8,7 +8,6 @@ package com.yahoo.bullet.querying;
 import com.yahoo.bullet.record.BulletRecord;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,11 +19,16 @@ import java.util.Map;
  * Use {@link #categorize(Map)} and {@link #categorize(BulletRecord, Map)}for categorizing queries. The latter
  * categorizes after making the Querier instances {@link Querier#consume(BulletRecord)}.
  */
-@Getter @Slf4j
+@Getter
+@Slf4j
 public class QueryCategorizer {
+
     private Map<String, Querier> rateLimited = new HashMap<>();
+
     private Map<String, Querier> closed = new HashMap<>();
+
     private Map<String, Querier> done = new HashMap<>();
+
     private Map<String, Querier> hasData = new HashMap<>();
 
     /**
@@ -34,8 +38,7 @@ public class QueryCategorizer {
      * @return This object for chaining.
      */
     public QueryCategorizer categorize(Map<String, Querier> queries) {
-        queries.entrySet().forEach(this::classify);
-        return this;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -46,11 +49,7 @@ public class QueryCategorizer {
      * @return This object for chaining.
      */
     public QueryCategorizer categorize(BulletRecord record, Map<String, Querier> queries) {
-        for (Map.Entry<String, Querier> query : queries.entrySet()) {
-            query.getValue().consume(record);
-            classify(query);
-        }
-        return this;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private void classify(Map.Entry<String, Querier> query) {

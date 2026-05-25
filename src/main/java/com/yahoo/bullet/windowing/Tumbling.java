@@ -9,15 +9,15 @@ import com.yahoo.bullet.querying.aggregations.Strategy;
 import com.yahoo.bullet.common.BulletConfig;
 import com.yahoo.bullet.query.Window;
 import com.yahoo.bullet.result.Meta;
-
 import java.util.Map;
-
 import static com.yahoo.bullet.result.Meta.addIfNonNull;
 
 public class Tumbling extends Basic {
+
     public static final String NAME = "Tumbling";
 
     protected long nextCloseTime;
+
     protected long windowLength;
 
     /**
@@ -35,35 +35,31 @@ public class Tumbling extends Basic {
 
     @Override
     protected Map<String, Object> getMetadata(Map<String, String> metadataKeys) {
-        Map<String, Object> meta = super.getMetadata(metadataKeys);
-        addIfNonNull(meta, metadataKeys, Meta.Concept.WINDOW_EXPECTED_EMIT_TIME, () -> this.nextCloseTime);
-        return meta;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void reset() {
-        super.reset();
-        nextCloseTime = nextCloseTime + windowLength;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean isClosed() {
-        return System.currentTimeMillis() >= nextCloseTime;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean isClosedForPartition() {
-        // For tumbling windows, isClosedForPartition is the same as isClosed.
-        return isClosed();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void start() {
-        nextCloseTime = System.currentTimeMillis() + windowLength;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected String name() {
-        return NAME;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

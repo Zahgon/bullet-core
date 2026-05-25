@@ -10,15 +10,14 @@ import com.yahoo.bullet.common.Utilities;
 import com.yahoo.bullet.querying.postaggregations.CullingStrategy;
 import com.yahoo.bullet.querying.postaggregations.PostStrategy;
 import lombok.Getter;
-
 import java.util.Set;
 
 @Getter
 public class Culling extends PostAggregation {
+
     private static final long serialVersionUID = -4606818164037391850L;
 
-    public static final BulletException CULLING_REQUIRES_FIELDS =
-            new BulletException("The CULLING post-aggregation requires at least one field.", "Please add at least one field.");
+    public static final BulletException CULLING_REQUIRES_FIELDS = new BulletException("The CULLING post-aggregation requires at least one field.", "Please add at least one field.");
 
     private Set<String> transientFields;
 
@@ -38,11 +37,11 @@ public class Culling extends PostAggregation {
 
     @Override
     public PostStrategy getPostStrategy() {
-        return new CullingStrategy(this);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String toString() {
-        return "{type: " + type + ", transientFields: " + transientFields + "}";
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

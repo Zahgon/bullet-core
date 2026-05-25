@@ -11,6 +11,7 @@ import com.yahoo.bullet.result.Clip;
 import com.yahoo.bullet.typesystem.Type;
 
 public class HavingStrategy implements PostStrategy {
+
     private final Evaluator evaluator;
 
     /**
@@ -24,13 +25,6 @@ public class HavingStrategy implements PostStrategy {
 
     @Override
     public Clip execute(Clip clip) {
-        clip.getRecords().removeIf(record -> {
-            try {
-                return !((Boolean) evaluator.evaluate(record).forceCast(Type.BOOLEAN).getValue());
-            } catch (Exception ignored) {
-                return true;
-            }
-        });
-        return clip;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

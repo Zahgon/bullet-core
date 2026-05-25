@@ -28,6 +28,7 @@ import java.util.concurrent.CompletableFuture;
  * specific arguments for the query are left to the specific criteria.
  */
 public interface Criteria<T, R> {
+
     /**
      * Retrieves data from the given {@link StorageManager} as a {@link CompletableFuture} resolving to a key-value
      * mapping of the raw data stored in the storage.
@@ -71,11 +72,6 @@ public interface Criteria<T, R> {
      */
     @SuppressWarnings("unchecked")
     static <V extends Serializable, S extends StorageManager> S checkType(StorageManager<V> storage, Class<S> klazz) {
-        Objects.requireNonNull(klazz);
-        if (!klazz.isInstance(storage)) {
-            String name = storage == null ? "null" : storage.getClass().getName();
-            throw new UnsupportedOperationException(name + " is not an instance of " + klazz.getName());
-        }
-        return (S) storage;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

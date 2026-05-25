@@ -18,8 +18,11 @@ import java.io.UnsupportedEncodingException;
 
 @Slf4j
 public abstract class RESTPublisher implements Publisher {
+
     public static final String APPLICATION_JSON = "application/json";
+
     public static final String CONTENT_TYPE = "content-type";
+
     private int connectTimeout;
 
     private CloseableHttpClient client;
@@ -37,11 +40,7 @@ public abstract class RESTPublisher implements Publisher {
 
     @Override
     public void close() {
-        try {
-            client.close();
-        } catch (IOException e) {
-            log.error("Caught exception when closing client: ", e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -51,22 +50,14 @@ public abstract class RESTPublisher implements Publisher {
      * @param message The message to send.
      */
     protected void sendToURL(String url, PubSubMessage message) {
-        log.debug("Sending message: {} to url: {}", message, url);
-        try (CloseableHttpResponse response = client.execute(makeHttpPost(url, message))) {
-            if (response == null || response.getStatusLine().getStatusCode() != RESTPubSub.OK_200) {
-                log.error("Couldn't POST to REST pubsub server. Got response: {}", response);
-            }
-        } catch (Exception e) {
-            log.error("Error when trying to POST. Message was: {}. Error was: ", message.asJSON(), e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private HttpPost makeHttpPost(String url, PubSubMessage message) throws UnsupportedEncodingException {
         HttpPost httpPost = new HttpPost(url);
         httpPost.setEntity(new StringEntity(message.asJSON()));
         httpPost.setHeader(CONTENT_TYPE, APPLICATION_JSON);
-        RequestConfig requestConfig =
-                RequestConfig.custom().setConnectTimeout(connectTimeout).setSocketTimeout(connectTimeout).build();
+        RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(connectTimeout).setSocketTimeout(connectTimeout).build();
         httpPost.setConfig(requestConfig);
         return httpPost;
     }

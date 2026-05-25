@@ -22,19 +22,21 @@ import com.yahoo.sketches.tuple.Sketches;
 import com.yahoo.sketches.tuple.Union;
 import com.yahoo.sketches.tuple.UpdatableSketch;
 import com.yahoo.sketches.tuple.UpdatableSketchBuilder;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import static com.yahoo.bullet.result.Meta.addIfNonNull;
 
 public class TupleSketch extends KMVSketch {
+
     private UpdatableSketch<CachingGroupData, GroupDataSummary> updateSketch;
+
     private Union<GroupDataSummary> unionSketch;
+
     private Sketch<GroupDataSummary> result;
 
     private final int maxSize;
+
     /**
      * Initialize a tuple sketch for summarizing group data.
      *
@@ -48,13 +50,8 @@ public class TupleSketch extends KMVSketch {
     public TupleSketch(ResizeFactor resizeFactor, float samplingProbability, int nominalEntries, int maxSize, BulletRecordProvider provider) {
         GroupDataSummaryFactory factory = new GroupDataSummaryFactory();
         UpdatableSketchBuilder<CachingGroupData, GroupDataSummary> builder = new UpdatableSketchBuilder(factory);
-
-        updateSketch = builder.setResizeFactor(resizeFactor)
-                              .setNominalEntries(nominalEntries)
-                              .setSamplingProbability(samplingProbability)
-                              .build();
+        updateSketch = builder.setResizeFactor(resizeFactor).setNominalEntries(nominalEntries).setSamplingProbability(samplingProbability).build();
         unionSketch = new Union<>(nominalEntries, factory);
-
         this.maxSize = maxSize;
         this.provider = provider;
     }
@@ -66,115 +63,88 @@ public class TupleSketch extends KMVSketch {
      * @param data The data for the group.
      */
     public void update(String key, CachingGroupData data) {
-        updateSketch.update(key, data);
-        super.update();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void union(byte[] serialized) {
-        Sketch<GroupDataSummary> deserialized = Sketches.heapifySketch(new NativeMemory(serialized));
-        unionSketch.update(deserialized);
-        super.union();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public byte[] serialize() {
-        merge();
-        return result.toByteArray();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public List<BulletRecord> getRecords() {
-        merge();
-        List<BulletRecord> result = new ArrayList<>();
-        SketchIterator<GroupDataSummary> iterator = this.result.iterator();
-        for (int count = 0; iterator.next() && count < maxSize; count++) {
-            GroupData data = iterator.getSummary().getData();
-            result.add(data.getAsBulletRecord(provider));
-        }
-        return result;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public Clip getResult(String metaKey, Map<String, String> conceptKeys) {
-        merge();
-        Clip result = super.getResult(metaKey, conceptKeys);
-        result.add(getRecords());
-        return result;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void reset() {
-        result = null;
-        updateSketch.reset();
-        unionSketch.reset();
-        super.reset();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected void mergeBothSketches() {
-        unionSketch.update(updateSketch.compact());
-        updateSketch.reset();
-        mergeUnionSketch();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected void mergeUpdateSketch() {
-        result = updateSketch.compact();
-        updateSketch.reset();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected void mergeUnionSketch() {
-        result = unionSketch.getResult();
-        unionSketch.reset();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected boolean unionedExistingResults() {
-        unionSketch.update(result);
-        return result != null;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected Map<String, Object> addMetadata(Map<String, String> conceptKeys) {
-        // The super will call merge()
-        Map<String, Object> metadata = super.addMetadata(conceptKeys);
-        addIfNonNull(metadata, conceptKeys, Concept.SKETCH_UNIQUES_ESTIMATE, this::getUniquesEstimate);
-        return metadata;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     // Meta
-
     @Override
     protected Boolean isEstimationMode() {
-        return result.isEstimationMode();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected String getFamily() {
-        return Family.TUPLE.getFamilyName();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected Integer getSize() {
-        // Size need not be calculated since Summaries are arbitrarily large
-        return null;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected Double getTheta() {
-        return result.getTheta();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected Double getLowerBound(int standardDeviation) {
-        return result.getLowerBound(standardDeviation);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected Double getUpperBound(int standardDeviation) {
-        return result.getUpperBound(standardDeviation);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**

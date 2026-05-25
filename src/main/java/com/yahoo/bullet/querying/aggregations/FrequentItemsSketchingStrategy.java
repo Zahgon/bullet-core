@@ -14,15 +14,17 @@ import com.yahoo.bullet.record.BulletRecord;
 import com.yahoo.bullet.record.BulletRecordProvider;
 import com.yahoo.bullet.result.Clip;
 import com.yahoo.sketches.frequencies.ErrorType;
-
 import java.util.List;
 import java.util.Map;
 
 public class FrequentItemsSketchingStrategy extends SketchingStrategy<FrequentItemsSketch> {
+
     public static final String NO_FALSE_NEGATIVES = "NFN";
+
     public static final String NO_FALSE_POSITIVES = "NFP";
 
     private final Map<String, String> fieldsToNames;
+
     private final String name;
 
     /**
@@ -34,39 +36,30 @@ public class FrequentItemsSketchingStrategy extends SketchingStrategy<FrequentIt
     @SuppressWarnings("unchecked")
     public FrequentItemsSketchingStrategy(TopK aggregation, BulletConfig config) {
         super(aggregation, config);
-
         String errorConfiguration = config.getAs(BulletConfig.TOP_K_AGGREGATION_SKETCH_ERROR_TYPE, String.class);
-
         ErrorType errorType = getErrorType(errorConfiguration);
-
         fieldsToNames = aggregation.getFieldsToNames();
         name = aggregation.getName();
-
         int maxMapSize = config.getAs(BulletConfig.TOP_K_AGGREGATION_SKETCH_ENTRIES, Integer.class);
         Long threshold = aggregation.getThreshold();
         int size = aggregation.getSize();
         BulletRecordProvider provider = config.getBulletRecordProvider();
-        sketch = threshold != null ? new FrequentItemsSketch(errorType, maxMapSize, threshold, size, provider) :
-                                     new FrequentItemsSketch(errorType, maxMapSize, size, provider);
+        sketch = threshold != null ? new FrequentItemsSketch(errorType, maxMapSize, threshold, size, provider) : new FrequentItemsSketch(errorType, maxMapSize, size, provider);
     }
 
     @Override
     public void consume(BulletRecord data) {
-        sketch.update(composeField(data));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public Clip getResult() {
-        Clip result = super.getResult();
-        result.getRecords().forEach(this::splitFields);
-        return result;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public List<BulletRecord> getRecords() {
-        List<BulletRecord> records = super.getRecords();
-        records.forEach(this::splitFields);
-        return records;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private void splitFields(BulletRecord record) {

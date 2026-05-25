@@ -11,7 +11,6 @@ import com.yahoo.bullet.querying.partitioning.Partitioner;
 import com.yahoo.bullet.record.BulletRecord;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -33,23 +32,38 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 public class QueryManager {
+
     private Map<String, Set<String>> partitioning;
+
     private Map<String, Querier> queries;
+
     private Partitioner partitioner;
+
     private long queriesSeen = 0;
+
     private long expectedQueriesSeen = 0;
 
     public static final int QUANTILE_STEP = 10;
 
     public enum PartitionStat {
-        QUERY_COUNT, PARTITION_COUNT, ACTUAL_QUERIES_SEEN, EXPECTED_QUERIES_SEEN,
-        STDDEV_PARTITION_SIZE, LARGEST_PARTITION, SMALLEST_PARTITION, DISTRIBUTION_PARTITION_SIZE
+
+        QUERY_COUNT,
+        PARTITION_COUNT,
+        ACTUAL_QUERIES_SEEN,
+        EXPECTED_QUERIES_SEEN,
+        STDDEV_PARTITION_SIZE,
+        LARGEST_PARTITION,
+        SMALLEST_PARTITION,
+        DISTRIBUTION_PARTITION_SIZE
     }
 
     // Exposed for testing.
     static class Partition implements Comparable<Partition> {
+
         private final String name;
+
         private final int count;
+
         static final String DELIMITER = " -> ";
 
         private Partition(Map.Entry<String, Set<String>> partition) {
@@ -59,26 +73,27 @@ public class QueryManager {
 
         @Override
         public int compareTo(Partition o) {
-            return count - o.count;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         @Override
         public String toString() {
-            return name + DELIMITER + count;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
     }
 
     private static class NoPartitioner implements Partitioner {
+
         private static final Set<String> EMPTY_KEYS = Collections.singleton("");
 
         @Override
         public Set<String> getKeys(Query query) {
-            return EMPTY_KEYS;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         @Override
         public Set<String> getKeys(BulletRecord record) {
-            return EMPTY_KEYS;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
     }
 
@@ -106,13 +121,7 @@ public class QueryManager {
      * @param querier A fully initialized {@link Querier} instance.
      */
     public void addQuery(String id, Querier querier) {
-        Query query = querier.getQuery();
-        Set<String> keys = partitioner.getKeys(query);
-        for (String key : keys) {
-            partitioning.computeIfAbsent(key, s -> new HashSet<>()).add(id);
-            log.debug("Added query: {} to partition: {}", id, key);
-        }
-        queries.put(id, querier);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -123,21 +132,7 @@ public class QueryManager {
      * @return The removed {@link Querier} instance.
      */
     public Querier removeAndGetQuery(String id) {
-        Querier querier = queries.remove(id);
-        if (querier != null) {
-            Query query = querier.getQuery();
-            Set<String> keys = partitioner.getKeys(query);
-            for (String key : keys) {
-                Set<String> partition = partitioning.get(key);
-                partition.remove(id);
-                if (partition.isEmpty()) {
-                    log.debug("Partition: {} is empty. Removing...", key);
-                    partitioning.remove(key);
-                }
-                log.debug("Removed query: {} from partition: {}", id, key);
-            }
-        }
-        return querier;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -148,7 +143,7 @@ public class QueryManager {
      * @return The removed {@link List} of {@link Querier} instances.
      */
     public List<Querier> removeAndGetQueries(Set<String> ids) {
-        return ids.stream().map(this::removeAndGetQuery).filter(Objects::nonNull).collect(Collectors.toList());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -158,7 +153,7 @@ public class QueryManager {
      * @param ids The non-null {@link Set} of query IDs to remove.
      */
     public void removeQueries(Set<String> ids) {
-        ids.forEach(this::removeAndGetQuery);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -168,7 +163,7 @@ public class QueryManager {
      * @return The {@link Querier} instance or null, if not present.
      */
     public Querier getQuery(String id) {
-        return queries.get(id);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -178,7 +173,7 @@ public class QueryManager {
      * @return A boolean denoting whether this query is in the manager.
      */
     public boolean hasQuery(String id) {
-        return queries.containsKey(id);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -187,7 +182,7 @@ public class QueryManager {
      * @return An int representing the number of queries in the manager.
      */
     public int size() {
-        return queries.size();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -198,18 +193,7 @@ public class QueryManager {
      * @return The non-null {@link Map} of matching queries for the record.
      */
     public Map<String, Querier> partition(BulletRecord record) {
-        Set<String> keys = partitioner.getKeys(record);
-        Map<String, Querier> queriers = new HashMap<>();
-        for (String key : keys) {
-            Set<String> queryIDs = partitioning.getOrDefault(key, Collections.emptySet());
-            queryIDs.forEach(id -> queriers.put(id, queries.get(id)));
-        }
-        int queriesSeen = queriers.size();
-        int allQueries = queries.size();
-        this.queriesSeen += queriesSeen;
-        expectedQueriesSeen += allQueries;
-        log.trace("Retrieved {}/{} queries for record: {}", queriesSeen, allQueries, record);
-        return queriers;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -218,7 +202,7 @@ public class QueryManager {
      * @return The {@link QueryCategorizer} instance with all the categorized queries in the manager.
      */
     public QueryCategorizer categorize() {
-        return categorize(queries);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -228,7 +212,7 @@ public class QueryManager {
      * @return The {@link QueryCategorizer} instance with the categorized queries in the manager after partitioning.
      */
     public QueryCategorizer categorize(BulletRecord record) {
-        return categorize(record, partition(record));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -237,21 +221,7 @@ public class QueryManager {
      * @return A {@link Map} of {@link PartitionStat} to their values for the current state of the manager.
      */
     public Map<PartitionStat, Object> getStats() {
-        Map<PartitionStat, Object> stats = new HashMap<>();
-        List<Partition> sorted = partitioning.entrySet().stream().map(Partition::new).sorted().collect(Collectors.toList());
-        int size = sorted.size();
-        stats.put(PartitionStat.QUERY_COUNT, queries.size());
-        stats.put(PartitionStat.PARTITION_COUNT, size);
-        stats.put(PartitionStat.ACTUAL_QUERIES_SEEN, queriesSeen);
-        stats.put(PartitionStat.EXPECTED_QUERIES_SEEN, expectedQueriesSeen);
-        if (size > 0) {
-            stats.put(PartitionStat.LARGEST_PARTITION, sorted.get(size - 1).toString());
-            stats.put(PartitionStat.SMALLEST_PARTITION, sorted.get(0).toString());
-            double[] sizes = sorted.stream().mapToDouble(p -> (double) p.count).toArray();
-            stats.put(PartitionStat.STDDEV_PARTITION_SIZE, new StandardDeviation().evaluate(sizes));
-            stats.put(PartitionStat.DISTRIBUTION_PARTITION_SIZE, getDistributions(sorted));
-        }
-        return stats;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private List<String> getDistributions(List<Partition> sorted) {

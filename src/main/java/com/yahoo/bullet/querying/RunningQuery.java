@@ -14,9 +14,13 @@ import lombok.Getter;
  */
 @Getter
 public class RunningQuery {
+
     private final String id;
+
     private final Query query;
+
     private final String queryString;
+
     private final long startTime;
 
     /**
@@ -35,7 +39,7 @@ public class RunningQuery {
 
     @Override
     public String toString() {
-        return query.toString();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -45,7 +49,6 @@ public class RunningQuery {
      * @return A boolean denoting whether this query has timed out.
      */
     public boolean isTimedOut() {
-        // Never add to query.getDuration() since it can be infinite (Long.MAX_VALUE)
-        return System.currentTimeMillis() - startTime >= query.getDuration();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

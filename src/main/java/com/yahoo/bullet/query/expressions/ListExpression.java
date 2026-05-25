@@ -9,7 +9,6 @@ import com.yahoo.bullet.common.Utilities;
 import com.yahoo.bullet.querying.evaluators.Evaluator;
 import com.yahoo.bullet.querying.evaluators.ListEvaluator;
 import lombok.Getter;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -18,6 +17,7 @@ import java.util.Objects;
  */
 @Getter
 public class ListExpression extends Expression {
+
     private static final long serialVersionUID = 311789452858823415L;
 
     private final List<Expression> values;
@@ -33,28 +33,21 @@ public class ListExpression extends Expression {
 
     @Override
     public Evaluator getEvaluator() {
-        return new ListEvaluator(this);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (!(obj instanceof ListExpression)) {
-            return false;
-        }
-        ListExpression other = (ListExpression) obj;
-        return Objects.equals(values, other.values) && type == other.type;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(values, type);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String toString() {
-        return "{values: " + values + ", " + super.toString() + "}";
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

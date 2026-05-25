@@ -7,7 +7,6 @@ package com.yahoo.bullet.result;
 
 import com.yahoo.bullet.record.BulletRecord;
 import lombok.Getter;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,10 +15,13 @@ import java.util.stream.Collectors;
 
 @Getter
 public class Clip implements JSONFormatter {
+
     public static final String META_KEY = "meta";
+
     public static final String RECORDS_KEY = "records";
 
     private Meta meta = new Meta();
+
     private List<BulletRecord> records = new ArrayList<>();
 
     /**
@@ -29,10 +31,7 @@ public class Clip implements JSONFormatter {
      * @return This Clip for chaining.
      */
     public Clip add(BulletRecord record) {
-        if (record != null) {
-            records.add(record);
-        }
-        return this;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -42,10 +41,7 @@ public class Clip implements JSONFormatter {
      * @return This Clip for chaining.
      */
     public Clip add(List<BulletRecord> records) {
-        if (records != null) {
-            records.forEach(this::add);
-        }
-        return this;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -55,11 +51,7 @@ public class Clip implements JSONFormatter {
      * @return This Clip for chaining.
      */
     public Clip add(Clip clip) {
-        if (clip != null) {
-            add(clip.getMeta());
-            add(clip.getRecords());
-        }
-        return this;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -70,18 +62,12 @@ public class Clip implements JSONFormatter {
      * @return This Clip for chaining
      */
     public Clip add(Meta meta) {
-        if (meta != null) {
-            this.meta.merge(meta);
-        }
-        return this;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String asJSON() {
-        Map<String, Object> wrapper = new HashMap<>();
-        wrapper.put(META_KEY, meta.asMap());
-        wrapper.put(RECORDS_KEY, records.stream().map(BulletRecord::toUnmodifiableDataMap).collect(Collectors.toList()));
-        return JSONFormatter.asJSON(wrapper);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -91,7 +77,7 @@ public class Clip implements JSONFormatter {
      * @return The created Clip.
      */
     public static Clip of(BulletRecord record) {
-        return new Clip().add(record);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -101,7 +87,7 @@ public class Clip implements JSONFormatter {
      * @return The created Clip.
      */
     public static Clip of(List<BulletRecord> records) {
-        return new Clip().add(records);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -112,6 +98,6 @@ public class Clip implements JSONFormatter {
      * @return This object for chaining
      */
     public static Clip of(Meta meta) {
-        return new Clip().add(meta);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

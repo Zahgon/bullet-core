@@ -27,12 +27,10 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import static com.yahoo.bullet.query.Projection.Type.COPY;
 import static com.yahoo.bullet.query.Projection.Type.PASS_THROUGH;
 import static com.yahoo.bullet.result.Meta.addIfNonNull;
@@ -214,7 +212,6 @@ import static com.yahoo.bullet.result.Meta.addIfNonNull;
  *     emit(clip)
  * </pre>
  *
- *
  * <h5>Case 2: KILL messages from Filter</h5>
  *
  * <pre>
@@ -271,6 +268,7 @@ import static com.yahoo.bullet.result.Meta.addIfNonNull;
  */
 @Slf4j
 public class Querier implements Monoidal {
+
     /**
      * This is used to determine if this operates in partitioned mode or not. If the Querier is operating in
      * {@link Mode#PARTITION}, it is assumed there are multiple queriers running in parallel and consuming parts of the
@@ -282,13 +280,15 @@ public class Querier implements Monoidal {
      * leave this at the default of {@link Mode#ALL}.
      */
     public enum Mode {
+
         PARTITION, ALL
     }
 
     public static final String TRY_AGAIN_LATER = "Please try again later";
 
     // For testing convenience
-    @Getter(AccessLevel.PACKAGE) @Setter(AccessLevel.PACKAGE)
+    @Getter(AccessLevel.PACKAGE)
+    @Setter(AccessLevel.PACKAGE)
     private Scheme window;
 
     @Getter
@@ -304,6 +304,7 @@ public class Querier implements Monoidal {
     private transient BulletConfig config;
 
     private Map<String, String> metaKeys;
+
     private boolean hasNewData = false;
 
     // This is counting the number of times we get the data out of the query.
@@ -344,46 +345,37 @@ public class Querier implements Monoidal {
     }
 
     // ********************************* Monoidal Interface Overrides *********************************
-
     /**
      * Starts the query.
      */
     private void start() {
         // Is an empty map if metadata was disabled
         metaKeys = (Map<String, String>) config.getAs(BulletConfig.RESULT_METADATA_METRICS, Map.class);
-
         boolean isRateLimitEnabled = config.getAs(BulletConfig.RATE_LIMIT_ENABLE, Boolean.class);
         if (isRateLimitEnabled) {
             int maxEmit = config.getAs(BulletConfig.RATE_LIMIT_MAX_EMIT_COUNT, Integer.class);
             int timeInterval = config.getAs(BulletConfig.RATE_LIMIT_TIME_INTERVAL, Integer.class);
             rateLimit = new RateLimiter(maxEmit, timeInterval);
         }
-
         Query query = runningQuery.getQuery();
-
         Expression filter = query.getFilter();
         if (filter != null) {
             this.filter = new Filter(filter);
         }
-
         TableFunction tableFunction = query.getTableFunction();
         if (tableFunction != null) {
             tableFunctor = tableFunction.getTableFunctor();
         }
-
         com.yahoo.bullet.query.Projection projection = query.getProjection();
         if (projection.getType() != PASS_THROUGH) {
             this.projection = new Projection(projection.getFields());
         }
-
         // Aggregation and Strategy are guaranteed to not be null.
         Strategy strategy = query.getAggregation().getStrategy(config);
-
         List<PostAggregation> postAggregations = query.getPostAggregations();
         if (postAggregations != null && !postAggregations.isEmpty()) {
             postStrategies = postAggregations.stream().map(PostAggregation::getPostStrategy).collect(Collectors.toList());
         }
-
         // Scheme is guaranteed to not be null. It is constructed in its "start" state.
         window = query.getWindow().getScheme(strategy, config);
     }
@@ -395,8 +387,7 @@ public class Querier implements Monoidal {
      * Join phase. This does not revalidate the query or reset any data this might have already consumed.
      */
     public void restart() {
-        // Currently, only necessary to mark the correct start of Tumbling and AdditiveTumbling windows.
-        window.start();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -408,11 +399,7 @@ public class Querier implements Monoidal {
      */
     @Override
     public void consume(BulletRecord record) {
-        // Ignore if query is expired. But consume if the window is closed (partition or otherwise)
-        if (isDone()) {
-            return;
-        }
-        consumeRecord(record);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -423,13 +410,7 @@ public class Querier implements Monoidal {
      */
     @Override
     public void combine(byte[] data) {
-        try {
-            window.combine(data);
-            hasNewData = true;
-        } catch (RuntimeException e) {
-            log.error("Unable to aggregate {} for query {}", data, this);
-            log.error("Skipping due to", e);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -439,14 +420,7 @@ public class Querier implements Monoidal {
      */
     @Override
     public byte[] getData() {
-        try {
-            incrementRate();
-            return window.getData();
-        } catch (RuntimeException e) {
-            log.error("Unable to get serialized aggregation for query {}", this);
-            log.error("Skipping due to", e);
-            return null;
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -457,17 +431,7 @@ public class Querier implements Monoidal {
      */
     @Override
     public List<BulletRecord> getRecords() {
-        try {
-            incrementRate();
-            Clip result = new Clip();
-            result.add(window.getRecords());
-            result = postAggregate(result);
-            result = outerQuery(result);
-            return result.getRecords();
-        } catch (RuntimeException e) {
-            log.error("Unable to get serialized result for query {}", this);
-            return null;
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -477,15 +441,7 @@ public class Querier implements Monoidal {
      */
     @Override
     public Meta getMetadata() {
-        Meta meta;
-        try {
-            meta = window.getMetadata();
-            meta.merge(getResultMetadata());
-        } catch (RuntimeException e) {
-            log.error("Unable to get metadata for query {}", this);
-            meta = getErrorMeta(e);
-        }
-        return meta;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -495,18 +451,7 @@ public class Querier implements Monoidal {
      */
     @Override
     public Clip getResult() {
-        Clip result;
-        try {
-            incrementRate();
-            result = window.getResult();
-            result = postAggregate(result);
-            result = outerQuery(result);
-            result.add(getResultMetadata());
-        } catch (RuntimeException e) {
-            log.error("Unable to get serialized data for query {}", this);
-            result = Clip.of(getErrorMeta(e));
-        }
-        return result;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -517,7 +462,7 @@ public class Querier implements Monoidal {
      */
     @Override
     public boolean isClosed() {
-        return mode == Mode.PARTITION ? window.isClosedForPartition() : window.isClosed();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -526,23 +471,17 @@ public class Querier implements Monoidal {
      */
     @Override
     public void reset() {
-        if (mode == Mode.PARTITION) {
-            window.resetForPartition();
-        } else {
-            window.reset();
-        }
-        hasNewData = false;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     // ********************************* Public helpers *********************************
-
     /**
      * Gets the {@link Query} instance for this Query.
      *
      * @return The {@link Query} instance for this object.
      */
     public Query getQuery() {
-        return runningQuery.getQuery();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -551,8 +490,7 @@ public class Querier implements Monoidal {
      * @return A boolean denoting whether the query has expired.
      */
     public boolean isDone() {
-        // We're done with the query if this is the last window and it is closed or query has timed out.
-        return (isLastWindow() && window.isClosed()) || runningQuery.isTimedOut();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -563,7 +501,7 @@ public class Querier implements Monoidal {
      * @return A boolean denoting whether we have any new data that can be emitted.
      */
     public boolean hasNewData() {
-        return hasNewData;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -573,7 +511,7 @@ public class Querier implements Monoidal {
      * @return A boolean denoting whether we have exceeded the rate limit.
      */
     public boolean isExceedingRateLimit() {
-        return rateLimit != null && rateLimit.isRateLimited();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -583,10 +521,7 @@ public class Querier implements Monoidal {
      * @return A rate limit error or null if the rate limit was not exceeded.
      */
     public RateLimitError getRateLimitError() {
-        if (rateLimit == null || !rateLimit.isExceededRate()) {
-            return null;
-        }
-        return new RateLimitError(rateLimit.getCurrentRate(), rateLimit.getAbsoluteRateLimit());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -596,8 +531,7 @@ public class Querier implements Monoidal {
      * @return A boolean that is true if the query results should be buffered in the Join phase.
      */
     public boolean shouldBuffer() {
-        // Only buffer if the window is not time based (RawStrategy or if it's a record based window).
-        return !runningQuery.getQuery().getWindow().isTimeBased();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -606,18 +540,15 @@ public class Querier implements Monoidal {
      * @return The final non-null {@link Clip} representing the final result.
      */
     public Clip finish() {
-        Clip result = getResult();
-        addFinishTime(result.getMeta());
-        return result;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String toString() {
-        return String.format("%s : %s", runningQuery.getId(), runningQuery.toString());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     // ********************************* Private helpers *********************************
-
     private void consumeRecord(BulletRecord record) {
         if (tableFunctor == null) {
             process(record);

@@ -11,6 +11,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 
 @Slf4j
 public class RESTResultPublisher extends RESTPublisher {
+
     /**
      * Create a RESTQueryPublisher from a {@link CloseableHttpClient}.
      *
@@ -23,9 +24,6 @@ public class RESTResultPublisher extends RESTPublisher {
 
     @Override
     public PubSubMessage send(PubSubMessage message) {
-        String url = ((RESTMetadata) message.getMetadata()).getUrl();
-        log.debug("Extracted url to send results to: {}", url);
-        sendToURL(url, message);
-        return message;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

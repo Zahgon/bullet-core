@@ -9,7 +9,6 @@ import com.yahoo.bullet.query.tablefunctions.LateralView;
 import com.yahoo.bullet.query.tablefunctions.TableFunction;
 import com.yahoo.bullet.record.BulletRecord;
 import com.yahoo.bullet.record.BulletRecordProvider;
-
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -18,6 +17,7 @@ import java.util.stream.Stream;
  * A table functor that joins the generated records of the nested table functor with the original input record.
  */
 public class LateralViewFunctor extends TableFunctor {
+
     private static final long serialVersionUID = 1017033253024183470L;
 
     final List<TableFunctor> tableFunctors;
@@ -33,14 +33,7 @@ public class LateralViewFunctor extends TableFunctor {
 
     @Override
     public List<BulletRecord> apply(BulletRecord record, BulletRecordProvider provider) {
-        if (tableFunctors.size() == 1) {
-            return apply(record, provider, tableFunctors.get(0));
-        }
-        Stream<BulletRecord> recordsStream = Stream.of(record);
-        for (TableFunctor tableFunctor : tableFunctors) {
-            recordsStream = recordsStream.flatMap(r -> apply(r, provider, tableFunctor).stream());
-        }
-        return recordsStream.collect(Collectors.toList());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private List<BulletRecord> apply(BulletRecord record, BulletRecordProvider provider, TableFunctor tableFunctor) {

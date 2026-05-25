@@ -10,12 +10,10 @@ import com.yahoo.bullet.querying.evaluators.Evaluator;
 import com.yahoo.bullet.record.BulletRecord;
 import com.yahoo.bullet.record.BulletRecordProvider;
 import com.yahoo.bullet.typesystem.TypedObject;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import static com.yahoo.bullet.common.Utilities.isNull;
 
 /**
@@ -27,6 +25,7 @@ import static com.yahoo.bullet.common.Utilities.isNull;
  * Nulls are not projected.
  */
 public class Projection {
+
     private final Map<String, Evaluator> evaluators;
 
     /**
@@ -46,17 +45,7 @@ public class Projection {
      * @return A new BulletRecord with fields projected onto it.
      */
     public BulletRecord project(BulletRecord record, BulletRecordProvider provider) {
-        BulletRecord projected = provider.getInstance();
-        evaluators.forEach((name, evaluator) -> {
-            try {
-                TypedObject value = evaluator.evaluate(record);
-                if (!isNull(value)) {
-                    projected.typedSet(name, value);
-                }
-            } catch (Exception ignored) {
-            }
-        });
-        return projected;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -66,18 +55,7 @@ public class Projection {
      * @return The original BulletRecord with new fields projected onto it.
      */
     public BulletRecord project(BulletRecord record) {
-        Map<String, TypedObject> map = new HashMap<>();
-        evaluators.forEach((name, evaluator) -> {
-            try {
-                TypedObject value = evaluator.evaluate(record);
-                if (!isNull(value)) {
-                    map.put(name, value);
-                }
-            } catch (Exception ignored) {
-            }
-        });
-        map.forEach(record::typedSet);
-        return record;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static Evaluator getEvaluator(Field field) {

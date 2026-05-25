@@ -12,7 +12,6 @@ import com.yahoo.bullet.common.Monoidal;
 import com.yahoo.bullet.query.Window;
 import com.yahoo.bullet.result.Meta;
 import lombok.extern.slf4j.Slf4j;
-
 import java.util.Map;
 
 /**
@@ -23,10 +22,14 @@ import java.util.Map;
  */
 @Slf4j
 public abstract class Scheme implements Monoidal {
+
     protected Strategy aggregation;
+
     protected Window window;
+
     protected Map<String, String> metadataKeys;
-    private  boolean shouldMeta;
+
+    private boolean shouldMeta;
 
     /**
      * Creates an instance of this windowing scheme with the provided {@link Strategy}, {@link Window} and
@@ -78,15 +81,7 @@ public abstract class Scheme implements Monoidal {
      */
     @Override
     public Meta getMetadata() {
-        Meta meta = new Meta();
-        if (shouldMeta) {
-            String key = getMetaKey();
-            if (key != null) {
-                meta.add(key, getMetadata(metadataKeys));
-            }
-            meta.merge(aggregation.getMetadata());
-        }
-        return meta;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private String getMetaKey() {

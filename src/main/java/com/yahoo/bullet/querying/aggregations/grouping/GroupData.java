@@ -12,13 +12,11 @@ import com.yahoo.bullet.record.BulletRecord;
 import com.yahoo.bullet.record.BulletRecordProvider;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
 import static com.yahoo.bullet.common.Utilities.extractFieldAsNumber;
 import static com.yahoo.bullet.querying.aggregations.grouping.GroupOperation.GroupOperationType.AVG;
 import static com.yahoo.bullet.querying.aggregations.grouping.GroupOperation.GroupOperationType.COUNT_FIELD;
@@ -32,11 +30,14 @@ import static com.yahoo.bullet.querying.aggregations.grouping.GroupOperation.Gro
  */
 @Slf4j
 public class GroupData implements Serializable {
+
     public static final long serialVersionUID = 387461949277948303L;
 
     @Setter
     protected Map<String, String> groupFields;
+
     protected Map<String, String> fieldAliases;
+
     protected Map<GroupOperation, Number> metrics;
 
     /**
@@ -47,16 +48,7 @@ public class GroupData implements Serializable {
      * @return An empty map of metrics that represent these operations.
      */
     public static Map<GroupOperation, Number> makeInitialMetrics(Set<GroupOperation> operations) {
-        Map<GroupOperation, Number> metrics = new HashMap<>();
-        // Initialize with nulls.
-        for (GroupOperation operation : operations) {
-            metrics.put(operation, null);
-            if (operation.getType() == AVG) {
-                // For AVG we store an additional COUNT_FIELD operation to store the count (the sum is stored in AVG)
-                metrics.put(new GroupOperation(COUNT_FIELD, operation.getField(), null), null);
-            }
-        }
-        return metrics;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -99,7 +91,7 @@ public class GroupData implements Serializable {
      * @param data The record to compute metrics for.
      */
     public void consume(BulletRecord data) {
-        metrics.entrySet().forEach(e -> consume(e, data));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -109,12 +101,7 @@ public class GroupData implements Serializable {
      * @param serializedGroupData the serialized bytes of a GroupData.
      */
     public void combine(byte[] serializedGroupData) {
-        GroupData otherMetric = SerializerDeserializer.fromBytes(serializedGroupData);
-        if (otherMetric == null) {
-            log.error("Could not create a GroupData. Skipping...");
-            return;
-        }
-        combine(otherMetric);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -124,7 +111,7 @@ public class GroupData implements Serializable {
      * @param otherData The other GroupData to merge.
      */
     public void combine(GroupData otherData) {
-        metrics.entrySet().forEach(e -> combine(e, otherData));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -134,9 +121,7 @@ public class GroupData implements Serializable {
      * @return A non-null {@link BulletRecord} containing the data stored in this object.
      */
     public BulletRecord getMetricsAsBulletRecord(BulletRecordProvider provider) {
-        BulletRecord record = provider.getInstance();
-        metrics.entrySet().forEach(e -> addToRecord(e, record));
-        return record;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -146,7 +131,7 @@ public class GroupData implements Serializable {
      * @return A non-null {@link BulletRecord} containing the data stored in this object.
      */
     public BulletRecord getAsBulletRecord(BulletRecordProvider provider) {
-        return getAsBulletRecord(fieldAliases, provider);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -157,21 +142,14 @@ public class GroupData implements Serializable {
      * @return A non-null {@link BulletRecord} containing the data stored in this object.
      */
     public BulletRecord getAsBulletRecord(Map<String, String> mapping, BulletRecordProvider provider) {
-        BulletRecord record = getMetricsAsBulletRecord(provider);
-        for (Map.Entry<String, String> e : groupFields.entrySet()) {
-            String field = e.getKey();
-            String mapped = mapping.get(field);
-            record.setString(Utilities.isEmpty(mapped) ? field : mapped, e.getValue());
-        }
-        return record;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private void consume(Map.Entry<GroupOperation, Number> metric, BulletRecord data) {
         GroupOperation operation = metric.getKey();
         GroupOperation.GroupOperationType type = operation.getType();
-
         Number casted = 1L;
-        switch (type) {
+        switch(type) {
             case COUNT:
                 break;
             case MIN:
@@ -181,7 +159,7 @@ public class GroupData implements Serializable {
                 casted = extractFieldAsNumber(operation.getField(), data);
                 break;
             case COUNT_FIELD:
-                casted = extractFieldAsNumber(operation.getField(), data) ;
+                casted = extractFieldAsNumber(operation.getField(), data);
                 casted = casted != null ? 1L : null;
                 break;
         }
@@ -191,7 +169,7 @@ public class GroupData implements Serializable {
     private void combine(Map.Entry<GroupOperation, Number> metric, GroupData otherData) {
         GroupOperation operation = metric.getKey();
         Number value = otherData.metrics.get(metric.getKey());
-        switch (operation.getType()) {
+        switch(operation.getType()) {
             case MIN:
                 updateMetric(value, metric, GroupOperation.MIN);
                 break;
@@ -212,7 +190,7 @@ public class GroupData implements Serializable {
     private void addToRecord(Map.Entry<GroupOperation, Number> metric, BulletRecord record) {
         GroupOperation operation = metric.getKey();
         Number value = metric.getValue();
-        switch (operation.getType()) {
+        switch(operation.getType()) {
             case COUNT:
                 record.setLong(getResultName(operation), value == null ? 0 : value.longValue());
                 break;
@@ -245,7 +223,7 @@ public class GroupData implements Serializable {
      * @return a String representing a name for the result of the operation.
      */
     public static String getResultName(GroupOperation operation) {
-        return operation.getName();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /*
@@ -260,4 +238,3 @@ public class GroupData implements Serializable {
         metrics.put(metric.getKey(), current == null ? number : operator.apply(number, current));
     }
 }
-

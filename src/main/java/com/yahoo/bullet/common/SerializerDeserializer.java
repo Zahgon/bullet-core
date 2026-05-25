@@ -6,7 +6,6 @@
 package com.yahoo.bullet.common;
 
 import lombok.extern.slf4j.Slf4j;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -16,6 +15,7 @@ import java.io.Serializable;
 
 @Slf4j
 public class SerializerDeserializer {
+
     /**
      * Convenience method to deserialize an object into a type from raw serialized data produced by the method
      * {@link #toBytes(Serializable)}.
@@ -25,16 +25,7 @@ public class SerializerDeserializer {
      * @return A reified object or null if not successful.
      */
     public static <U extends Serializable> U fromBytes(byte[] data) {
-        try (
-            ByteArrayInputStream bis = new ByteArrayInputStream(data);
-            ObjectInputStream ois = new ObjectInputStream(bis)
-        ) {
-            return (U) ois.readObject();
-        } catch (IOException | ClassNotFoundException | RuntimeException e) {
-            log.error("Could not reify an Object from raw data {}", data);
-            log.error("Exception was: ", e);
-        }
-        return null;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -45,16 +36,6 @@ public class SerializerDeserializer {
      * @return the serialized byte[] or null if not successful.
      */
     public static <U extends Serializable> byte[] toBytes(U object) {
-        try (
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(bos)
-        ) {
-            oos.writeObject(object);
-            return bos.toByteArray();
-        } catch (IOException | RuntimeException e) {
-            log.error("Could not serialize given object {}", object);
-            log.error("Exception was: ", e);
-        }
-        return null;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

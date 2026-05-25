@@ -9,7 +9,6 @@ import com.yahoo.bullet.querying.evaluators.Evaluator;
 import com.yahoo.bullet.typesystem.Type;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.io.Serializable;
 
 /**
@@ -27,8 +26,10 @@ import java.io.Serializable;
  *
  * Look at {@link Evaluator} to see how expressions are evaluated.
  */
-@Getter @Setter
+@Getter
+@Setter
 public abstract class Expression implements Serializable {
+
     private static final long serialVersionUID = -769774785327135375L;
 
     protected Type type;
@@ -48,6 +49,6 @@ public abstract class Expression implements Serializable {
 
     @Override
     public String toString() {
-        return "type: " + type;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

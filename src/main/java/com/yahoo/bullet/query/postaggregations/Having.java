@@ -13,10 +13,10 @@ import lombok.Getter;
 
 @Getter
 public class Having extends PostAggregation {
+
     private static final long serialVersionUID = -123184459098221770L;
 
-    public static final BulletException HAVING_REQUIRES_EXPRESSION =
-            new BulletException("The HAVING post-aggregation requires an expression.", "Please add an expression.");
+    public static final BulletException HAVING_REQUIRES_EXPRESSION = new BulletException("The HAVING post-aggregation requires an expression.", "Please add an expression.");
 
     private Expression expression;
 
@@ -35,11 +35,11 @@ public class Having extends PostAggregation {
 
     @Override
     public PostStrategy getPostStrategy() {
-        return new HavingStrategy(this);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String toString() {
-        return "{type: " + type + ", expression: " + expression + "}";
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

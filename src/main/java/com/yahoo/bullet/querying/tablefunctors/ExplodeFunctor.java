@@ -10,7 +10,6 @@ import com.yahoo.bullet.querying.evaluators.Evaluator;
 import com.yahoo.bullet.record.BulletRecord;
 import com.yahoo.bullet.record.BulletRecordProvider;
 import com.yahoo.bullet.typesystem.TypedObject;
-
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
@@ -25,10 +24,13 @@ import java.util.stream.Collectors;
  * value aliases. If the result of the evaluator has the wrong type or is null, the table functor returns an empty list.
  */
 public class ExplodeFunctor extends OuterableTableFunctor {
+
     private static final long serialVersionUID = -6412197830718118997L;
 
     final Evaluator field;
+
     final String keyAlias;
+
     final String valueAlias;
 
     /**
@@ -45,11 +47,7 @@ public class ExplodeFunctor extends OuterableTableFunctor {
 
     @Override
     protected List<BulletRecord> outerableApply(BulletRecord record, BulletRecordProvider provider) {
-        if (valueAlias != null) {
-            return explodeMap(record, provider);
-        } else {
-            return explodeList(record, provider);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private List<BulletRecord> explodeMap(BulletRecord record, BulletRecordProvider provider) {

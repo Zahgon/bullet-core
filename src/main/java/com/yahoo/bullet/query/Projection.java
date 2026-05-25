@@ -8,24 +8,30 @@ package com.yahoo.bullet.query;
 import com.yahoo.bullet.common.Utilities;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-
 import java.io.Serializable;
 import java.util.List;
 
-@Slf4j @Getter
+@Slf4j
+@Getter
 public class Projection implements Serializable {
+
     private static final long serialVersionUID = -9194169391843941958L;
 
     /**
      * The type of the Projection decides how its fields are projected.
      */
     public enum Type {
-        COPY,           // Projects onto a copy of the original record
-        NO_COPY,        // Projects onto a new record
-        PASS_THROUGH    // Passes the original record through
+
+        // Projects onto a copy of the original record
+        COPY,
+        // Projects onto a new record
+        NO_COPY,
+        // Passes the original record through
+        PASS_THROUGH
     }
 
     private final List<Field> fields;
+
     private final Type type;
 
     /**
@@ -49,6 +55,6 @@ public class Projection implements Serializable {
 
     @Override
     public String toString() {
-        return "{fields: " + fields + ", type: " + type + "}";
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

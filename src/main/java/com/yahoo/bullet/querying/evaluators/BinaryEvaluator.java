@@ -13,10 +13,13 @@ import com.yahoo.bullet.typesystem.TypedObject;
  * An evaluator that applies a binary operator to the result of a left evaluator and the result of a right evaluator.
  */
 public class BinaryEvaluator extends Evaluator {
+
     private static final long serialVersionUID = -467853226398830498L;
 
     final Evaluator left;
+
     final Evaluator right;
+
     final BinaryOperations.BinaryOperator op;
 
     /**
@@ -32,6 +35,6 @@ public class BinaryEvaluator extends Evaluator {
 
     @Override
     public TypedObject evaluate(BulletRecord record) {
-        return op.apply(left, right, record);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

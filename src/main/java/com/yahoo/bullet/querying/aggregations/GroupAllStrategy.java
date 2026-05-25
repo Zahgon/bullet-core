@@ -15,18 +15,20 @@ import com.yahoo.bullet.record.BulletRecord;
 import com.yahoo.bullet.record.BulletRecordProvider;
 import com.yahoo.bullet.result.Clip;
 import lombok.extern.slf4j.Slf4j;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 @Slf4j
 public class GroupAllStrategy implements Strategy {
+
     // We only have a single group.
     private GroupData data;
 
     private Set<GroupOperation> operations;
+
     private BulletRecordProvider provider;
+
     /**
      * Constructor that requires an {@link Aggregation}.
      *
@@ -42,33 +44,31 @@ public class GroupAllStrategy implements Strategy {
 
     @Override
     public void consume(BulletRecord data) {
-        this.data.consume(data);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void combine(byte[] data) {
-        this.data.combine(data);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public byte[] getData() {
-        return SerializerDeserializer.toBytes(data);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public Clip getResult() {
-        return Clip.of(getRecords());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public List<BulletRecord> getRecords() {
-        List<BulletRecord> list = new ArrayList<>();
-        list.add(data.getMetricsAsBulletRecord(provider));
-        return list;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void reset() {
-        data = new GroupData(operations);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

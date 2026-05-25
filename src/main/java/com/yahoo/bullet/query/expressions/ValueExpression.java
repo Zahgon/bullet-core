@@ -10,7 +10,6 @@ import com.yahoo.bullet.querying.evaluators.Evaluator;
 import com.yahoo.bullet.querying.evaluators.ValueEvaluator;
 import com.yahoo.bullet.typesystem.Type;
 import lombok.Getter;
-
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -19,9 +18,11 @@ import java.util.Objects;
  */
 @Getter
 public class ValueExpression extends Expression {
+
     private static final long serialVersionUID = -6979831483897873098L;
-    private static final BulletException VALUE_EXPRESSION_REQUIRES_PRIMITIVE_OR_NULL =
-            new BulletException("Value must be primitive or null.", "Please specify a valid value.");
+
+    private static final BulletException VALUE_EXPRESSION_REQUIRES_PRIMITIVE_OR_NULL = new BulletException("Value must be primitive or null.", "Please specify a valid value.");
+
     private static final String SINGLE_QUOTE = "'";
 
     private final Serializable value;
@@ -41,24 +42,17 @@ public class ValueExpression extends Expression {
 
     @Override
     public Evaluator getEvaluator() {
-        return new ValueEvaluator(this);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (!(obj instanceof ValueExpression)) {
-            return false;
-        }
-        ValueExpression other = (ValueExpression) obj;
-        return Objects.equals(value, other.value) && type == other.type;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(value, type);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private String toFormattedString() {
@@ -68,6 +62,6 @@ public class ValueExpression extends Expression {
 
     @Override
     public String toString() {
-        return "{value: " + toFormattedString() + ", " + super.toString() + "}";
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

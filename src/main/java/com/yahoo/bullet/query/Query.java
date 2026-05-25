@@ -15,7 +15,6 @@ import com.yahoo.bullet.query.postaggregations.PostAggregation;
 import com.yahoo.bullet.query.tablefunctions.TableFunction;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -23,27 +22,35 @@ import java.util.Objects;
 /**
  * This class is the top level Bullet query specification. It holds the definition of the query.
  */
-@Getter @Slf4j
+@Getter
+@Slf4j
 public class Query implements Configurable, Serializable {
+
     private static final long serialVersionUID = 592082288228551406L;
 
     private final TableFunction tableFunction;
+
     private final Projection projection;
+
     private final Expression filter;
+
     private final Aggregation aggregation;
+
     private final List<PostAggregation> postAggregations;
+
     private final Query outerQuery;
+
     private Window window;
+
     private Long duration;
 
-    private static final BulletException ONLY_RAW_RECORD = new BulletException("Only RAW aggregation type can have window emit type RECORD.",
-                                                                               "Change your aggregation type or your window emit type to TIME.");
-    private static final BulletException NO_RAW_ALL = new BulletException("RAW aggregation type cannot have window include type ALL.",
-                                                                          "Change your aggregation type or your window include type.");
-    private static final BulletException NO_OUTER_QUERY_WINDOW = new BulletException("Outer query cannot have a window.",
-                                                                                     "Remove the window.");
-    private static final BulletException NO_NESTED_OUTER_QUERY = new BulletException("Outer query cannot have an outer query.",
-                                                                                     "Remove the nested outer query.");
+    private static final BulletException ONLY_RAW_RECORD = new BulletException("Only RAW aggregation type can have window emit type RECORD.", "Change your aggregation type or your window emit type to TIME.");
+
+    private static final BulletException NO_RAW_ALL = new BulletException("RAW aggregation type cannot have window include type ALL.", "Change your aggregation type or your window include type.");
+
+    private static final BulletException NO_OUTER_QUERY_WINDOW = new BulletException("Outer query cannot have a window.", "Remove the window.");
+
+    private static final BulletException NO_NESTED_OUTER_QUERY = new BulletException("Outer query cannot have an outer query.", "Remove the nested outer query.");
 
     /**
      * Constructor that creates the Bullet query.
@@ -126,28 +133,11 @@ public class Query implements Configurable, Serializable {
     @Override
     @SuppressWarnings("unchecked")
     public void configure(BulletConfig config) {
-        aggregation.configure(config);
-
-        boolean disableWindowing = config.getAs(BulletConfig.WINDOW_DISABLE, Boolean.class);
-        if (disableWindowing) {
-            window = new Window();
-        }
-        window.configure(config);
-
-        long durationDefault = config.getAs(BulletConfig.QUERY_DEFAULT_DURATION, Long.class);
-        long durationMax = config.getAs(BulletConfig.QUERY_MAX_DURATION, Long.class);
-
-        // Null or negative, then default, else min of duration and max.
-        duration = (duration == null || duration <= 0) ? durationDefault : Math.min(duration, durationMax);
-
-        if (outerQuery != null) {
-            outerQuery.configure(config);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String toString() {
-        return "{tableFunction: " + tableFunction + ", projection: " + projection + ", filter: " + filter + ", aggregation: " + aggregation +
-               ", postAggregations: " + postAggregations + ", window: " + window + ", duration: " + duration + ", outerQuery: " + outerQuery + "}";
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

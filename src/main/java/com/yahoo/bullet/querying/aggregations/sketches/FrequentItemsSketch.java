@@ -15,27 +15,29 @@ import com.yahoo.sketches.ArrayOfUtf16StringsSerDe;
 import com.yahoo.sketches.Family;
 import com.yahoo.sketches.frequencies.ErrorType;
 import com.yahoo.sketches.frequencies.ItemsSketch;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import static com.yahoo.bullet.result.Meta.addIfNonNull;
 
 /**
  * Wraps a {@link ItemsSketch} of String.
  */
 public class FrequentItemsSketch extends Sketch {
+
     private ItemsSketch<String> sketch;
 
     private final ErrorType type;
+
     private final long threshold;
+
     private final int maxSize;
 
     // No state -> static
     private static final ArrayOfItemsSerDe<String> SER_DE = new ArrayOfUtf16StringsSerDe();
 
     public static final String ITEM_FIELD = "item";
+
     public static final String COUNT_FIELD = "count";
 
     /**
@@ -74,70 +76,52 @@ public class FrequentItemsSketch extends Sketch {
      * @param item The String item to add to the Sketch.
      */
     public void update(String item) {
-        sketch.update(item);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void union(byte[] serialized) {
-        ItemsSketch<String> other = ItemsSketch.getInstance(new NativeMemory(serialized), SER_DE);
-        sketch.merge(other);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public List<BulletRecord> getRecords() {
-        List<BulletRecord> data = new ArrayList<>();
-
-        ItemsSketch.Row<String>[] items = sketch.getFrequentItems(threshold, type);
-        for (int i = 0; i < items.length && i < maxSize; ++i) {
-            ItemsSketch.Row<String> item = items[i];
-            BulletRecord record = provider.getInstance();
-            record.setString(ITEM_FIELD, item.getItem());
-            record.setLong(COUNT_FIELD, item.getEstimate());
-            data.add(record);
-        }
-        return data;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public byte[] serialize() {
-        return sketch.toByteArray(SER_DE);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public Clip getResult(String metaKey, Map<String, String> conceptKeys) {
-        Clip data = super.getResult(metaKey, conceptKeys);
-        data.add(getRecords());
-        return data;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected Map<String, Object> addMetadata(Map<String, String> conceptKeys) {
-        Map<String, Object> metadata = super.addMetadata(conceptKeys);
-        addIfNonNull(metadata, conceptKeys, Concept.SKETCH_ITEMS_SEEN, this::getStreamLength);
-        addIfNonNull(metadata, conceptKeys, Concept.SKETCH_ACTIVE_ITEMS, this::getItemsStored);
-        addIfNonNull(metadata, conceptKeys, Concept.SKETCH_MAXIMUM_COUNT_ERROR, this::getMaximumError);
-        return metadata;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void reset() {
-        sketch.reset();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected String getFamily() {
-        return Family.FREQUENCY.getFamilyName();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected Boolean isEstimationMode() {
-        return sketch.getMaximumError() > 0;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected Integer getSize() {
-        // Size is dependent on the items, so not computing it. Could use length of serialize
-        return null;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private Long getStreamLength() {

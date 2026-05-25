@@ -11,11 +11,9 @@ import com.yahoo.bullet.query.Window;
 import com.yahoo.bullet.record.BulletRecord;
 import com.yahoo.bullet.result.Clip;
 import com.yahoo.bullet.result.Meta;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import static com.yahoo.bullet.result.Meta.addIfNonNull;
 
 /**
@@ -24,7 +22,9 @@ import static com.yahoo.bullet.result.Meta.addIfNonNull;
  * {@link Strategy#isClosed()}.
  */
 public class Basic extends Scheme {
+
     public static final String NAME = "Windowless";
+
     protected long windowCount = 1L;
 
     /**
@@ -40,11 +40,7 @@ public class Basic extends Scheme {
 
     @Override
     protected Map<String, Object> getMetadata(Map<String, String> metadataKeys) {
-        Map<String, Object> meta = new HashMap<>();
-        addIfNonNull(meta, metadataKeys, Meta.Concept.WINDOW_NAME, this::name);
-        addIfNonNull(meta, metadataKeys, Meta.Concept.WINDOW_NUMBER, this::count);
-        addIfNonNull(meta, metadataKeys, Meta.Concept.WINDOW_EMIT_TIME, System::currentTimeMillis);
-        return meta;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -54,7 +50,7 @@ public class Basic extends Scheme {
      */
     @Override
     public void consume(BulletRecord data) {
-        aggregation.consume(data);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -64,50 +60,47 @@ public class Basic extends Scheme {
      */
     @Override
     public void combine(byte[] data) {
-        aggregation.combine(data);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public byte[] getData() {
-        return aggregation.getData();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public Clip getResult() {
-        // This has already called aggregation.getMetadata
-        Clip clip = Clip.of(getMetadata());
-        clip.add(aggregation.getRecords());
-        return clip;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public List<BulletRecord> getRecords() {
-        return aggregation.getRecords();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void reset() {
-        aggregation.reset();
-        windowCount++;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void resetForPartition() {
-        reset();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean isClosed() {
-        return aggregation.isClosed();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean isClosedForPartition() {
-        return aggregation.isClosed();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void start() {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -116,7 +109,7 @@ public class Basic extends Scheme {
      * @return A String name for this window.
      */
     protected String name() {
-        return NAME;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -125,7 +118,6 @@ public class Basic extends Scheme {
      * @return A long representing the number of windows opened.
      */
     protected long count() {
-        // This should always be one unless reset is called (which it shouldn't because this window doesn't close).
-        return windowCount;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

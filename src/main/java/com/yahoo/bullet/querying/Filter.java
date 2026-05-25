@@ -18,6 +18,7 @@ import com.yahoo.bullet.typesystem.TypedObject;
  * Also note that if the evaluator throws an exception, the filter will not match.
  */
 public class Filter {
+
     private Evaluator evaluator;
 
     public Filter(Expression filter) {
@@ -31,11 +32,6 @@ public class Filter {
      * @return True if the record matches this filter and false otherwise.
      */
     public boolean match(BulletRecord record) {
-        try {
-            TypedObject value = evaluator.evaluate(record);
-            return !value.isNull() && (Boolean) value.forceCast(Type.BOOLEAN).getValue();
-        } catch (Exception e) {
-            return false;
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

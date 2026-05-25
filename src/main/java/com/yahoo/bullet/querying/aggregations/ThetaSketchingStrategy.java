@@ -13,13 +13,14 @@ import com.yahoo.bullet.record.BulletRecord;
 import com.yahoo.bullet.result.Clip;
 import com.yahoo.sketches.Family;
 import com.yahoo.sketches.ResizeFactor;
-
 import java.util.List;
 
 public class ThetaSketchingStrategy extends KMVStrategy<ThetaSketch> {
+
     // Theta Sketch defaults
     // Recommended for real-time systems
     public static final String DEFAULT_UPDATE_SKETCH_FAMILY = Family.ALPHA.getFamilyName();
+
     // This gives us (Alpha sketches fall back to QuickSelect RSEs after compaction or set operations) a 2.34% error
     // rate at 99.73% confidence (3 Standard Deviations).
     public static final int DEFAULT_NOMINAL_ENTRIES = 16384;
@@ -35,32 +36,27 @@ public class ThetaSketchingStrategy extends KMVStrategy<ThetaSketch> {
     @SuppressWarnings("unchecked")
     public ThetaSketchingStrategy(CountDistinct aggregation, BulletConfig config) {
         super(aggregation, config);
-
         ResizeFactor resizeFactor = getResizeFactor(config, BulletConfig.COUNT_DISTINCT_AGGREGATION_SKETCH_RESIZE_FACTOR);
         float samplingProbability = config.getAs(BulletConfig.COUNT_DISTINCT_AGGREGATION_SKETCH_SAMPLING, Float.class);
         Family family = getFamily(config.getAs(BulletConfig.COUNT_DISTINCT_AGGREGATION_SKETCH_FAMILY, String.class));
         int nominalEntries = config.getAs(BulletConfig.COUNT_DISTINCT_AGGREGATION_SKETCH_ENTRIES, Integer.class);
-
         name = aggregation.getName();
         sketch = new ThetaSketch(resizeFactor, family, samplingProbability, nominalEntries, config.getBulletRecordProvider());
     }
 
     @Override
     public void consume(BulletRecord data) {
-        String field = composeField(data);
-        sketch.update(field);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public Clip getResult() {
-        Clip result = super.getResult();
-        renameInPlace(result.getRecords());
-        return result;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public List<BulletRecord> getRecords() {
-        return renameInPlace(super.getRecords());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private List<BulletRecord> renameInPlace(List<BulletRecord> records) {
@@ -77,6 +73,6 @@ public class ThetaSketchingStrategy extends KMVStrategy<ThetaSketch> {
      * @return The Sketch family represented by the string or {@link #DEFAULT_UPDATE_SKETCH_FAMILY} otherwise.
      */
     static Family getFamily(String family) {
-        return Family.QUICKSELECT.getFamilyName().equals(family) ? Family.QUICKSELECT : Family.ALPHA;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

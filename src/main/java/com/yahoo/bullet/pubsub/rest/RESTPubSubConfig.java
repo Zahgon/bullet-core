@@ -14,57 +14,51 @@ import java.util.List;
 
 @Slf4j
 public class RESTPubSubConfig extends BulletConfig {
+
     // Field names
     public static final String PREFIX = "bullet.pubsub.rest.";
+
     public static final String SUBSCRIBER_CONNECT_TIMEOUT = PREFIX + "subscriber.connect.timeout.ms";
+
     public static final String PUBLISHER_CONNECT_TIMEOUT = PREFIX + "publisher.connect.timeout.ms";
+
     public static final String MAX_UNCOMMITTED_MESSAGES = PREFIX + "subscriber.max.uncommitted.messages";
+
     public static final String QUERY_URLS = PREFIX + "query.urls";
+
     public static final String RESULT_URL = PREFIX + "result.url";
+
     public static final String RESULT_SUBSCRIBER_MIN_WAIT = PREFIX + "result.subscriber.min.wait.ms";
+
     public static final String QUERY_SUBSCRIBER_MIN_WAIT = PREFIX + "query.subscriber.min.wait.ms";
 
     // Defaults
     public static final int DEFAULT_SUBSCRIBER_CONNECT_TIMEOUT = 5000;
+
     public static final int DEFAULT_PUBLISHER_CONNECT_TIMEOUT = 5000;
+
     public static final int DEFAULT_MAX_UNCOMMITTED_MESSAGES = 100;
-    public static final List<String> DEFAULT_QUERY_URLS = Arrays.asList("http://localhost:9901/api/bullet/pubsub/query",
-                                                                        "http://localhost:9902/api/bullet/pubsub/query");
+
+    public static final List<String> DEFAULT_QUERY_URLS = Arrays.asList("http://localhost:9901/api/bullet/pubsub/query", "http://localhost:9902/api/bullet/pubsub/query");
+
     public static final String DEFAULT_RESULT_URL = "http://localhost:9901/api/bullet/pubsub/result";
+
     public static final Long DEFAULT_RESULT_MIN_WAIT = 10L;
+
     public static final Long DEFAULT_QUERY_MIN_WAIT = 10L;
 
     public static final String DEFAULT_REST_PUBSUB_CONFIGURATION_NAME = "rest_pubsub_defaults.yaml";
 
     private static final Validator VALIDATOR = new Validator();
+
     static {
-        VALIDATOR.define(SUBSCRIBER_CONNECT_TIMEOUT)
-                 .defaultTo(DEFAULT_SUBSCRIBER_CONNECT_TIMEOUT)
-                 .checkIf(Validator::isPositiveInt)
-                 .castTo(Validator::asInt);
-        VALIDATOR.define(PUBLISHER_CONNECT_TIMEOUT)
-                .defaultTo(DEFAULT_PUBLISHER_CONNECT_TIMEOUT)
-                .checkIf(Validator::isPositiveInt)
-                .castTo(Validator::asInt);
-        VALIDATOR.define(MAX_UNCOMMITTED_MESSAGES)
-                 .defaultTo(DEFAULT_MAX_UNCOMMITTED_MESSAGES)
-                 .checkIf(Validator::isPositiveInt)
-                 .castTo(Validator::asInt);
-        VALIDATOR.define(QUERY_URLS)
-                 .defaultTo(DEFAULT_QUERY_URLS)
-                 .checkIf(Validator::isNonEmptyList);
-        VALIDATOR.define(RESULT_URL)
-                 .defaultTo(DEFAULT_RESULT_URL)
-                 .checkIf(Validator::isString)
-                 .castTo(Validator::asString);
-        VALIDATOR.define(RESULT_SUBSCRIBER_MIN_WAIT)
-                 .defaultTo(DEFAULT_RESULT_MIN_WAIT)
-                 .checkIf(Validator::isPositiveInt)
-                 .castTo(Validator::asLong);
-        VALIDATOR.define(QUERY_SUBSCRIBER_MIN_WAIT)
-                 .defaultTo(DEFAULT_QUERY_MIN_WAIT)
-                 .checkIf(Validator::isPositiveInt)
-                 .castTo(Validator::asLong);
+        VALIDATOR.define(SUBSCRIBER_CONNECT_TIMEOUT).defaultTo(DEFAULT_SUBSCRIBER_CONNECT_TIMEOUT).checkIf(Validator::isPositiveInt).castTo(Validator::asInt);
+        VALIDATOR.define(PUBLISHER_CONNECT_TIMEOUT).defaultTo(DEFAULT_PUBLISHER_CONNECT_TIMEOUT).checkIf(Validator::isPositiveInt).castTo(Validator::asInt);
+        VALIDATOR.define(MAX_UNCOMMITTED_MESSAGES).defaultTo(DEFAULT_MAX_UNCOMMITTED_MESSAGES).checkIf(Validator::isPositiveInt).castTo(Validator::asInt);
+        VALIDATOR.define(QUERY_URLS).defaultTo(DEFAULT_QUERY_URLS).checkIf(Validator::isNonEmptyList);
+        VALIDATOR.define(RESULT_URL).defaultTo(DEFAULT_RESULT_URL).checkIf(Validator::isString).castTo(Validator::asString);
+        VALIDATOR.define(RESULT_SUBSCRIBER_MIN_WAIT).defaultTo(DEFAULT_RESULT_MIN_WAIT).checkIf(Validator::isPositiveInt).castTo(Validator::asLong);
+        VALIDATOR.define(QUERY_SUBSCRIBER_MIN_WAIT).defaultTo(DEFAULT_QUERY_MIN_WAIT).checkIf(Validator::isPositiveInt).castTo(Validator::asLong);
     }
 
     /**
@@ -89,8 +83,6 @@ public class RESTPubSubConfig extends BulletConfig {
 
     @Override
     public RESTPubSubConfig validate() {
-        super.validate();
-        VALIDATOR.validate(this);
-        return this;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

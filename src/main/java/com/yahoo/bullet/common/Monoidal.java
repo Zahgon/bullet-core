@@ -8,7 +8,6 @@ package com.yahoo.bullet.common;
 import com.yahoo.bullet.record.BulletRecord;
 import com.yahoo.bullet.result.Clip;
 import com.yahoo.bullet.result.Meta;
-
 import java.util.List;
 
 /**
@@ -20,6 +19,7 @@ import java.util.List;
  * that {@link #getMetadata()} might not be strictly monoidal since they may not reset to the identity upon {@link #reset()}.
  */
 public interface Monoidal extends Closable {
+
     /**
      * Consumes a single {@link BulletRecord} into this Monoid.
      *
@@ -42,7 +42,7 @@ public interface Monoidal extends Closable {
      * @param other The non-null other object to combine data from.
      */
     default void merge(Monoidal other) {
-        combine(other.getData());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**

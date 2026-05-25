@@ -8,7 +8,6 @@ package com.yahoo.bullet.storage;
 import com.yahoo.bullet.common.BulletConfig;
 import com.yahoo.bullet.common.SerializerDeserializer;
 import lombok.extern.slf4j.Slf4j;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,12 +15,13 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
-
 import static com.yahoo.bullet.common.Utilities.putNotNull;
 
 @Slf4j
 abstract class BaseStorageManager<V extends Serializable> implements AutoCloseable, Serializable {
+
     private static final long serialVersionUID = 951633252390860251L;
+
     static final CompletableFuture<Boolean> SUCCESS = CompletableFuture.completedFuture(true);
 
     protected BulletConfig config;
@@ -41,10 +41,10 @@ abstract class BaseStorageManager<V extends Serializable> implements AutoCloseab
      */
     @Override
     public void close() {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     // Accessors
-
     /**
      * Store a given ID and value for that ID into the given namespace in the storage.
      *
@@ -73,16 +73,7 @@ abstract class BaseStorageManager<V extends Serializable> implements AutoCloseab
      * @return A {@link CompletableFuture} that resolves to true if the storage was completely successful.
      */
     protected CompletableFuture<Boolean> putAllRaw(String namespace, Map<String, byte[]> data) {
-        if (data == null) {
-            return SUCCESS;
-        }
-        int i = 0;
-        CompletableFuture[] futures = new CompletableFuture[data.size()];
-        for (Map.Entry<String, byte[]> entry : data.entrySet()) {
-            futures[i] = putRaw(namespace, entry.getKey(), entry.getValue());
-            i++;
-        }
-        return CompletableFuture.allOf(futures).thenApply(ignored -> true);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -102,18 +93,7 @@ abstract class BaseStorageManager<V extends Serializable> implements AutoCloseab
      * @return A {@link CompletableFuture} that resolves to a {@link Map} of IDs to their stored values as byte[].
      */
     protected CompletableFuture<Map<String, byte[]>> getAllRaw(String namespace, Set<String> ids) {
-        if (ids == null) {
-            return CompletableFuture.completedFuture(null);
-        }
-        ConcurrentHashMap<String, byte[]> data = new ConcurrentHashMap<>();
-
-        int i = 0;
-        CompletableFuture[] futures = new CompletableFuture[ids.size()];
-        for (String id : ids) {
-            futures[i] = getRaw(namespace, id).thenAccept(v -> putNotNull(data, id, v));
-            i++;
-        }
-        return CompletableFuture.allOf(futures).thenApply(ignored -> data);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -158,7 +138,7 @@ abstract class BaseStorageManager<V extends Serializable> implements AutoCloseab
      * @return A {@link CompletableFuture} that resolves to true if the store succeeded.
      */
     public CompletableFuture<Boolean> put(String namespace, String id, V value) {
-        return putRaw(namespace, id, this.convert(value));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -169,7 +149,7 @@ abstract class BaseStorageManager<V extends Serializable> implements AutoCloseab
      * @return A {@link CompletableFuture} that resolves to the data.
      */
     public CompletableFuture<V> get(String namespace, String id) {
-        return getRaw(namespace, id).thenApply(this::convert);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -180,7 +160,7 @@ abstract class BaseStorageManager<V extends Serializable> implements AutoCloseab
      * @return A {@link CompletableFuture} that resolves to true if the storage was completely successful.
      */
     public CompletableFuture<Boolean> putAll(String namespace, Map<String, V> data) {
-        return putAllRaw(namespace, fromObjectMap(data, this::convert));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -191,7 +171,7 @@ abstract class BaseStorageManager<V extends Serializable> implements AutoCloseab
      * @return A {@link CompletableFuture} that resolves to a {@link Map} of IDs to their stored values.
      */
     public CompletableFuture<Map<String, V>> getAll(String namespace) {
-        return getAllRaw(namespace).thenApply(m -> toObjectMap(m, this::convert));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -203,7 +183,7 @@ abstract class BaseStorageManager<V extends Serializable> implements AutoCloseab
      * @return A {@link CompletableFuture} that resolves to a {@link Map} of IDs to their stored values.
      */
     public CompletableFuture<Map<String, V>> getAll(String namespace, Set<String> ids) {
-        return getAllRaw(namespace, ids).thenApply(m -> toObjectMap(m, this::convert));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -215,11 +195,10 @@ abstract class BaseStorageManager<V extends Serializable> implements AutoCloseab
      * @return A {@link CompletableFuture} that resolves to the data.
      */
     public CompletableFuture<V> remove(String namespace, String id) {
-        return removeRaw(namespace, id).thenApply(this::convert);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     // Partition methods
-
     /**
      * Returns the number of partitions stored in this storage manager for the given namespace. Partitions can be
      * sharded in storage and can also be used as a smaller unit of processing to reduce memory requirements. Partitions
@@ -230,7 +209,7 @@ abstract class BaseStorageManager<V extends Serializable> implements AutoCloseab
      * @return The number of partitions in this storage manager.
      */
     public int numberOfPartitions(String namespace) {
-        return 0;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -243,7 +222,7 @@ abstract class BaseStorageManager<V extends Serializable> implements AutoCloseab
      *         arrays or null if no data is present.
      */
     protected CompletableFuture<Map<String, byte[]>> getPartitionRaw(String namespace, int partition) {
-        return getAllRaw(namespace);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -256,7 +235,7 @@ abstract class BaseStorageManager<V extends Serializable> implements AutoCloseab
      *         objects or null if no data is present.
      */
     public CompletableFuture<Map<String, V>> getPartition(String namespace, int partition) {
-        return getPartitionRaw(namespace, partition).thenApply(d -> BaseStorageManager.toObjectMap(d, this::convert));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -267,7 +246,7 @@ abstract class BaseStorageManager<V extends Serializable> implements AutoCloseab
      * @return A {@link CompletableFuture} that resolves to true if the wipe was successful.
      */
     public CompletableFuture<Boolean> clear(String namespace, int partition) {
-        return clear(namespace);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -279,11 +258,10 @@ abstract class BaseStorageManager<V extends Serializable> implements AutoCloseab
      * @return A {@link CompletableFuture} that resolves to true if the repartitioning was successful.
      */
     public CompletableFuture<Boolean> repartition(String namespace, int newPartitionCount) {
-        return SUCCESS;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     // Conversion methods
-
     /**
      * Converts a @{@link byte[]} to a type of the given object. By default, uses {@link SerializerDeserializer} to
      * deserialize using Java deserialization.
@@ -292,8 +270,7 @@ abstract class BaseStorageManager<V extends Serializable> implements AutoCloseab
      * @return The converted object or null if the input was null or the conversion was unable to be performed.
      */
     protected V convert(byte[] bytes) {
-        // While SerializerDeserializer handles nulls, adding a null check to avoid using exceptions for control flow
-        return bytes == null ? null : SerializerDeserializer.fromBytes(bytes);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -304,8 +281,7 @@ abstract class BaseStorageManager<V extends Serializable> implements AutoCloseab
      * @return The converted byte[] or null if the input was null or the conversion was unable to be performed.
      */
     protected byte[] convert(V object) {
-        // While SerializerDeserializer handles nulls, adding a null check to avoid using exceptions for control flow
-        return object == null ? null : SerializerDeserializer.toBytes(object);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -317,14 +293,7 @@ abstract class BaseStorageManager<V extends Serializable> implements AutoCloseab
      * @return The String to byte[] converted map.
      */
     public static <S> Map<String, byte[]> fromObjectMap(Map<String, S> input, Function<S, byte[]> converter) {
-        if (input == null) {
-            return null;
-        }
-        Map<String, byte[]> map = new HashMap<>();
-        for (Map.Entry<String, S> entry : input.entrySet()) {
-            map.put(entry.getKey(), converter.apply(entry.getValue()));
-        }
-        return map;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -336,13 +305,6 @@ abstract class BaseStorageManager<V extends Serializable> implements AutoCloseab
      * @return The String to the given type converted map.
      */
     public static <S> Map<String, S> toObjectMap(Map<String, byte[]> input, Function<byte[], S> converter) {
-        if (input == null) {
-            return null;
-        }
-        Map<String, S> map = new HashMap<>();
-        for (Map.Entry<String, byte[]> entry : input.entrySet()) {
-            map.put(entry.getKey(), converter.apply(entry.getValue()));
-        }
-        return map;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

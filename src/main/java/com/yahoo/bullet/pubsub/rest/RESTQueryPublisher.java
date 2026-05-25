@@ -14,8 +14,10 @@ import org.apache.http.impl.client.CloseableHttpClient;
 
 @Slf4j
 public class RESTQueryPublisher extends RESTPublisher {
+
     @Getter(AccessLevel.PACKAGE)
     private String queryURL;
+
     private String resultURL;
 
     /**
@@ -35,11 +37,6 @@ public class RESTQueryPublisher extends RESTPublisher {
 
     @Override
     public PubSubMessage send(PubSubMessage message) {
-        // Put resultURL in the metadata so the ResponsePublisher knows to which host to send the response
-        Metadata metadata = message.getMetadata();
-        metadata = metadata == null ? new RESTMetadata(resultURL) : new RESTMetadata(resultURL, metadata);
-        message.setMetadata(metadata);
-        sendToURL(queryURL, message);
-        return message;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

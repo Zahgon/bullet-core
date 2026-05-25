@@ -9,6 +9,7 @@ package com.yahoo.bullet.pubsub;
  * Exception to be thrown if there is an error in {@link PubSub}, {@link Publisher} or {@link Subscriber}.
  */
 public class PubSubException extends Exception {
+
     /**
      * Constructor to initialize PubSubException with a message.
      *
@@ -36,7 +37,6 @@ public class PubSubException extends Exception {
      * @return A PubSubException indicating failure to read a required argument.
      */
     public static PubSubException forArgument(String name, Throwable cause) {
-        String message = "Could not read required argument: " + name;
-        return cause == null ? new PubSubException(message) : new PubSubException(message, cause);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

@@ -8,7 +8,6 @@ package com.yahoo.bullet.common;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -21,7 +20,6 @@ import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
 import static java.util.Arrays.asList;
 
 /**
@@ -33,9 +31,13 @@ import static java.util.Arrays.asList;
  */
 @Slf4j
 public class Validator {
+
     private static final Predicate<Object> UNARY_IDENTITY = o -> true;
+
     private static final BiPredicate<Object, Object> BINARY_IDENTITY = (oA, oB) -> true;
+
     private static final Predicate<List<Object>> NARY_IDENTITY = o -> true;
+
     private static final String COMMA = ", ";
 
     /**
@@ -46,11 +48,17 @@ public class Validator {
      * You can also ask that the check cause a failure using {@link #orFail()}.
      */
     public static class Entry {
+
         private String key;
+
         private Predicate<Object> validation;
+
         private Predicate<Object> guard;
+
         private Object defaultValue;
+
         private Function<Object, Object> adapter;
+
         private boolean fail;
 
         private Entry(String key) {
@@ -79,9 +87,7 @@ public class Validator {
          * @return This Entry for chaining.
          */
         public Entry unless(Predicate<Object> guard) {
-            Objects.requireNonNull(guard);
-            this.guard = guard;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         /**
@@ -94,9 +100,7 @@ public class Validator {
          * @return This Entry for chaining.
          */
         public Entry checkIf(Predicate<Object> validator) {
-            Objects.requireNonNull(validator);
-            this.validation = this.validation.and(validator);
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         /**
@@ -105,8 +109,7 @@ public class Validator {
          * @return This Entry for chaining.
          */
         public Entry orFail() {
-            fail = true;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         /**
@@ -117,8 +120,7 @@ public class Validator {
          * @return This Entry for chaining.
          */
         public Entry defaultTo(Object defaultValue) {
-            this.defaultValue = defaultValue;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         /**
@@ -130,8 +132,7 @@ public class Validator {
          * @return This Entry for chaining.
          */
         public Entry castTo(Function<Object, Object> adapter) {
-            this.adapter = adapter;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         /**
@@ -140,10 +141,7 @@ public class Validator {
          * @return The defaultValue after any casts.
          */
         public Object getDefaultValue() {
-            if (adapter == null) {
-                return defaultValue;
-            }
-            return adapter.apply(defaultValue);
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         /**
@@ -153,26 +151,7 @@ public class Validator {
          * @param config The config to validate.
          */
         void normalize(BulletConfig config) {
-            Object value = config.get(key);
-            boolean shouldGuard = guard.test(value);
-            if (shouldGuard) {
-                log.debug("Guard satisfied for Key: {}. Using current value: {}", key, value);
-                return;
-            }
-            boolean isValid = validation.test(value);
-            if (!isValid) {
-                if (fail) {
-                    log.error("Key: {} had an invalid value: {}. Erroring out as default not permitted.", key, value);
-                    throw new IllegalStateException("Check cannot be satisfied or fixed for " + key);
-                }
-                log.warn("Key: {} had an invalid value: {}. Using default: {}", key, value, defaultValue);
-                value = defaultValue;
-            }
-            if (adapter != null) {
-                value = adapter.apply(value);
-                log.debug("Changed the type for {}: {}", key, value);
-            }
-            config.set(key, value);
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
     }
 
@@ -184,12 +163,19 @@ public class Validator {
      * {@link #orFail()} if you do not want it to default..
      */
     public static class Relationship {
+
         private String keyA;
+
         private String keyB;
+
         private String description;
+
         private BiPredicate<Object, Object> binaryRelation;
+
         private Object defaultA;
+
         private Object defaultB;
+
         private boolean fail;
 
         private Relationship(String description, String keyA, String keyB, Map<String, Entry> entries) {
@@ -220,8 +206,7 @@ public class Validator {
          * @return This Relationship for chaining.
          */
         public Relationship checkIf(BiPredicate<Object, Object> binaryRelation) {
-            this.binaryRelation = this.binaryRelation.and(binaryRelation);
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         /**
@@ -232,15 +217,14 @@ public class Validator {
          * @param objectB The default for the second field.
          */
         public void orElseUse(Object objectA, Object objectB) {
-            this.defaultA = objectA;
-            this.defaultB = objectB;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         /**
          * Fail if this relationship fails to hold.
          */
         public void orFail() {
-            fail = true;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         /**
@@ -251,22 +235,7 @@ public class Validator {
          * @param config The config to validate.
          */
         void normalize(BulletConfig config) {
-            Object objectA = config.get(keyA);
-            Object objectB = config.get(keyB);
-            boolean isValid = binaryRelation.test(objectA, objectB);
-            if (isValid) {
-                return;
-            }
-            if (fail) {
-                log.error("{}: {} and {}: {} do not satisfy: {}. Erroring out as using defaults was not permitted...",
-                          keyA, objectA, keyB, objectB, description);
-                throw new IllegalStateException("Relationship cannot be satisfied or fixed: " + description);
-            }
-            log.warn("{}: {} and {}: {} do not satisfy: {}. Using their defaults", keyA, objectA, keyB, objectB, description);
-            log.warn("Using default {} for {}", defaultA, keyA);
-            log.warn("Using default {} for {}", defaultB, keyB);
-            config.set(keyA, defaultA);
-            config.set(keyB, defaultB);
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
     }
 
@@ -278,9 +247,13 @@ public class Validator {
      * defined for these fields will be used for all of them.
      */
     public static class State {
+
         private final String description;
+
         private final List<String> keys;
+
         private Predicate<List<Object>> validation;
+
         private boolean fail;
 
         private State(String description, List<String> keys) {
@@ -305,15 +278,14 @@ public class Validator {
          * @return This Relationship for chaining.
          */
         public State checkIf(Predicate<List<Object>> validation) {
-            this.validation = this.validation.and(validation);
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         /**
          * Fail if this state check fails.
          */
         public void orFail() {
-            fail = true;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         /*
@@ -325,29 +297,16 @@ public class Validator {
          * @param entries The {@link Map} of names to {@link Entry} that are relevant for this config.
          */
         void normalize(BulletConfig config, Map<String, Entry> entries) {
-            // Sequential stream so order is the same
-            List<Object> values = keys.stream().map(config::get).collect(Collectors.toList());
-            boolean result = validation.test(values);
-            if (result) {
-                return;
-            }
-            log.warn("State validation: {} failed for values {}", description, values);
-            if (fail) {
-                log.error("Erroring out as using defaults was not permitted");
-                throw new IllegalStateException("Unsupported values for " + values);
-            }
-            for (String key : keys) {
-                Object defaultValue = entries.get(key).getDefaultValue();
-                log.warn("Using default value of {} for {}", defaultValue, key);
-                config.set(key, defaultValue);
-            }
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
     }
 
     // For testing
     @Getter(AccessLevel.PACKAGE)
     private final Map<String, Entry> entries;
+
     private final List<Relationship> relations;
+
     private final List<State> states;
 
     /**
@@ -375,9 +334,7 @@ public class Validator {
      * @return The created {@link Entry}.
      */
     public Entry define(String key) {
-        Entry entry = new Entry(key);
-        entries.put(key, entry);
-        return entry;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -392,12 +349,7 @@ public class Validator {
      * @return The created {@link Relationship}.
      */
     public Relationship relate(String description, String keyA, String keyB) {
-        Objects.requireNonNull(entries.get(keyA), "You cannot add a relationship for " + keyA + " before defining it");
-        Objects.requireNonNull(entries.get(keyB), "You cannot add a relationship for " + keyB + " before defining it");
-
-        Relationship relation = new Relationship(description, keyA, keyB, entries);
-        relations.add(relation);
-        return relation;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -411,14 +363,7 @@ public class Validator {
      * @return The create {@link State}.
      */
     public State evaluate(String description, String... keys) {
-        Objects.requireNonNull(keys, "You must provide the relevant keys for this state validation");
-        List<String> missingKeys = Arrays.stream(keys).filter(k -> entries.get(k) == null).collect(Collectors.toList());
-        if (!missingKeys.isEmpty())  {
-            throw new NullPointerException("You must evaluate entries for "  + missingKeys.stream().collect(Collectors.joining(COMMA)));
-        }
-        State state = new State(description, asList(keys));
-        states.add(state);
-        return state;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -428,9 +373,7 @@ public class Validator {
      * @param config The config containing fields to validate.
      */
     public void validate(BulletConfig config) {
-        entries.values().forEach(e -> e.normalize(config));
-        relations.forEach(r -> r.normalize(config));
-        states.forEach(s -> s.normalize(config, entries));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -440,11 +383,10 @@ public class Validator {
      * @return A copy of this validator with all its defined {@link Entry} and {@link Relationship}.
      */
     public Validator copy() {
-        return new Validator(entries, relations, states);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     // Type Adapters
-
     /**
      * This casts a {@link Number} Object to an {@link Integer}.
      *
@@ -452,7 +394,7 @@ public class Validator {
      * @return The converted Integer object.
      */
     public static Object asInt(Object value) {
-        return ((Number) value).intValue();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -462,7 +404,7 @@ public class Validator {
      * @return The converted Long object.
      */
     public static Object asLong(Object value) {
-        return ((Number) value).longValue();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -472,7 +414,7 @@ public class Validator {
      * @return The converted Float object.
      */
     public static Object asFloat(Object value) {
-        return ((Number) value).floatValue();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -482,7 +424,7 @@ public class Validator {
      * @return The converted Double object.
      */
     public static Object asDouble(Object value) {
-        return ((Number) value).doubleValue();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -492,11 +434,10 @@ public class Validator {
      * @return The converted String object.
      */
     public static Object asString(Object value) {
-        return value.toString();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     // Unary Predicates
-
     /**
      * Checks to see if the value is null or not.
      *
@@ -504,7 +445,7 @@ public class Validator {
      * @return A boolean denoting if the value was null.
      */
     public static boolean isNotNull(Object value) {
-        return value != null;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -514,7 +455,7 @@ public class Validator {
      * @return A boolean denoting if the value was null.
      */
     public static boolean isNull(Object value) {
-        return value == null;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -524,7 +465,7 @@ public class Validator {
      * @return A boolean denoting if the value was true.
      */
     public static boolean isTrue(Object value) {
-        return isBoolean(value) && ((Boolean) value);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -534,7 +475,7 @@ public class Validator {
      * @return A boolean denoting if the value was false.
      */
     public static boolean isFalse(Object value) {
-        return isBoolean(value) && !((Boolean) value);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -545,7 +486,7 @@ public class Validator {
      * @return A boolean denoting if the value was of the provided class.
      */
     public static boolean isType(Object value, Class clazz) {
-        return isNotNull(value) && clazz.isInstance(value);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -555,7 +496,7 @@ public class Validator {
      * @return A boolean denoting if the value was a boolean.
      */
     public static boolean isBoolean(Object value) {
-        return isType(value, Boolean.class);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -565,7 +506,7 @@ public class Validator {
      * @return A boolean denoting if the value was a String.
      */
     public static boolean isString(Object value) {
-        return isType(value, String.class);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -575,7 +516,7 @@ public class Validator {
      * @return A boolean denoting if the value was a List.
      */
     public static boolean isList(Object value) {
-        return isType(value, List.class);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -585,7 +526,7 @@ public class Validator {
      * @return A boolean denoting if the value was a Map.
      */
     public static boolean isMap(Object value) {
-        return isType(value, Map.class);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -595,7 +536,7 @@ public class Validator {
      * @return A boolean denoting if the value was a Number.
      */
     public static boolean isNumber(Object value) {
-        return isType(value, Number.class);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -605,7 +546,7 @@ public class Validator {
      * @return A boolean denoting if the value was an integer.
      */
     public static boolean isInt(Object value) {
-        return isType(value, Long.class) || isType(value, Integer.class);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -615,7 +556,7 @@ public class Validator {
      * @return A boolean denoting if the value was a floating-point.
      */
     public static boolean isFloat(Object value) {
-        return isType(value, Double.class) || isType(value, Float.class);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -625,7 +566,7 @@ public class Validator {
      * @return A boolean denoting whether the given number value was positive.
      */
     public static boolean isPositive(Object value) {
-        return isNumber(value) && ((Number) value).doubleValue() > 0;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -635,7 +576,7 @@ public class Validator {
      * @return A boolean denoting whether the given number value was a positive integer type.
      */
     public static boolean isPositiveInt(Object value) {
-        return isPositive(value) && isInt(value);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -645,11 +586,7 @@ public class Validator {
      * @return A boolean denoting whether the given number value was a positive, power of 2 integer type.
      */
     public static boolean isPowerOfTwo(Object value) {
-        if (!isPositiveInt(value)) {
-            return false;
-        }
-        int toCheck = ((Number) value).intValue();
-        return (toCheck & toCheck - 1) == 0;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -659,7 +596,7 @@ public class Validator {
      * @return A boolean denoting if the value was a non-empty list.
      */
     public static boolean isNonEmptyList(Object value) {
-        return isType(value, List.class) && !((List) value).isEmpty();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -669,7 +606,7 @@ public class Validator {
      * @return A boolean denoting if the value was a non-empty map.
      */
     public static boolean isNonEmptyMap(Object value) {
-        return isType(value, Map.class) && !((Map) value).isEmpty();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -679,16 +616,10 @@ public class Validator {
      * @return A boolean denoting whether the given value was the name of a class.
      */
     public static boolean isClassName(Object value) {
-        try {
-            Class.forName((String) value);
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     // Unary Predicate Generators
-
     /**
      * Creates a {@link Predicate} that checks to see if the given object is in the list of values.
      *
@@ -698,9 +629,7 @@ public class Validator {
      */
     @SuppressWarnings("unchecked")
     public static <T> Predicate<Object> isIn(T... values) {
-        Objects.requireNonNull(values);
-        Set<T> set = new HashSet<>(asList(values));
-        return set::contains;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -711,7 +640,7 @@ public class Validator {
      * @return A boolean denoting if the {@link List} has a size of at least the given parameter.
      */
     public static Predicate<Object> hasMinimumListSize(int n) {
-        return o -> isList(o) && ((List) o).size() >= n;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -722,7 +651,7 @@ public class Validator {
      * @return A boolean denoting if the {@link List} has a size of at most the given parameter.
      */
     public static Predicate<Object> hasMaximumListSize(int n) {
-        return o -> isList(o) && ((List) o).size() <= n;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -735,11 +664,7 @@ public class Validator {
      */
     @SuppressWarnings("unchecked")
     public static <T extends Number> Predicate<Object> isInRange(T min, T max) {
-        Objects.requireNonNull(min);
-        Objects.requireNonNull(max);
-        double minimum = min.doubleValue();
-        double maximum = max.doubleValue();
-        return o -> isNumber(o) && ((T) o).doubleValue() >= minimum && ((T) o).doubleValue() <= maximum;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -752,13 +677,7 @@ public class Validator {
      */
     @SuppressWarnings("unchecked")
     public static <T> Predicate<Object> isListOfType(Class<T> type) {
-        return value -> {
-            if (!isNonEmptyList(value)) {
-                return false;
-            }
-            List list = (List) value;
-            return list.stream().allMatch(i -> isType(i, type));
-        };
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -772,16 +691,7 @@ public class Validator {
      */
     @SuppressWarnings("unchecked")
     public static <K, V> Predicate<Object> isMapOfType(Class<K> keyType, Class<V> valueType) {
-        return value -> {
-            if (!isNonEmptyMap(value)) {
-                return false;
-            }
-            Map map = (Map) value;
-            return map.entrySet().stream().allMatch(e -> {
-                Map.Entry entry = (Map.Entry) e;
-                return isType(entry.getKey(), keyType) && isType(entry.getValue(), valueType);
-            });
-        };
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -792,11 +702,7 @@ public class Validator {
      */
     @SafeVarargs
     public static Predicate<Object> and(Predicate<Object>... predicates) {
-        Predicate<Object> anded = UNARY_IDENTITY;
-        for (Predicate<Object> predicate : predicates) {
-            anded = anded.and(predicate);
-        }
-        return anded;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -807,11 +713,7 @@ public class Validator {
      */
     @SafeVarargs
     public static Predicate<Object> or(Predicate<Object>... predicates) {
-        Predicate<Object> ored = not(UNARY_IDENTITY);
-        for (Predicate<Object> predicate : predicates) {
-            ored = ored.or(predicate);
-        }
-        return ored;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -821,11 +723,10 @@ public class Validator {
      * @return A predicate that is the NOT of the given predicate.
      */
     public static Predicate<Object> not(Predicate<Object> predicate) {
-        return predicate.negate();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     // Binary Predicates
-
     /**
      * Checks to see if the first numeric object is greater than or equal to the second numeric object.
      *
@@ -834,7 +735,7 @@ public class Validator {
      * @return A boolean denoting whether the first object is greater or equal to the second.
      */
     public static boolean isGreaterOrEqual(Object first, Object second) {
-        return ((Number) first).doubleValue() >= ((Number) second).doubleValue();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -846,12 +747,10 @@ public class Validator {
      * @return A boolean denoting whether the second is implied by the first.
      */
     public static boolean isImplied(Object first, Object second) {
-        // first -> second === ~first or second
-        return !((Boolean) first) || ((Boolean) second);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     // Binary Predicate Generators.
-
     /**
      * Returns a {@link BiPredicate} that checks to see if the first argument is at least the given times
      * more than the second.
@@ -860,7 +759,7 @@ public class Validator {
      * @return The created {@link BiPredicate}.
      */
     public static BiPredicate<Object, Object> isAtleastNTimes(double n) {
-        return (greater, smaller) -> ((Number) greater).doubleValue() >= n * ((Number) smaller).doubleValue();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -872,8 +771,7 @@ public class Validator {
      * @return The created {@link BiPredicate}.
      */
     public static BiPredicate<Object, Object> ifTrueThenCheck(Predicate<Object> predicate) {
-        // Can use isImplied(bool, predicate.test(object)) but is not lazy anymore
-        return (bool, object) -> !((Boolean) bool) || predicate.test(object);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -887,6 +785,6 @@ public class Validator {
      * @return The created {@link BiPredicate}.
      */
     public static BiPredicate<Object, Object> isImpliedBy(Predicate<Object> firstTest, Predicate<Object> secondTest) {
-        return (first, second) -> !(firstTest.test(first)) || secondTest.test(second);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

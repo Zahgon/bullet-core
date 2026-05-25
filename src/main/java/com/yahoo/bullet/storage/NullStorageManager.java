@@ -6,7 +6,6 @@
 package com.yahoo.bullet.storage;
 
 import com.yahoo.bullet.common.BulletConfig;
-
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Set;
@@ -16,6 +15,7 @@ import java.util.concurrent.CompletableFuture;
  * A default implementation that does nothing if you do not want to use a StorageManager.
  */
 public class NullStorageManager<V extends Serializable> extends StorageManager<V> implements Serializable {
+
     private static final long serialVersionUID = -1718811448543607136L;
 
     /**
@@ -29,36 +29,36 @@ public class NullStorageManager<V extends Serializable> extends StorageManager<V
 
     @Override
     protected CompletableFuture<Boolean> putRaw(String namespace, String id, byte[] value) {
-        return SUCCESS;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected CompletableFuture<byte[]> getRaw(String namespace, String id) {
-        return CompletableFuture.completedFuture(null);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected CompletableFuture<Map<String, byte[]>> getAllRaw(String namespace) {
-        return CompletableFuture.completedFuture(null);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected CompletableFuture<byte[]> removeRaw(String namespace, String id) {
-        return CompletableFuture.completedFuture(null);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public CompletableFuture<Boolean> wipe() {
-        return SUCCESS;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public CompletableFuture<Boolean> clear(String namespace) {
-        return SUCCESS;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public CompletableFuture<Boolean> clear(String namespace, Set<String> ids) {
-        return SUCCESS;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

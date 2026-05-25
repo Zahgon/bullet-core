@@ -11,7 +11,6 @@ import com.yahoo.bullet.common.BulletConfig;
 import com.yahoo.bullet.common.BulletException;
 import com.yahoo.bullet.common.Utilities;
 import lombok.Getter;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,12 +18,15 @@ import java.util.Objects;
 
 @Getter
 public class TopK extends Aggregation {
+
     private static final long serialVersionUID = 2934123789816778466L;
-    private static final BulletException TOP_K_REQUIRES_FIELDS =
-            new BulletException("TOP K requires at least one field.", "Please add at least one field.");
+
+    private static final BulletException TOP_K_REQUIRES_FIELDS = new BulletException("TOP K requires at least one field.", "Please add at least one field.");
 
     private final Map<String, String> fieldsToNames;
+
     private final Long threshold;
+
     private final String name;
 
     /**
@@ -48,16 +50,16 @@ public class TopK extends Aggregation {
 
     @Override
     public Strategy getStrategy(BulletConfig config) {
-        return new FrequentItemsSketchingStrategy(this, config);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public List<String> getFields() {
-        return new ArrayList<>(fieldsToNames.keySet());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String toString() {
-        return "{size: " + size + ", type: " + type + ", fieldsToNames: " + fieldsToNames + ", threshold: " + threshold + ", name: " + getName() + "}";
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

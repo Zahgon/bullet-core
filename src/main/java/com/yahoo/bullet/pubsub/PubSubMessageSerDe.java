@@ -7,7 +7,6 @@ package com.yahoo.bullet.pubsub;
 
 import com.yahoo.bullet.common.BulletConfig;
 import com.yahoo.bullet.query.Query;
-
 import java.io.Serializable;
 
 /**
@@ -21,6 +20,7 @@ import java.io.Serializable;
  * {@link Query} in the backend.
  */
 public abstract class PubSubMessageSerDe implements Serializable {
+
     private static final long serialVersionUID = 5352288558800960763L;
 
     protected BulletConfig config;
@@ -44,7 +44,7 @@ public abstract class PubSubMessageSerDe implements Serializable {
      * @return A converted {@link PubSubMessage}.
      */
     public PubSubMessage toMessage(String id, Query query, String queryString) {
-        return toMessage(new PubSubMessage(id, query, new Metadata(null, queryString)));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -72,10 +72,6 @@ public abstract class PubSubMessageSerDe implements Serializable {
      * @return An instance of specified class initialized with settings from the input file and defaults.
      */
     public static PubSubMessageSerDe from(BulletConfig config) {
-        try {
-            return config.loadConfiguredClass(BulletConfig.PUBSUB_MESSAGE_SERDE_CLASS_NAME);
-        } catch (RuntimeException e) {
-            throw new RuntimeException("Cannot create PubSubMessageSerDe instance.", e.getCause());
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

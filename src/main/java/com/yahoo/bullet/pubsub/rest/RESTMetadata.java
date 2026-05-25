@@ -11,7 +11,9 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 class RESTMetadata extends Metadata {
+
     private static final long serialVersionUID = 5718947090573796171L;
+
     @Getter
     private final String url;
 
@@ -28,6 +30,6 @@ class RESTMetadata extends Metadata {
 
     @Override
     public Metadata copy() {
-        return new RESTMetadata(url, this);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

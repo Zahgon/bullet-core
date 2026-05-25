@@ -1,2 +1,7 @@
 /target/**
 pom.xml.bak
+
+.aider*
+logs/
+.commit0_scripts/
+.github/workflows/

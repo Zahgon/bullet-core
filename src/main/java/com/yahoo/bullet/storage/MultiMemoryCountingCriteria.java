@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-
 import static com.yahoo.bullet.storage.Criteria.checkType;
 
 /**
@@ -20,22 +19,20 @@ import static com.yahoo.bullet.storage.Criteria.checkType;
  * count is returned.
  */
 public class MultiMemoryCountingCriteria implements Criteria<List<String>, Long> {
+
     @Override
     public <V extends Serializable> CompletableFuture<Map<String, V>> get(StorageManager<V> storage) {
-        throw new UnsupportedOperationException("The counting criteria does not allow fetching data");
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public <V extends Serializable> CompletableFuture<Long> retrieve(StorageManager<V> storage) {
-        return CompletableFuture.completedFuture(sum(storage.getDefaultNamespace(), storage));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public <V extends Serializable> CompletableFuture<Long> apply(StorageManager<V> storage, List<String> query) {
-        if (query == null || query.isEmpty()) {
-            return CompletableFuture.completedFuture(sum(storage));
-        }
-        return CompletableFuture.completedFuture(query.stream().mapToLong(namespace -> sum(namespace, storage)).sum());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private <V extends Serializable> Long sum(String namespace, StorageManager<V> storage) {
@@ -54,8 +51,6 @@ public class MultiMemoryCountingCriteria implements Criteria<List<String>, Long>
     }
 
     private <V extends Serializable> Long sum(MultiMemoryStorageManager<V> storage) {
-        return storage.getStorage().values().stream()
-                                            .mapToLong(n -> n.values().stream().mapToLong(Map::size).sum())
-                                            .sum();
+        return storage.getStorage().values().stream().mapToLong(n -> n.values().stream().mapToLong(Map::size).sum()).sum();
     }
 }

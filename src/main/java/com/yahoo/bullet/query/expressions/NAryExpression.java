@@ -10,10 +10,8 @@ import com.yahoo.bullet.common.Utilities;
 import com.yahoo.bullet.querying.evaluators.Evaluator;
 import com.yahoo.bullet.querying.evaluators.NAryEvaluator;
 import lombok.Getter;
-
 import java.util.List;
 import java.util.Objects;
-
 import static com.yahoo.bullet.query.expressions.Operation.N_ARY_OPERATIONS;
 
 /**
@@ -21,12 +19,15 @@ import static com.yahoo.bullet.query.expressions.Operation.N_ARY_OPERATIONS;
  */
 @Getter
 public class NAryExpression extends Expression {
+
     private static final long serialVersionUID = -1000391436451418013L;
-    private static final BulletException N_ARY_EXPRESSION_REQUIRES_N_ARY_OPERATION =
-            new BulletException("N-ary expression requires an n-ary operation.", "Please specify an n-ary operation.");
+
+    private static final BulletException N_ARY_EXPRESSION_REQUIRES_N_ARY_OPERATION = new BulletException("N-ary expression requires an n-ary operation.", "Please specify an n-ary operation.");
+
     private static final String DELIMITER = ", ";
 
     private final List<Expression> operands;
+
     private final Operation op;
 
     /**
@@ -45,28 +46,21 @@ public class NAryExpression extends Expression {
 
     @Override
     public Evaluator getEvaluator() {
-        return new NAryEvaluator(this);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (!(obj instanceof NAryExpression)) {
-            return false;
-        }
-        NAryExpression other = (NAryExpression) obj;
-        return Objects.equals(operands, other.operands) && op == other.op && type == other.type;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(operands, op, type);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String toString() {
-        return "{operands: " + operands + ", op: " + op + ", " + super.toString() + "}";
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

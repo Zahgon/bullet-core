@@ -6,13 +6,13 @@
 package com.yahoo.bullet.common.metrics;
 
 import com.yahoo.bullet.common.BulletConfig;
-
 import java.util.Map;
 
 /**
  * This class concretizes {@link MetricPublisher} with {@link MetricEvent}.
  */
 public abstract class MetricEventPublisher extends MetricPublisher<MetricEvent> {
+
     public static String DEFAULT_GROUP = "default";
 
     /**
@@ -30,11 +30,11 @@ public abstract class MetricEventPublisher extends MetricPublisher<MetricEvent> 
      * @return The group to use for the {@link MetricEvent}.
      */
     public String getGroup() {
-        return DEFAULT_GROUP;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public MetricEvent convert(Map<String, String> dimensions, Map<String, Number> metrics) {
-        return new MetricEvent(getGroup(), dimensions, metrics);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

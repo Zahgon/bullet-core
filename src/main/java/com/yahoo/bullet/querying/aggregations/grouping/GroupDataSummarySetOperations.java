@@ -12,13 +12,14 @@ import com.yahoo.sketches.tuple.SummarySetOperations;
  * supported.
  */
 public class GroupDataSummarySetOperations implements SummarySetOperations<GroupDataSummary> {
+
     @Override
     public GroupDataSummary union(GroupDataSummary a, GroupDataSummary b) {
-        return GroupDataSummary.mergeInPlace(a, b);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public GroupDataSummary intersection(GroupDataSummary a, GroupDataSummary b) {
-        throw new UnsupportedOperationException("Intersection is not supported at the moment.");
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

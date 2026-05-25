@@ -18,11 +18,9 @@ import com.yahoo.sketches.quantiles.DoublesSketchBuilder;
 import com.yahoo.sketches.quantiles.DoublesUnion;
 import com.yahoo.sketches.quantiles.DoublesUnionBuilder;
 import com.yahoo.sketches.quantiles.UpdateDoublesSketch;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import static com.yahoo.bullet.common.Utilities.round;
 import static com.yahoo.bullet.result.Meta.addIfNonNull;
 
@@ -30,32 +28,51 @@ import static com.yahoo.bullet.result.Meta.addIfNonNull;
  * Wraps operations for working with a {@link DoublesSketch} - Quantile Sketch.
  */
 public class QuantileSketch extends DualSketch {
+
     private UpdateDoublesSketch updateSketch;
+
     private DoublesUnion unionSketch;
+
     private DoublesSketch result;
 
     private double[] points;
+
     private Integer numberOfPoints;
+
     private int rounding;
+
     private final DistributionType type;
 
     public static final double QUANTILE_MIN = 0.0;
+
     public static final double QUANTILE_MAX = 1.0;
 
     public static final String QUANTILE_FIELD = "Quantile";
+
     public static final String VALUE_FIELD = "Value";
+
     public static final String PROBABILITY_FIELD = "Probability";
+
     public static final String COUNT_FIELD = "Count";
+
     public static final String RANGE_FIELD = "Range";
 
     public static final String START_INCLUSIVE = "[";
+
     public static final String START_EXCLUSIVE = "(";
+
     public static final String END_EXCLUSIVE = ")";
+
     public static final String SEPARATOR = " to ";
+
     public static final String INFINITY = "\u221e";
-    public static final String POSITIVE_INFINITY = "+"  + INFINITY;
-    public static final String NEGATIVE_INFINITY = "-"  + INFINITY;
+
+    public static final String POSITIVE_INFINITY = "+" + INFINITY;
+
+    public static final String NEGATIVE_INFINITY = "-" + INFINITY;
+
     public static final String NEGATIVE_INFINITY_START = START_EXCLUSIVE + NEGATIVE_INFINITY;
+
     public static final String POSITIVE_INFINITY_END = POSITIVE_INFINITY + END_EXCLUSIVE;
 
     private QuantileSketch(int k, DistributionType type) {
@@ -101,105 +118,72 @@ public class QuantileSketch extends DualSketch {
      * @param data A double to insert into the sketch.
      */
     public void update(double data) {
-        updateSketch.update(data);
-        super.update();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void union(byte[] serialized) {
-        DoublesSketch sketch = DoublesSketch.heapify(new NativeMemory(serialized));
-        unionSketch.update(sketch);
-        super.union();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public byte[] serialize() {
-        merge();
-        return result.toByteArray();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public List<BulletRecord> getRecords() {
-        merge();
-        double[] domain = getDomain();
-        double[] range;
-        if (type == DistributionType.QUANTILE) {
-            range = result.getQuantiles(domain);
-        } else if (type == DistributionType.PMF) {
-            range = result.getPMF(domain);
-        } else {
-            range = result.getCDF(domain);
-        }
-        return zip(domain, range, type, getNumberOfEntries());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public Clip getResult(String metaKey, Map<String, String> conceptKeys) {
-        merge();
-        Clip data = super.getResult(metaKey, conceptKeys);
-        data.add(getRecords());
-        return data;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void reset() {
-        result = null;
-        updateSketch.reset();
-        unionSketch.reset();
-        super.reset();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected void mergeBothSketches() {
-        unionSketch.update(updateSketch);
-        updateSketch.reset();
-        mergeUnionSketch();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected void mergeUpdateSketch() {
-        result = updateSketch.compact();
-        updateSketch.reset();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected void mergeUnionSketch() {
-        result = unionSketch.getResult();
-        unionSketch.reset();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected boolean unionedExistingResults() {
-        unionSketch.update(result);
-        return result != null;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected Map<String, Object> addMetadata(Map<String, String> conceptKeys) {
-        merge();
-        Map<String, Object> metadata = super.addMetadata(conceptKeys);
-
-        addIfNonNull(metadata, conceptKeys, Concept.SKETCH_MINIMUM_VALUE, this::getMinimum);
-        addIfNonNull(metadata, conceptKeys, Concept.SKETCH_MAXIMUM_VALUE, this::getMaximum);
-        addIfNonNull(metadata, conceptKeys, Concept.SKETCH_ITEMS_SEEN, this::getNumberOfEntries);
-        addIfNonNull(metadata, conceptKeys, Concept.SKETCH_NORMALIZED_RANK_ERROR, this::getNormalizedRankError);
-
-        return metadata;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected Boolean isEstimationMode() {
-        return result.isEstimationMode();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected String getFamily() {
-        return Family.QUANTILES.getFamilyName();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected Integer getSize() {
-        return result.getStorageBytes();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private Double getMinimum() {
@@ -220,8 +204,7 @@ public class QuantileSketch extends DualSketch {
 
     private double[] getDomain() {
         if (numberOfPoints != null) {
-            return type == DistributionType.QUANTILE ? getPoints(QUANTILE_MIN, QUANTILE_MAX, numberOfPoints, rounding) :
-                                                       getPoints(getMinimum(), getMaximum(), numberOfPoints, rounding);
+            return type == DistributionType.QUANTILE ? getPoints(QUANTILE_MIN, QUANTILE_MAX, numberOfPoints, rounding) : getPoints(getMinimum(), getMaximum(), numberOfPoints, rounding);
         }
         return points;
     }
@@ -240,26 +223,13 @@ public class QuantileSketch extends DualSketch {
      * @return The records that correspond to the data.
      */
     List<BulletRecord> zip(double[] domain, double[] range, DistributionType type, long n) {
-        List<BulletRecord> records = null;
-        switch (type) {
-            case QUANTILE:
-                records = zipQuantiles(domain, range);
-                break;
-            case PMF:
-                records = zipRanges(domain, range, n, false);
-                break;
-            case CDF:
-                records = zipRanges(domain, range, n, true);
-                break;
-        }
-        return records;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     // Static helpers
-
     private static double[] getPoints(double start, double end, int numberOfPoints, int rounding) {
         // We should have numberOfPoints >= 1 but just in case...
-        if  (numberOfPoints <= 1 || start >= end) {
+        if (numberOfPoints <= 1 || start >= end) {
             return new double[] { round(start, rounding) };
         }
         double increment = (end - start) / (numberOfPoints - 1);
@@ -268,10 +238,8 @@ public class QuantileSketch extends DualSketch {
 
     private List<BulletRecord> zipQuantiles(double[] domain, double[] range) {
         List<BulletRecord> records = new ArrayList<>();
-
         for (int i = 0; i < domain.length; ++i) {
-            records.add(provider.getInstance().setDouble(QUANTILE_FIELD, domain[i])
-                                              .setDouble(VALUE_FIELD, range[i]));
+            records.add(provider.getInstance().setDouble(QUANTILE_FIELD, domain[i]).setDouble(VALUE_FIELD, range[i]));
         }
         return records;
     }
@@ -280,9 +248,7 @@ public class QuantileSketch extends DualSketch {
         List<BulletRecord> records = new ArrayList<>();
         String[] bins = makeBins(domain, cumulative);
         for (int i = 0; i < bins.length; ++i) {
-            records.add(provider.getInstance().setString(RANGE_FIELD, bins[i])
-                                              .setDouble(PROBABILITY_FIELD, range[i])
-                                              .setDouble(COUNT_FIELD, range[i] * n));
+            records.add(provider.getInstance().setString(RANGE_FIELD, bins[i]).setDouble(PROBABILITY_FIELD, range[i]).setDouble(COUNT_FIELD, range[i] * n));
         }
         return records;
     }

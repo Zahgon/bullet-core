@@ -6,7 +6,6 @@
 package com.yahoo.bullet.storage;
 
 import com.yahoo.bullet.common.BulletConfig;
-
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Set;
@@ -61,6 +60,7 @@ import java.util.concurrent.CompletableFuture;
  * </ol>
  */
 public abstract class StorageManager<V extends Serializable> extends BaseStringStorageManager<V> implements Serializable {
+
     private static final long serialVersionUID = -2521566298026119635L;
 
     public static final String DEFAULT_NAMESPACE = "";
@@ -83,7 +83,7 @@ public abstract class StorageManager<V extends Serializable> extends BaseStringS
      * @return A {@link CompletableFuture} that resolves to a {@link Map} of IDs to their stored values.
      */
     public <T, R> CompletableFuture<Map<String, V>> getAll(Criteria<T, R> criteria) {
-        return criteria.get(this);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -95,7 +95,7 @@ public abstract class StorageManager<V extends Serializable> extends BaseStringS
      * @return A {@link CompletableFuture} that resolves to the type returned by the {@link Criteria}.
      */
     public <T, R> CompletableFuture<R> retrieveAll(Criteria<T, R> criteria) {
-        return criteria.retrieve(this);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -108,7 +108,7 @@ public abstract class StorageManager<V extends Serializable> extends BaseStringS
      * @return A {@link CompletableFuture} that resolves to the type returned by the {@link Criteria}.
      */
     public <T, R> CompletableFuture<R> apply(Criteria<T, R> criteria, T query) {
-        return criteria.apply(this, query);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -117,7 +117,7 @@ public abstract class StorageManager<V extends Serializable> extends BaseStringS
      * @return The default namespace.
      */
     protected String getDefaultNamespace() {
-        return DEFAULT_NAMESPACE;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -126,7 +126,7 @@ public abstract class StorageManager<V extends Serializable> extends BaseStringS
      * @return A {@link CompletableFuture} that resolves to true if the wipe was successful.
      */
     public CompletableFuture<Boolean> clear() {
-        return clear(getDefaultNamespace());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -136,7 +136,7 @@ public abstract class StorageManager<V extends Serializable> extends BaseStringS
      * @return A {@link CompletableFuture} that resolves to true if the wipe was successful.
      */
     public CompletableFuture<Boolean> clear(int partition) {
-        return clear(getDefaultNamespace(), partition);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -146,7 +146,7 @@ public abstract class StorageManager<V extends Serializable> extends BaseStringS
      * @return A {@link CompletableFuture} that resolves to true if the wipe was successful.
      */
     public CompletableFuture<Boolean> clear(Set<String> ids) {
-        return clear(getDefaultNamespace(), ids);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -157,7 +157,7 @@ public abstract class StorageManager<V extends Serializable> extends BaseStringS
      * @return A {@link CompletableFuture} that resolves to true if the store succeeded.
      */
     public CompletableFuture<Boolean> put(String id, V data) {
-        return put(getDefaultNamespace(), id, data);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -167,7 +167,7 @@ public abstract class StorageManager<V extends Serializable> extends BaseStringS
      * @return A {@link CompletableFuture} that resolves to the data.
      */
     public CompletableFuture<V> get(String id) {
-        return get(getDefaultNamespace(), id);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -177,7 +177,7 @@ public abstract class StorageManager<V extends Serializable> extends BaseStringS
      * @return A {@link CompletableFuture} that resolves to true if the storage was completely successful.
      */
     public CompletableFuture<Boolean> putAll(Map<String, V> data) {
-        return putAll(getDefaultNamespace(), data);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -187,7 +187,7 @@ public abstract class StorageManager<V extends Serializable> extends BaseStringS
      * @return A {@link CompletableFuture} that resolves to a {@link Map} of IDs to their stored values.
      */
     public CompletableFuture<Map<String, V>> getAll() {
-        return getAll(getDefaultNamespace());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -198,7 +198,7 @@ public abstract class StorageManager<V extends Serializable> extends BaseStringS
      * @return A {@link CompletableFuture} that resolves to a {@link Map} of IDs to their stored values.
      */
     public CompletableFuture<Map<String, V>> getAll(Set<String> ids) {
-        return getAll(getDefaultNamespace(), ids);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -209,7 +209,7 @@ public abstract class StorageManager<V extends Serializable> extends BaseStringS
      * @return A {@link CompletableFuture} that resolves to the data.
      */
     public CompletableFuture<V> remove(String id) {
-        return remove(getDefaultNamespace(), id);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -221,7 +221,7 @@ public abstract class StorageManager<V extends Serializable> extends BaseStringS
      * @return The number of partitions in this storage manager.
      */
     public int numberOfPartitions() {
-        return numberOfPartitions(getDefaultNamespace());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -232,7 +232,7 @@ public abstract class StorageManager<V extends Serializable> extends BaseStringS
      *         arrays or null if no data is present.
      */
     public CompletableFuture<Map<String, V>> getPartition(int partition) {
-        return getPartition(getDefaultNamespace(), partition);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -242,7 +242,7 @@ public abstract class StorageManager<V extends Serializable> extends BaseStringS
      * @return A {@link CompletableFuture} that resolves to true if the repartitioning was successful.
      */
     public CompletableFuture<Boolean> repartition(int newPartitionCount) {
-        return repartition(getDefaultNamespace(), newPartitionCount);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -253,7 +253,7 @@ public abstract class StorageManager<V extends Serializable> extends BaseStringS
      * @return A {@link CompletableFuture} that resolves to true if the store succeeded.
      */
     public CompletableFuture<Boolean> putString(String id, String value) {
-        return putString(getDefaultNamespace(), id, value);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -263,7 +263,7 @@ public abstract class StorageManager<V extends Serializable> extends BaseStringS
      * @return A {@link CompletableFuture} that resolves to the data.
      */
     public CompletableFuture<String> getString(String id) {
-        return getString(getDefaultNamespace(), id);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -273,7 +273,7 @@ public abstract class StorageManager<V extends Serializable> extends BaseStringS
      * @return A {@link CompletableFuture} that resolves to true if the storage was completely successful.
      */
     public CompletableFuture<Boolean> putAllString(Map<String, String> data) {
-        return putAllString(getDefaultNamespace(), data);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -282,7 +282,7 @@ public abstract class StorageManager<V extends Serializable> extends BaseStringS
      * @return A {@link CompletableFuture} that resolves to a {@link Map} of IDs to their String values.
      */
     public CompletableFuture<Map<String, String>> getAllString() {
-        return getAllString(getDefaultNamespace());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -293,7 +293,7 @@ public abstract class StorageManager<V extends Serializable> extends BaseStringS
      * @return A {@link CompletableFuture} that resolves to a {@link Map} of IDs to their String values.
      */
     public CompletableFuture<Map<String, String>> getAllString(Set<String> ids) {
-        return getAllString(getDefaultNamespace(), ids);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -303,7 +303,7 @@ public abstract class StorageManager<V extends Serializable> extends BaseStringS
      * @return A {@link CompletableFuture} that resolves to the data.
      */
     public CompletableFuture<String> removeString(String id) {
-        return removeString(getDefaultNamespace(), id);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -315,7 +315,7 @@ public abstract class StorageManager<V extends Serializable> extends BaseStringS
      * @return An integer from 0 to numberOfPartitions.
      */
     public static int hash(String key, int numberOfPartitions) {
-        return Math.floorMod(key == null ? 42 : key.hashCode(), numberOfPartitions);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -325,10 +325,6 @@ public abstract class StorageManager<V extends Serializable> extends BaseStringS
      * @return an instance of specified class initialized with settings from the input file and defaults.
      */
     public static StorageManager from(BulletConfig config) {
-        try {
-            return config.loadConfiguredClass(BulletConfig.STORAGE_CLASS_NAME);
-        } catch (RuntimeException e) {
-            throw new RuntimeException("Cannot create StorageManager instance.", e.getCause());
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

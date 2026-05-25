@@ -14,6 +14,7 @@ import com.yahoo.sketches.ResizeFactor;
  * The parent class for {@link SketchingStrategy} that use the KMV type of Sketch - Theta and Tuple.
  */
 abstract class KMVStrategy<S extends KMVSketch> extends SketchingStrategy<S> {
+
     /**
      * Constructor that requires an {@link Aggregation} and a {@link BulletConfig} configuration.
      *
@@ -34,8 +35,9 @@ abstract class KMVStrategy<S extends KMVSketch> extends SketchingStrategy<S> {
      */
     @SuppressWarnings("unchecked")
     ResizeFactor getResizeFactor(BulletConfig config, String key) {
-        return getResizeFactor(config.getAs(key, Integer.class));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
+
     /**
      * Converts a integer representing the resizing for Sketches into a {@link ResizeFactor}.
      *
@@ -43,15 +45,6 @@ abstract class KMVStrategy<S extends KMVSketch> extends SketchingStrategy<S> {
      * @return A {@link ResizeFactor} represented by the integer or {@link ResizeFactor#X8} otherwise.
      */
     public static ResizeFactor getResizeFactor(int factor) {
-        switch (factor) {
-            case 1:
-                return ResizeFactor.X1;
-            case 2:
-                return ResizeFactor.X2;
-            case 4:
-                return ResizeFactor.X4;
-            default:
-                return ResizeFactor.X8;
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

@@ -6,7 +6,6 @@
 package com.yahoo.bullet.storage;
 
 import com.yahoo.bullet.common.BulletConfig;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +16,7 @@ import java.util.concurrent.CompletableFuture;
  * A Storage manager that stores everything in-memory and does not support namespaces or partitions.
  */
 public class MemoryStorageManager<V extends Serializable> extends StorageManager<V> implements Serializable {
+
     private static final long serialVersionUID = 3815534537510449363L;
 
     private Map<String, byte[]> storage;
@@ -33,41 +33,36 @@ public class MemoryStorageManager<V extends Serializable> extends StorageManager
 
     @Override
     protected CompletableFuture<Boolean> putRaw(String namespace, String id, byte[] value) {
-        storage.put(id, value);
-        return SUCCESS;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected CompletableFuture<byte[]> getRaw(String namespace, String id) {
-        return CompletableFuture.completedFuture(storage.get(id));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected CompletableFuture<Map<String, byte[]>> getAllRaw(String namespace) {
-        return CompletableFuture.completedFuture(new HashMap<>(storage));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     protected CompletableFuture<byte[]> removeRaw(String namespace, String id) {
-        return CompletableFuture.completedFuture(storage.remove(id));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public CompletableFuture<Boolean> wipe() {
-        storage.clear();
-        return SUCCESS;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public CompletableFuture<Boolean> clear(String namespace) {
-        return wipe();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public CompletableFuture<Boolean> clear(String namespace, Set<String> ids) {
-        if (ids != null) {
-            ids.forEach(storage::remove);
-        }
-        return SUCCESS;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

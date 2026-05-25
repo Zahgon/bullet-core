@@ -6,7 +6,6 @@
 package com.yahoo.bullet.querying.aggregations.grouping;
 
 import lombok.Getter;
-
 import java.io.Serializable;
 import java.util.EnumMap;
 import java.util.HashSet;
@@ -14,7 +13,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.BiFunction;
-
 import static java.util.Arrays.asList;
 
 /**
@@ -23,28 +21,34 @@ import static java.util.Arrays.asList;
  */
 @Getter
 public class GroupOperation implements Serializable {
+
     private static final long serialVersionUID = 40039294765462402L;
 
     public enum GroupOperationType {
+
         COUNT,
         SUM,
         MIN,
         MAX,
         AVG,
         // COUNT_FIELD operation is only used internally in conjunction with AVG and won't be returned.
-        COUNT_FIELD;
+        COUNT_FIELD
     }
 
     public interface GroupOperator extends BiFunction<Number, Number, Number> {
     }
 
     // If either argument is null, a NullPointerException will be thrown.
-    public static final GroupOperator MIN = (x, y) -> x.doubleValue() <  y.doubleValue() ? x : y;
-    public static final GroupOperator MAX = (x, y) -> x.doubleValue() >  y.doubleValue() ? x : y;
+    public static final GroupOperator MIN = (x, y) -> x.doubleValue() < y.doubleValue() ? x : y;
+
+    public static final GroupOperator MAX = (x, y) -> x.doubleValue() > y.doubleValue() ? x : y;
+
     public static final GroupOperator SUM = (x, y) -> x.doubleValue() + y.doubleValue();
+
     public static final GroupOperator COUNT = (x, y) -> x.longValue() + y.longValue();
 
     public static final Map<GroupOperationType, GroupOperator> OPERATORS = new EnumMap<>(GroupOperationType.class);
+
     static {
         OPERATORS.put(GroupOperationType.COUNT, GroupOperation.COUNT);
         OPERATORS.put(GroupOperationType.COUNT_FIELD, GroupOperation.COUNT);
@@ -54,12 +58,12 @@ public class GroupOperation implements Serializable {
         OPERATORS.put(GroupOperationType.AVG, GroupOperation.SUM);
     }
 
-    public static final Set<GroupOperationType> SUPPORTED_GROUP_OPERATIONS =
-            new HashSet<>(asList(GroupOperationType.COUNT, GroupOperationType.AVG, GroupOperationType.MAX,
-                                 GroupOperationType.MIN, GroupOperationType.SUM));
+    public static final Set<GroupOperationType> SUPPORTED_GROUP_OPERATIONS = new HashSet<>(asList(GroupOperationType.COUNT, GroupOperationType.AVG, GroupOperationType.MAX, GroupOperationType.MIN, GroupOperationType.SUM));
 
     private final GroupOperationType type;
+
     private final String field;
+
     // Ignored purposefully for hashCode and equals
     private final String name;
 
@@ -71,7 +75,7 @@ public class GroupOperation implements Serializable {
      * @param name The name of the group operation. Can be null for COUNT_FIELD operation.
      */
     public GroupOperation(GroupOperationType type, String field, String name) {
-        switch (type) {
+        switch(type) {
             case COUNT:
                 this.field = null;
                 this.name = Objects.requireNonNull(name);
@@ -94,30 +98,16 @@ public class GroupOperation implements Serializable {
 
     @Override
     public int hashCode() {
-        // Not relying on Enum hashcode
-        return Objects.hash(type.ordinal(), field);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean equals(Object object) {
-        if (object == this) {
-            return true;
-        }
-        if (!(object instanceof GroupOperation)) {
-            return false;
-        }
-        GroupOperation other = (GroupOperation) object;
-        if (type != other.type) {
-            return false;
-        }
-        if (field == null && other.field == null) {
-            return true;
-        }
-        return field != null && field.equals(other.field);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String toString() {
-        return "{type: " + type + ", field: " + field + ", name: " + name + "}";
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

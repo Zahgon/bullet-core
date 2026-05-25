@@ -15,7 +15,6 @@ import com.yahoo.bullet.query.aggregations.GroupBy;
 import com.yahoo.bullet.record.BulletRecord;
 import com.yahoo.bullet.typesystem.Type;
 import com.yahoo.sketches.ResizeFactor;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +27,7 @@ import java.util.Objects;
  * of the total sum and count across all the groups.
  */
 public class TupleSketchingStrategy extends KMVStrategy<TupleSketch> {
+
     // This is reused for the duration of the strategy.
     private final CachingGroupData container;
 
@@ -40,32 +40,21 @@ public class TupleSketchingStrategy extends KMVStrategy<TupleSketch> {
     @SuppressWarnings("unchecked")
     public TupleSketchingStrategy(GroupBy aggregation, BulletConfig config) {
         super(aggregation, config);
-
         Map<GroupOperation, Number> metrics = GroupData.makeInitialMetrics(aggregation.getOperations());
         container = new CachingGroupData(null, aggregation.getFieldsToNames(), metrics);
-
         ResizeFactor resizeFactor = getResizeFactor(config, BulletConfig.GROUP_AGGREGATION_SKETCH_RESIZE_FACTOR);
         float samplingProbability = config.getAs(BulletConfig.GROUP_AGGREGATION_SKETCH_SAMPLING, Float.class);
-
         // Default at 512 gives a 13.27% error rate at 99.73% confidence (3 SD). Irrelevant since we are using this to
         // mostly cap the number of groups. You can use the Sketch theta to extrapolate the aggregation for all the data.
         int nominalEntries = config.getAs(BulletConfig.GROUP_AGGREGATION_SKETCH_ENTRIES, Integer.class);
         int maximumSize = config.getAs(BulletConfig.GROUP_AGGREGATION_MAX_SIZE, Integer.class);
         int size = Math.min(aggregation.getSize(), maximumSize);
-
         sketch = new TupleSketch(resizeFactor, samplingProbability, nominalEntries, size, config.getBulletRecordProvider());
     }
 
     @Override
     public void consume(BulletRecord data) {
-        Map<String, String> fieldToValues = getFields(data);
-        // More optimal than calling composeFields
-        String key = getFieldsAsString(fields, fieldToValues);
-
-        // Set the record and the group values into the container. The metrics are already initialized.
-        container.setCachedRecord(data);
-        container.setGroupFields(fieldToValues);
-        sketch.update(key, container);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private Map<String, String> getFields(BulletRecord record) {

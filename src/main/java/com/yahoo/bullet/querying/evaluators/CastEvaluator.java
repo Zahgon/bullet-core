@@ -14,9 +14,11 @@ import com.yahoo.bullet.typesystem.TypedObject;
  * An evaluator that force casts the result of an evaluator to a given type.
  */
 public class CastEvaluator extends Evaluator {
+
     private static final long serialVersionUID = -7527404049388459123L;
 
     final Evaluator value;
+
     final Type castType;
 
     /**
@@ -31,6 +33,6 @@ public class CastEvaluator extends Evaluator {
 
     @Override
     public TypedObject evaluate(BulletRecord record) {
-        return value.evaluate(record).forceCast(castType);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

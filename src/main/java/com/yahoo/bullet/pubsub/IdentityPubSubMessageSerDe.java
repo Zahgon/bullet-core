@@ -8,6 +8,7 @@ package com.yahoo.bullet.pubsub;
 import com.yahoo.bullet.common.BulletConfig;
 
 public class IdentityPubSubMessageSerDe extends PubSubMessageSerDe {
+
     private static final long serialVersionUID = -1709000962888195381L;
 
     /**
@@ -21,11 +22,11 @@ public class IdentityPubSubMessageSerDe extends PubSubMessageSerDe {
 
     @Override
     public PubSubMessage toMessage(PubSubMessage message) {
-        return message;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public PubSubMessage fromMessage(PubSubMessage message) {
-        return message;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

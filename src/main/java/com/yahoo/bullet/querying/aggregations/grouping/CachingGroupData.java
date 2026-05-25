@@ -8,7 +8,6 @@ package com.yahoo.bullet.querying.aggregations.grouping;
 import com.yahoo.bullet.record.BulletRecord;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,9 +19,11 @@ import java.util.Map;
  * single record.
  */
 public class CachingGroupData extends GroupData {
+
     private static final long serialVersionUID = 5059094620642168848L;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private transient BulletRecord cachedRecord;
 
     /**
@@ -43,7 +44,7 @@ public class CachingGroupData extends GroupData {
      * @return A copied {@link CachingGroupData}.
      */
     public CachingGroupData partialCopy() {
-        return new CachingGroupData(groupFields, fieldAliases, copy(metrics));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -53,7 +54,7 @@ public class CachingGroupData extends GroupData {
      * @return A {@link CachingGroupData} copy of the GroupData or null if it was null.
      */
     public static CachingGroupData copy(GroupData other) {
-        return other != null ? new CachingGroupData(copy(other.groupFields), copy(other.fieldAliases), copy(other.metrics)) : null;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static <K, V> Map<K, V> copy(Map<K, V> map) {

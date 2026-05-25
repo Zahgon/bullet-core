@@ -12,7 +12,6 @@ import com.yahoo.bullet.query.Query;
 import com.yahoo.bullet.result.JSONFormatter;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -25,12 +24,16 @@ import java.util.Objects;
  */
 @Getter
 public class PubSubMessage implements Serializable, JSONFormatter {
+
     public static final Charset CHARSET = StandardCharsets.UTF_8;
+
     private static final long serialVersionUID = 5096747716667851530L;
 
     protected String id;
+
     // Serializable enforced through the constructors, getter and setter. Is Object so GSON can reify an instance.
     protected Object content;
+
     @Setter
     protected Metadata metadata;
 
@@ -91,7 +94,7 @@ public class PubSubMessage implements Serializable, JSONFormatter {
      * @return true if message has content.
      */
     public boolean hasContent() {
-        return content != null;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -100,7 +103,7 @@ public class PubSubMessage implements Serializable, JSONFormatter {
      * @return true if message has Metadata.
      */
     public boolean hasMetadata() {
-        return metadata != null;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -110,7 +113,7 @@ public class PubSubMessage implements Serializable, JSONFormatter {
      * @return true if message has the given signal.
      */
     public boolean hasSignal(Signal signal) {
-        return hasMetadata() && metadata.hasSignal(signal);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -119,7 +122,7 @@ public class PubSubMessage implements Serializable, JSONFormatter {
      * @return true if message has a signal.
      */
     public boolean hasSignal() {
-        return hasMetadata() && metadata.hasSignal();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -128,7 +131,7 @@ public class PubSubMessage implements Serializable, JSONFormatter {
      * @return The content stored.
      */
     public Serializable getContent() {
-        return (Serializable) content;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -138,7 +141,7 @@ public class PubSubMessage implements Serializable, JSONFormatter {
      * @return The content stored as a byte[].
      */
     public byte[] getContentAsByteArray() {
-        return (byte[]) content;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -148,7 +151,7 @@ public class PubSubMessage implements Serializable, JSONFormatter {
      * @return The content stored as a String.
      */
     public String getContentAsString() {
-        return (String) content;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -158,7 +161,7 @@ public class PubSubMessage implements Serializable, JSONFormatter {
      * @return The content stored as a {@link Query}.
      */
     public Query getContentAsQuery() {
-        return (Query) content;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -167,33 +170,27 @@ public class PubSubMessage implements Serializable, JSONFormatter {
      * @param content The content for this message.
      */
     public void setContent(Serializable content) {
-        this.content = content;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean equals(Object other) {
-        if (other == null || other.getClass() != PubSubMessage.class) {
-            return false;
-        }
-        PubSubMessage otherMessage = (PubSubMessage) other;
-        return id.equals(otherMessage.getId());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String toString() {
-        return asJSON();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String asJSON() {
-        String data = Base64.getEncoder().encodeToString(SerializerDeserializer.toBytes((Serializable) content));
-        PubSubMessage message = new PubSubMessage(id, data, metadata);
-        return JSONFormatter.asJSON(message);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -203,7 +200,7 @@ public class PubSubMessage implements Serializable, JSONFormatter {
      * @return An instance of this class.
      */
     public static PubSubMessage fromJSON(String json) {
-        return fromJSON(json, GSON);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -215,7 +212,7 @@ public class PubSubMessage implements Serializable, JSONFormatter {
      * @return An instance of this class.
      */
     public static PubSubMessage fromJSON(String json, Gson gson) {
-        return fromJSON(gson.fromJson(json, PubSubMessage.class));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static PubSubMessage fromJSON(PubSubMessage message) {

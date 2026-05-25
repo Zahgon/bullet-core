@@ -13,6 +13,7 @@ import com.yahoo.bullet.typesystem.TypedObject;
  * An evaluator that returns a constant value.
  */
 public class ValueEvaluator extends Evaluator {
+
     private static final long serialVersionUID = -1689526286716310223L;
 
     final TypedObject value;
@@ -28,6 +29,6 @@ public class ValueEvaluator extends Evaluator {
 
     @Override
     public TypedObject evaluate(BulletRecord record) {
-        return value;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

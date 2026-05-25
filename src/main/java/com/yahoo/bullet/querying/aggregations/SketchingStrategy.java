@@ -11,7 +11,6 @@ import com.yahoo.bullet.querying.aggregations.sketches.Sketch;
 import com.yahoo.bullet.record.BulletRecord;
 import com.yahoo.bullet.result.Clip;
 import com.yahoo.bullet.result.Meta;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +24,7 @@ import java.util.stream.Stream;
  * @param <S> A {@link Sketch} type.
  */
 public abstract class SketchingStrategy<S extends Sketch> implements Strategy {
+
     // The metadata concept to key mapping
     protected final Map<String, String> metadataKeys;
 
@@ -55,32 +55,32 @@ public abstract class SketchingStrategy<S extends Sketch> implements Strategy {
 
     @Override
     public void combine(byte[] data) {
-        sketch.union(data);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public byte[] getData() {
-        return sketch.serialize();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public Clip getResult() {
-        return sketch.getResult(getMetaKey(), metadataKeys);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public List<BulletRecord> getRecords() {
-        return sketch.getRecords();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public Meta getMetadata() {
-        return sketch.getMetadata(getMetaKey(), metadataKeys);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void reset() {
-        sketch.reset();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -90,7 +90,7 @@ public abstract class SketchingStrategy<S extends Sketch> implements Strategy {
      * @return A string representing the composite field.
      */
     String composeField(BulletRecord record) {
-        return composeField(fields.stream().map(field -> Objects.toString(record.typedGet(field).getValue())));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -100,7 +100,7 @@ public abstract class SketchingStrategy<S extends Sketch> implements Strategy {
      * @return A string that represents the fields.
      */
     String composeField(Stream<String> fields) {
-        return fields.collect(Collectors.joining(separator));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -110,19 +110,7 @@ public abstract class SketchingStrategy<S extends Sketch> implements Strategy {
      * @return A {@link List} of the fields that this field was made of.
      */
     List<String> decomposeField(String field) {
-        List<String> fields = new ArrayList<>();
-        int index = 0;
-        while (true) {
-            int nextIndex = field.indexOf(separator, index);
-            if (nextIndex >= 0) {
-                fields.add(field.substring(index, nextIndex));
-                index = nextIndex + separator.length();
-            } else {
-                fields.add(field.substring(index));
-                break;
-            }
-        }
-        return fields;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private String getMetaKey() {

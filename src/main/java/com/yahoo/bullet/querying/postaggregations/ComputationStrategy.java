@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class ComputationStrategy implements PostStrategy {
+
     private Projection projection;
 
     /**
@@ -25,7 +26,6 @@ public class ComputationStrategy implements PostStrategy {
 
     @Override
     public Clip execute(Clip clip) {
-        clip.getRecords().forEach(projection::project);
-        return clip;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

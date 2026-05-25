@@ -10,25 +10,23 @@ import com.yahoo.bullet.common.Configurable;
 import com.yahoo.bullet.querying.aggregations.Strategy;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
-@Getter @AllArgsConstructor
+@Getter
+@AllArgsConstructor
 public abstract class Aggregation implements Configurable, Serializable {
+
     private static final long serialVersionUID = -4451469769203362270L;
 
     protected Integer size;
+
     protected final AggregationType type;
 
     @Override
     public void configure(BulletConfig config) {
-        int sizeDefault = config.getAs(BulletConfig.AGGREGATION_DEFAULT_SIZE, Integer.class);
-        int sizeMaximum = config.getAs(BulletConfig.AGGREGATION_MAX_SIZE, Integer.class);
-
-        // Null or not positive, then default, else min of size and max
-        size = (size == null || size <= 0) ? sizeDefault : Math.min(size, sizeMaximum);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -45,11 +43,11 @@ public abstract class Aggregation implements Configurable, Serializable {
      * @return The aggregation fields.
      */
     public List<String> getFields() {
-        return Collections.emptyList();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public String toString() {
-        return "{size: " + size + ", type: " + type + "}";
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

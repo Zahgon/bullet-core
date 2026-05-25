@@ -6,13 +6,13 @@
 package com.yahoo.bullet.common.metrics;
 
 import com.yahoo.bullet.common.BulletConfig;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public abstract class MetricPublisher<T> implements AutoCloseable {
+
     protected BulletConfig config;
 
     /**
@@ -31,7 +31,7 @@ public abstract class MetricPublisher<T> implements AutoCloseable {
      * @return The {@link Map} of static and extra dimensions to use for all publishing.
      */
     public Map<String, String> getDimensions(Map<String, String> extraDimensions) {
-        return new HashMap<>(extraDimensions);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -41,7 +41,7 @@ public abstract class MetricPublisher<T> implements AutoCloseable {
      * @param metricValue The value of the metric being published.
      */
     public void fire(String metricName, Number metricValue) {
-        fire(Collections.emptyMap(), Collections.singletonMap(metricName, metricValue));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -50,7 +50,7 @@ public abstract class MetricPublisher<T> implements AutoCloseable {
      * @param metrics The metrics to publish.
      */
     public void fire(Map<String, Number> metrics) {
-        fire(Collections.emptyMap(), metrics);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -60,10 +60,7 @@ public abstract class MetricPublisher<T> implements AutoCloseable {
      * @param metrics The metrics to publish.
      */
     public void fire(Map<String, String> dimensions, Map<String, Number> metrics) {
-        if (metrics.isEmpty()) {
-            return;
-        }
-        publish(dimensions, metrics);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -74,7 +71,7 @@ public abstract class MetricPublisher<T> implements AutoCloseable {
      * @return A {@link CompletableFuture} that resolves to true or false depending on whether the publish succeeded.
      */
     public CompletableFuture<Boolean> publish(String metricName, Number metricValue) {
-        return publish(Collections.singletonMap(metricName, metricValue));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -84,7 +81,7 @@ public abstract class MetricPublisher<T> implements AutoCloseable {
      * @return A {@link CompletableFuture} that resolves to true or false depending on whether the publish succeeded.
      */
     public CompletableFuture<Boolean> publish(Map<String, Number> metrics) {
-        return publish(Collections.emptyMap(), metrics);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -95,10 +92,7 @@ public abstract class MetricPublisher<T> implements AutoCloseable {
      * @return A {@link CompletableFuture} that resolves to true or false depending on whether the publish succeeded.
      */
     public CompletableFuture<Boolean> publish(Map<String, String> dimensions, Map<String, Number> metrics) {
-        if (metrics.isEmpty()) {
-            return CompletableFuture.completedFuture(true);
-        }
-        return publish(convert(getDimensions(dimensions), metrics));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**
@@ -125,11 +119,6 @@ public abstract class MetricPublisher<T> implements AutoCloseable {
      * @return an instance of specified class initialized with settings from the input file and defaults.
      */
     public static MetricPublisher from(BulletConfig config) {
-        try {
-            return config.loadConfiguredClass(BulletConfig.METRIC_PUBLISHER_CLASS_NAME);
-        } catch (RuntimeException e) {
-            throw new RuntimeException("Cannot create MetricPublisher instance.", e.getCause());
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }
-
